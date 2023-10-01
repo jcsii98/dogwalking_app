@@ -1,13 +1,15 @@
 import dog1 from "../assets/dog1.jpg";
 import React, { useState } from "react";
-export default function AuthPage(props) {
-  const { setShowForm } = props;
+export default function AuthForm(props) {
+  const { setShowForm, setIsLoggedIn, setUserData } = props;
   const [toggleAuth, setToggleAuth] = useState(true);
   const [message, setMessage] = useState();
-  const [error, setError] = useState({});
+  const [error, setError] = useState(null);
 
   const handleToggleAuth = () => {
     setToggleAuth((prevToggle) => !prevToggle);
+    setMessage();
+    setError(null);
   };
 
   const handleSubmit = async (event) => {
@@ -17,7 +19,8 @@ export default function AuthPage(props) {
     } else {
       setMessage("Signing in");
     }
-    setError();
+    setError(null);
+
     // Depending on toggleAuth, make a request for either Sign Up or Sign In
     if (toggleAuth) {
       // This is the Sign Up Request
@@ -54,7 +57,7 @@ export default function AuthPage(props) {
       // This is the Sign In Request
       try {
         // Again, assuming you're using the fetch API
-        const response = await fetch("/api/signin", {
+        const response = await fetch("http://localhost:3000/auth/sign_in", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -64,8 +67,20 @@ export default function AuthPage(props) {
 
         const data = await response.json();
         console.log(data);
-
-        // Handle the response as per your requirements
+        if (data.success == false) {
+          setError(data.errors);
+          console.log(data.errors);
+        } else {
+          console.log("Signed in as", signInFormData.email);
+          setMessage();
+          localStorage.setItem("uid", response.headers.get("uid"));
+          localStorage.setItem("client", response.headers.get("client"));
+          localStorage.setItem(
+            "access-token",
+            response.headers.get("access-token")
+          );
+          setIsLoggedIn(true);
+        }
       } catch (error) {
         console.error("Error during sign in:", error);
       }
@@ -82,6 +97,7 @@ export default function AuthPage(props) {
     name: "",
     password: "",
     password_confirmation: "",
+    kind: "2",
   });
 
   const handleSignInChange = (e) => {
@@ -224,6 +240,13 @@ export default function AuthPage(props) {
                     ></input>
                   </div>
                   <div className="pt-2 w-full">
+                    {message && <p className="text-slate-500">{message}</p>}
+                    {Array.isArray(error) &&
+                      error.map((errMsg, index) => (
+                        <p key={index} className="text-red-500">
+                          {errMsg}
+                        </p>
+                      ))}
                     <button
                       onClick={handleSubmit}
                       className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
