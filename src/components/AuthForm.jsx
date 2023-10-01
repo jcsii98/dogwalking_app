@@ -1,11 +1,17 @@
 import dog1 from "../assets/dog1.jpg";
 import React, { useState } from "react";
-export default function AuthPage() {
+export default function AuthPage(props) {
+  const { setShowForm } = props;
   const [toggleAuth, setToggleAuth] = useState(false);
 
   const handleToggleAuth = () => {
     setToggleAuth((prevToggle) => !prevToggle);
   };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <>
       <div
@@ -19,7 +25,9 @@ export default function AuthPage() {
         ></div>
         <div id="container-right" className="flex-1 flex flex-col px-10">
           <div className="text-sm font-bold py-6">
-            <p className="cursor-pointer">Go Back</p>
+            <p className="cursor-pointer" onClick={() => setShowForm(false)}>
+              Go Back
+            </p>
           </div>
           <div className="text-3xl font-medium pb-6">
             {toggleAuth ? (
@@ -68,6 +76,7 @@ export default function AuthPage() {
                   </div>
                   <div className="pt-2 w-full">
                     <button
+                      onClick={handleSubmit}
                       className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
                       type="submit"
                     >
@@ -101,6 +110,7 @@ export default function AuthPage() {
                   </div>
                   <div className="pt-2 w-full">
                     <button
+                      onClick={handleSubmit}
                       className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
                       type="submit"
                     >
