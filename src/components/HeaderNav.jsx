@@ -19,7 +19,7 @@ export default function HeaderNav(props) {
         <div className="w-[1400px] flex justify-between items-center">
           <div className="text-black font-extrabold text-3xl">Fido.</div>
           <nav>
-            <ul className="text-md font-medium xl flex space-x-24 items-center">
+            <ul className="text-md font-medium xl flex space-x-12 items-center">
               {!isLoggedIn && (
                 <>
                   <li>

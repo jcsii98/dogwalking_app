@@ -1,5 +1,6 @@
 import ProfileCard from "../components/ProfileCard";
 import React, { useState, useEffect } from "react";
+import LoadingComponent from "../components/LoadingComponent";
 
 export default function MyAccount(props) {
   const { userData, setUserData, setIsLoggedIn } = props;
@@ -43,7 +44,7 @@ export default function MyAccount(props) {
   useEffect(() => {
     const timer = setTimeout(() => {
       checkUserData();
-    }, 1500);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -51,7 +52,9 @@ export default function MyAccount(props) {
     <>
       <div className="w-[1400px] h-full">
         {isLoading ? (
-          <></>
+          <>
+            <LoadingComponent />
+          </>
         ) : (
           <>
             {/* account page for dog walkers */}

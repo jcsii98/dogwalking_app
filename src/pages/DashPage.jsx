@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import DogProfileForm from "../components/DogProfileForm";
 import { BsChevronDown } from "react-icons/bs";
 import DogProfileCard from "../components/DogProfileCard";
+import LoadingComponent from "../components/LoadingComponent";
 
 export default function DashPage(props) {
   const { userData } = props;
@@ -49,77 +50,81 @@ export default function DashPage(props) {
   }, []);
   return (
     <>
-      <div className="w-[1400px] h-full flex justify-between">
+      <div className="w-[1400px] h-full">
         {isLoading ? (
-          <></>
+          <>
+            <LoadingComponent />
+          </>
         ) : (
           <>
-            {/* dashboard for dog walkers */}
-            {userData.kind == 1 && <></>}
+            <div className="flex justify-between">
+              {/* dashboard for dog walkers */}
+              {userData.kind == 1 && <></>}
 
-            {/* dashboard for dog owners */}
-            {userData.kind == 2 && (
-              <>
-                <div className="w-[330px]">
-                  <div className="bg-white rounded-md p-6">
-                    {/* other dashboard stuff here */}
-                  </div>
-                </div>
-                <div className="w-[1000px] flex flex-col">
-                  {/* accordion */}
-                  <div className="">
-                    <div
-                      className="group flex flex-col bg-white rounded-md p-6 mb-[40px]"
-                      tabIndex="0"
-                      onClick={() => setIsOpen(!isOpen)} // Toggle the isOpen state
-                    >
-                      <div className="flex cursor-pointer items-center justify-between">
-                        <div className="font-bold text-xl flex">
-                          <div>Active Dog Profiles</div>
-                          <div className="text-slate-500 pl-2">
-                            - {!dogProfilesData && <>0</>}
-                            {dogProfilesData && (
-                              <>{dogProfilesData.data.length}</>
-                            )}
-                          </div>
-                        </div>
-                        <BsChevronDown
-                          className={`h-6 w-6 transition-all duration-500 text-black ${
-                            isOpen ? "rotate-180" : ""
-                          }`}
-                        />
-                      </div>
-                      <div
-                        className={`transition-all ${
-                          isOpen
-                            ? "visible max-h-screen opacity-100"
-                            : "invisible max-h-0 opacity-0"
-                        } duration-500`}
-                      >
-                        <div className="h-[150px] bg-slate-100 mt-4 p-6 flex items-center">
-                          <div className="flex overflow-x-auto items-center space-x-10">
-                            {dogProfilesData &&
-                              dogProfilesData.data.map((dog) => (
-                                <>
-                                  <DogProfileCard key={dog.id} dog={dog} />
-                                </>
-                              ))}
-                          </div>
-                        </div>
-                        {/* dog profiles here */}
-                      </div>
+              {/* dashboard for dog owners */}
+              {userData.kind == 2 && (
+                <>
+                  <div className="w-[330px]">
+                    <div className="bg-white rounded-md p-6">
+                      {/* other dashboard stuff here */}
                     </div>
                   </div>
+                  <div className="w-[1000px] flex flex-col">
+                    {/* accordion */}
+                    <div className="">
+                      <div
+                        className="group flex flex-col bg-white rounded-md p-6 mb-[40px]"
+                        tabIndex="0"
+                        onClick={() => setIsOpen(!isOpen)} // Toggle the isOpen state
+                      >
+                        <div className="flex cursor-pointer items-center justify-between">
+                          <div className="font-bold text-xl flex">
+                            <div>Active Dog Profiles</div>
+                            <div className="text-slate-500 pl-2">
+                              - {!dogProfilesData && <>0</>}
+                              {dogProfilesData && (
+                                <>{dogProfilesData.data.length}</>
+                              )}
+                            </div>
+                          </div>
+                          <BsChevronDown
+                            className={`h-6 w-6 transition-all duration-500 text-black ${
+                              isOpen ? "rotate-180" : ""
+                            }`}
+                          />
+                        </div>
+                        <div
+                          className={`transition-all ${
+                            isOpen
+                              ? "visible max-h-screen opacity-100"
+                              : "invisible max-h-0 opacity-0"
+                          } duration-500`}
+                        >
+                          <div className="h-[150px] bg-slate-100 mt-4 p-6 flex items-center">
+                            <div className="flex overflow-x-auto items-center space-x-10">
+                              {dogProfilesData &&
+                                dogProfilesData.data.map((dog) => (
+                                  <>
+                                    <DogProfileCard key={dog.id} dog={dog} />
+                                  </>
+                                ))}
+                            </div>
+                          </div>
+                          {/* dog profiles here */}
+                        </div>
+                      </div>
+                    </div>
 
-                  <div className="text-md text-slate-700 font-medium pb-2">
-                    Setting up a Dog Profile
+                    <div className="text-md text-slate-700 font-medium pb-2">
+                      Setting up a Dog Profile
+                    </div>
+                    <div className="bg-white rounded-md p-6">
+                      <DogProfileForm />
+                    </div>
                   </div>
-                  <div className="bg-white rounded-md p-6">
-                    <DogProfileForm />
-                  </div>
-                </div>
-              </>
-            )}
+                </>
+              )}
+            </div>
           </>
         )}
       </div>
