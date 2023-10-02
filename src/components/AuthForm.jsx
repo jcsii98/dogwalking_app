@@ -72,6 +72,7 @@ export default function AuthForm(props) {
           console.log(data.errors);
         } else {
           console.log("Signed in as", signInFormData.email);
+          setUserData(data.data);
           setMessage();
           localStorage.setItem("uid", response.headers.get("uid"));
           localStorage.setItem("client", response.headers.get("client"));

@@ -3,12 +3,14 @@ import HomePage from "../pages/HomePage";
 import LoadingPage from "../pages/LoadingPage";
 import DashPage from "../pages/DashPage";
 import HeaderNav from "../components/HeaderNav";
+import MyAccount from "../pages/MyAccount";
 export default function Root() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState(null);
   const [showForm, setShowForm] = useState(false);
 
+  const [activeNavTab, setActiveNavTab] = useState(1);
   const rememberMe = async () => {
     const uid = localStorage.getItem("uid");
     const client = localStorage.getItem("client");
@@ -65,10 +67,24 @@ export default function Root() {
                 setIsLoggedIn={setIsLoggedIn}
                 isLoggedIn={isLoggedIn}
                 setShowForm={setShowForm}
+                setActiveNavTab={setActiveNavTab}
               />
               {isLoggedIn ? (
                 <>
-                  <DashPage userData={userData} />
+                  {activeNavTab == 1 && (
+                    <>
+                      <DashPage userData={userData} />
+                    </>
+                  )}
+                  {activeNavTab == 2 && (
+                    <>
+                      <MyAccount
+                        setUserData={setUserData}
+                        userData={userData}
+                        setIsLoggedIn={setIsLoggedIn}
+                      />
+                    </>
+                  )}
                 </>
               ) : (
                 <>

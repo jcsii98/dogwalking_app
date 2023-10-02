@@ -1,5 +1,11 @@
 export default function HeaderNav(props) {
-  const { setShowForm, isLoggedIn, setIsLoggedIn } = props;
+  const {
+    setShowForm,
+    isLoggedIn,
+    setIsLoggedIn,
+    setActiveNavTab,
+    activeNavTab,
+  } = props;
 
   const handleSignOut = () => {
     setIsLoggedIn(false);
@@ -46,20 +52,28 @@ export default function HeaderNav(props) {
               {isLoggedIn && (
                 <>
                   <li>
-                    <a
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveNavTab(2);
+                      }}
                       href="#"
                       className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
                     >
                       My Account
-                    </a>
+                    </button>
                   </li>
                   <li>
-                    <a
+                    <button
+                      onClick={() => {
+                        setActiveNavTab(1);
+                      }}
+                      type="button"
                       href="#"
                       className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
                     >
                       Dashboard
-                    </a>
+                    </button>
                   </li>
                   <li>
                     <a
