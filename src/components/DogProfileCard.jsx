@@ -1,7 +1,7 @@
 import DogPng from "../assets/dog.png";
 
 export default function DogProfileCard(props) {
-  const { key, dog, setDogProfile, setDashTab } = props;
+  const { dog, setDogProfile, setDashTab } = props;
 
   const handleClick = () => {
     setDogProfile(dog);

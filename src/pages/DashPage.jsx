@@ -57,6 +57,7 @@ export default function DashPage(props) {
       <div className="w-[1400px] h-full">
         {isLoading ? (
           <>
+            {/* <LoadingComponent /> */}
             <LoadingComponent />
           </>
         ) : (
@@ -112,9 +113,9 @@ export default function DashPage(props) {
                                     dogProfilesData.data.map((dog) => (
                                       <>
                                         <DogProfileCard
+                                          key={dog.id}
                                           setDashTab={setDashTab}
                                           setDogProfile={setDogProfile}
-                                          key={dog.id}
                                           dog={dog}
                                         />
                                       </>

@@ -1,3 +1,6 @@
+@import "../node_modules/mapbox-gl/dist/mapbox-gl.css";
+@import "../node_modules/@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -22,4 +25,21 @@
 button:disabled {
   opacity: 0;
   pointer-events: none;
+}
+
+.address-autofill-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+.address-autofill-container .mapboxgl-ctrl-geocoder input[type="text"] {
+  width: 100%;
+}
+
+.mapboxgl-ctrl-geocoder {
+  width: 100% !important;
+  font-size: 15px;
+  line-height: 20px;
+  max-width: 360px;
 }

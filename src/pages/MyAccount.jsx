@@ -62,7 +62,7 @@ export default function MyAccount(props) {
             {/* account page for dog owners */}
             {userData.kind == 2 && (
               <>
-                <ProfileCard userData={userData} />
+                <ProfileCard userData={userData} setUserData={setUserData} />
               </>
             )}
           </>
