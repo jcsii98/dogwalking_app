@@ -14,6 +14,7 @@ const router = createBrowserRouter([
     path: "/admin",
     element: <AdminRoot />,
   },
+  { path: "/confirmed", element: <Root /> },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
