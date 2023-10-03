@@ -30,7 +30,7 @@ export default function DogProfile(props) {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/dog_profiles/${dogId}`,
+        `https://dogwalking-api.onrender.com/dog_profiles/${dogId}`,
         {
           method: "DELETE",
           headers: {

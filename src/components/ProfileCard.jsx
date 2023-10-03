@@ -4,7 +4,7 @@ import Dog3 from "../assets/dog3.png";
 import { TbEdit } from "react-icons/tb";
 import { TbEditOff } from "react-icons/tb";
 import React, { useState, useEffect } from "react";
-import AddressAutofill from "./AddressAutofill";
+import AddressAutofill from "./AddressAutofill.jsx";
 
 export default function ProfileCard(props) {
   const { userData, setUserData } = props;
@@ -38,7 +38,7 @@ export default function ProfileCard(props) {
     const accessToken = localStorage.getItem("access-token");
 
     try {
-      const response = await fetch("http://localhost:3000/user", {
+      const response = await fetch("https://dogwalking-api.onrender.com/user", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
