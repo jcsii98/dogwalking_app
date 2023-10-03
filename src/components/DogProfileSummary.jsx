@@ -74,19 +74,16 @@ export default function DogProfileSummary(props) {
       setMessage(`Creating Profile for ${dogData.name}`);
       setErrors();
       try {
-        const response = await fetch(
-          "https://dogwalking-api.onrender.com/dog_profiles",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              uid: uid,
-              client: client,
-              "access-token": accessToken,
-            },
-            body: JSON.stringify({ dog_profile: dogData }),
-          }
-        );
+        const response = await fetch("http://localhost:3000/dog_profiles", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            uid: uid,
+            client: client,
+            "access-token": accessToken,
+          },
+          body: JSON.stringify({ dog_profile: dogData }),
+        });
         if (!response.ok) {
           const data = await response.json(); // Get the JSON data from the response
           setMessage();
@@ -118,7 +115,7 @@ export default function DogProfileSummary(props) {
       setMessage(`Updating Profile for ${dogId}`);
       try {
         const response = await fetch(
-          `https://dogwalking-api.onrender.com/dog_profiles/${dogId}`,
+          `http://localhost:3000/dog_profiles/${dogId}`,
           {
             method: "PATCH",
             headers: {

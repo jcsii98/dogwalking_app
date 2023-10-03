@@ -20,18 +20,15 @@ export default function DashPage(props) {
     const client = localStorage.getItem("client");
     const accessToken = localStorage.getItem("access-token");
     try {
-      const response = await fetch(
-        "https://dogwalking-api.onrender.com/dog_profiles",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            uid: uid,
-            client: client,
-            "access-token": accessToken,
-          },
-        }
-      );
+      const response = await fetch("http://localhost:3000/dog_profiles", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          uid: uid,
+          client: client,
+          "access-token": accessToken,
+        },
+      });
       const data = await response.json();
 
       console.log(data);
