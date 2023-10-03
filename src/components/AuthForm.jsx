@@ -74,6 +74,7 @@ export default function AuthForm(props) {
         const data = await response.json();
         console.log(data);
         if (data.success == false) {
+          setMessage("");
           setError(data.errors);
           console.log(data.errors);
         } else {
