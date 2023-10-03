@@ -65,43 +65,41 @@ export default function Root() {
       ) : (
         <>
           <div className="bg-[#f4f2f3] w-screen h-screen overflow-hidden">
-            <div className="w-full h-full flex flex-col justify-center items-center">
-              <HeaderNav
-                setIsLoggedIn={setIsLoggedIn}
-                isLoggedIn={isLoggedIn}
-                setShowForm={setShowForm}
-                setActiveNavTab={setActiveNavTab}
-              />
-              {isLoggedIn ? (
-                <>
-                  {activeNavTab == 1 && (
-                    <>
-                      <DashPage userData={userData} />
-                    </>
-                  )}
-                  {activeNavTab == 2 && (
-                    <>
-                      <MyAccount
-                        setUserData={setUserData}
-                        userData={userData}
-                        setIsLoggedIn={setIsLoggedIn}
-                      />
-                    </>
-                  )}
-                </>
-              ) : (
-                <>
-                  <HomePage
-                    showForm={showForm}
-                    setShowForm={setShowForm}
-                    userData={userData}
-                    setUserData={setUserData}
-                    setIsLoggedIn={setIsLoggedIn}
-                    isLoggedIn={isLoggedIn}
-                  />
-                </>
-              )}
-            </div>
+            <HeaderNav
+              setIsLoggedIn={setIsLoggedIn}
+              isLoggedIn={isLoggedIn}
+              setShowForm={setShowForm}
+              setActiveNavTab={setActiveNavTab}
+            />
+            {isLoggedIn ? (
+              <>
+                {activeNavTab == 1 && (
+                  <>
+                    <DashPage userData={userData} />
+                  </>
+                )}
+                {activeNavTab == 2 && (
+                  <>
+                    <MyAccount
+                      setUserData={setUserData}
+                      userData={userData}
+                      setIsLoggedIn={setIsLoggedIn}
+                    />
+                  </>
+                )}
+              </>
+            ) : (
+              <>
+                <HomePage
+                  showForm={showForm}
+                  setShowForm={setShowForm}
+                  userData={userData}
+                  setUserData={setUserData}
+                  setIsLoggedIn={setIsLoggedIn}
+                  isLoggedIn={isLoggedIn}
+                />
+              </>
+            )}
           </div>
         </>
       )}

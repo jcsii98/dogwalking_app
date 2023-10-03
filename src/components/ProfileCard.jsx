@@ -73,103 +73,118 @@ export default function ProfileCard(props) {
 
   return (
     <>
-      <div className="flex justify-between space-x-[100px]">
-        <div className="w-[330px] bg-white rounded-md p-6">
-          <div className="flex items-start justify-between font-medium text-md text-slate-700 pb-4 border-b-[1px]">
-            <div className="flex items-center">
-              <img
-                className="place-self-center w-14 h-14 rounded-full mr-4"
-                src={UserPng}
-                alt="Profile"
-              />
-              <div className="text-lg font-medium">{userData.name}</div>
-              {userData.status == "approved" && (
-                <>
-                  <img className="ml-4 w-3 h-3 place-self-center" src={Paw} />
-                </>
-              )}
-            </div>
-            {isEditing ? (
-              <TbEditOff className="cursor-pointer" onClick={toggleIsEditing} />
-            ) : (
-              <TbEdit onClick={toggleIsEditing} className="cursor-pointer" />
-            )}
-          </div>
-          <div className="pt-4">
-            <div className="text-base font-medium text-slate-600">Email</div>
-            <div className="text-base font-medium">{userData.email}</div>
-          </div>
-          <div className="pt-4">
-            <div className="text-base font-medium text-slate-600">Contact</div>
-            <div className="text-base font-medium">0919 509 3049</div>
-          </div>
-          <div className="pt-4">
-            <div className="text-lg font-medium text-slate-600">Address</div>
-          </div>
-          {isEditing ? (
-            <>
-              <div className="pt-2">
-                <div className="pb-2 text-base font-medium text-slate-600">
-                  Street Address
-                </div>
-                <div className="w-full">
-                  <AddressAutofill
-                    onSelected={handleAddressSelected}
-                    onInputChange={handleInputChange}
+      <div className="max-w-screen-xl w-full flex justify-between space-x-20">
+        <div className="basis-1/3">
+          <div className="bg-white rounded-md p-6">
+            <div className="font-medium text-md text-slate-700 pb-4 border-b-[1px]">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <img
+                    className="place-self-center w-14 h-14 rounded-full mr-4"
+                    src={UserPng}
+                    alt="Profile"
                   />
+                  <div className="text-lg font-medium">{userData.name}</div>
+                  {userData.status == "approved" && (
+                    <img className="ml-4 w-3 h-3 place-self-center" src={Paw} />
+                  )}
                 </div>
-                {message && <p className="text-slate-500">{message}</p>}
-                {error && <p className="text-red-500">{error}</p>}
-                <div className="flex justify-between">
-                  <button
-                    onClick={toggleIsEditing}
-                    className="font-medium hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
-                  >
-                    Go Back
-                  </button>
-                  {showUpdate && (
-                    <>
-                      <button
-                        onClick={updateAddress}
-                        className="font-medium hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
-                      >
-                        Update
-                      </button>
-                    </>
+
+                <div className="">
+                  {isEditing ? (
+                    <TbEditOff
+                      className="cursor-pointer"
+                      onClick={toggleIsEditing}
+                    />
+                  ) : (
+                    <TbEdit
+                      onClick={toggleIsEditing}
+                      className="cursor-pointer"
+                    />
                   )}
                 </div>
               </div>
-            </>
-          ) : (
-            <>
-              <div className="pt-2">
-                <div className="text-base font-medium text-slate-600">
-                  Street Address
-                </div>
-                <div className="text-base font-medium">
-                  {userData.street_address || "N/A"}
-                </div>
+            </div>
+            <div className="pt-4">
+              <div className="text-base font-medium text-slate-600">Email</div>
+              <div className="text-base font-medium">{userData.email}</div>
+            </div>
+            <div className="pt-4">
+              <div className="text-base font-medium text-slate-600">
+                Contact
               </div>
-            </>
-          )}
+              <div className="text-base font-medium">0919 509 3049</div>
+            </div>
+            <div className="pt-4">
+              <div className="text-lg font-medium text-slate-600">Address</div>
+            </div>
+            {isEditing ? (
+              <>
+                <div className="pt-2">
+                  <div className="text-base font-medium text-slate-600">
+                    Street Address
+                  </div>
+                  <div className="w-full">
+                    <AddressAutofill
+                      onSelected={handleAddressSelected}
+                      onInputChange={handleInputChange}
+                    />
+                  </div>
+                  {message && <p className="text-slate-500">{message}</p>}
+                  {error && <p className="text-red-500">{error}</p>}
+                  <div className="flex justify-between">
+                    <button
+                      onClick={toggleIsEditing}
+                      className="font-medium hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
+                    >
+                      Go Back
+                    </button>
+                    {showUpdate && (
+                      <>
+                        <button
+                          onClick={updateAddress}
+                          className="font-medium hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
+                        >
+                          Update
+                        </button>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="pt-2">
+                  <div className="text-base font-medium text-slate-600">
+                    Street Address
+                  </div>
+                  <div className="text-base font-medium">
+                    {userData.street_address || "N/A"}
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
         </div>
-        <div className="w-[1000px] max-h-[300px] bg-white rounded-md p-6 px-10">
-          {userData.status == "pending" && (
-            <>
-              <div className="pb-10 text-6xl font-black">Oops!</div>
-              <div className="flex items-center space-x-4">
-                <img src={Dog3} className="h-40" />
-                <div className="text-lg font-normal p-4 bg-slate-200 rounded-md">
-                  Looks like your profile is not yet verified. To complete the
-                  verification process and ensure a smooth experience, please
-                  update your profile with the necessary information, including
-                  your address. This will help us verify your account and
-                  provide you with the best possible service. Thank you for your
-                  cooperation!
+        <div className="basis-2/3 flex flex-col">
+          <div className="bg-white rounded-md p-6">
+            {userData.status == "pending" && (
+              <>
+                <div className="flex flex-col justify-center items-center space-x-4">
+                  <div className="pb-10 pl-4 text-6xl font-black">Oops!</div>
+                  <img src={Dog3} className="pb-4 h-40" />
+                  <div className="text-lg font-normal p-4 bg-slate-200 rounded-md">
+                    Looks like your profile is not yet verified. To complete the
+                    verification process and ensure a smooth experience, please
+                    update your profile with the necessary information,
+                    including your address. This will help us verify your
+                    account and provide you with the best possible service.
+                    Thank you for your cooperation!
+                  </div>
                 </div>
-              </div>
-            </>
-          )}
+              </>
+            )}
+          </div>
         </div>
       </div>
     </>

@@ -57,15 +57,15 @@ export default function DashPage(props) {
   }, []);
   return (
     <>
-      <div className="w-[1400px] h-full">
-        {isLoading ? (
-          <>
-            {/* <LoadingComponent /> */}
-            <LoadingComponent />
-          </>
-        ) : (
-          <>
-            <div className="flex justify-between">
+      <div className="py-6 px-8 flex justify-center">
+        <div className="max-w-screen-xl w-full flex justify-between space-x-20">
+          {isLoading ? (
+            <>
+              {/* <LoadingComponent /> */}
+              <LoadingComponent />
+            </>
+          ) : (
+            <>
               {/* dashboard for dog walkers */}
               {userData.kind == 1 && <></>}
 
@@ -74,16 +74,16 @@ export default function DashPage(props) {
                 <>
                   {dashTab == 1 && (
                     <>
-                      <div className="w-[330px]">
+                      <div id="container-1" className="basis-1/3">
                         <div className="bg-white rounded-md p-6">
                           {/* other dashboard stuff here */}
                         </div>
                       </div>
-                      <div className="w-[1000px] flex flex-col">
+                      <div id="container-2" className="basis-2/3 flex flex-col">
                         {/* accordion */}
                         <div className="">
                           <div
-                            className="group flex flex-col bg-white rounded-md p-6 mb-[40px]"
+                            className="group bg-white rounded-md p-6 mb-[40px]"
                             tabIndex="0"
                             onClick={() => setIsOpen(!isOpen)} // Toggle the isOpen state
                           >
@@ -155,9 +155,9 @@ export default function DashPage(props) {
                   )}
                 </>
               )}
-            </div>
-          </>
-        )}
+            </>
+          )}
+        </div>
       </div>
     </>
   );

@@ -53,23 +53,16 @@ export default function MyAccount(props) {
   }, []);
   return (
     <>
-      <div className="w-[1400px] h-full">
-        {isLoading ? (
-          <>
+      <div className="py-6 px-8 flex justify-center">
+        <div className="max-w-screen-xl w-full flex justify-between space-x-20">
+          {" "}
+          {/* Added max-width, margin auto and padding */}
+          {isLoading ? (
             <LoadingComponent />
-          </>
-        ) : (
-          <>
-            {/* account page for dog walkers */}
-            {userData.kind == 1 && <></>}
-            {/* account page for dog owners */}
-            {userData.kind == 2 && (
-              <>
-                <ProfileCard userData={userData} setUserData={setUserData} />
-              </>
-            )}
-          </>
-        )}
+          ) : userData.kind == 2 ? (
+            <ProfileCard userData={userData} setUserData={setUserData} />
+          ) : null}
+        </div>
       </div>
     </>
   );

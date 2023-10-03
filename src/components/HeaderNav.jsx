@@ -15,11 +15,11 @@ export default function HeaderNav(props) {
 
   return (
     <>
-      <div className="py-6 flex justify-center">
-        <div className="w-[1400px] flex justify-between items-center">
+      <div className="py-6 px-8 flex justify-center">
+        <div className="max-w-screen-xl w-full flex justify-between items-center">
           <div className="text-black font-extrabold text-3xl">Fido.</div>
           <nav>
-            <ul className="text-md font-medium xl flex space-x-12 items-center">
+            <ul className="text-md font-medium flex space-x-12 items-center">
               {!isLoggedIn && (
                 <>
                   <li>

@@ -4,7 +4,7 @@ import DogPng from "../assets/dog.png";
 export default function LoadingComponent() {
   return (
     <>
-      <div className="bg-white rounded-md p-6 flex items-center justify-center">
+      <div className="bg-white rounded-md p-6 flex items-center justify-center w-full">
         <div className="relative h-[200px] w-[200px]">
           <AiOutlineLoading
             style={{ color: "#94a3b8" }}
