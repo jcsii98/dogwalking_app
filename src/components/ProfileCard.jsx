@@ -4,7 +4,7 @@ import Dog3 from "../assets/dog3.png";
 import { TbEdit } from "react-icons/tb";
 import { TbEditOff } from "react-icons/tb";
 import React, { useState, useEffect } from "react";
-import AddressAutofill from "./AddressAutoFill";
+import AddressAutofill from "./AddressAutofill";
 
 export default function ProfileCard(props) {
   const { userData, setUserData } = props;
