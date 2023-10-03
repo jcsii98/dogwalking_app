@@ -16,6 +16,7 @@ export default function ProfileCard(props) {
   const [showUpdate, setShowUpdate] = useState(false);
 
   const toggleIsEditing = () => {
+    setShowUpdate(false);
     setMessage("");
     setIsEditing((prev) => !prev);
   };
@@ -152,15 +153,13 @@ export default function ProfileCard(props) {
             </>
           )}
         </div>
-        <div className="w-[1000px] bg-white rounded-md p-6">
+        <div className="w-[1000px] max-h-[300px] bg-white rounded-md p-6 px-10">
           {userData.status == "pending" && (
             <>
-              <div className="pb-10 text-3xl font-bold">
-                Hi, {userData.name}!
-              </div>
+              <div className="pb-10 text-6xl font-black">Oops!</div>
               <div className="flex items-center space-x-4">
                 <img src={Dog3} className="h-40" />
-                <div className="text-lg font-normal">
+                <div className="text-lg font-normal p-4 bg-slate-200 rounded-md">
                   Looks like your profile is not yet verified. To complete the
                   verification process and ensure a smooth experience, please
                   update your profile with the necessary information, including

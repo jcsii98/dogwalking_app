@@ -11,6 +11,7 @@ const AddressAutofill = ({ onSelected, onInputChange }) => {
   useEffect(() => {
     const geocoder = new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
+      countries: "PH",
       // ... other options
     });
 
