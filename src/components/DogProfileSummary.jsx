@@ -1,7 +1,18 @@
 import React, { useState, useEffect } from "react";
 
 export default function DogProfileSummary(props) {
-  const { dogData, setActiveTab, setDogData, setCurrentQuestionIndex } = props;
+  const {
+    setShowSideBtns,
+    checkDogProfiles,
+    dogData,
+    setActiveTab,
+    setDogData,
+    setCurrentQuestionIndex,
+    setDashTab,
+    setDogProfile,
+    dogUpdate,
+    dogId,
+  } = props;
   const [errors, setErrors] = useState([]);
   const [message, setMessage] = useState();
   const [submitErrors, setSubmitErrors] = useState();
@@ -59,38 +70,90 @@ export default function DogProfileSummary(props) {
     const uid = localStorage.getItem("uid");
     const client = localStorage.getItem("client");
     const accessToken = localStorage.getItem("access-token");
-    setMessage(`Creating Profile for ${dogData.name}`);
-    try {
-      const response = await fetch("http://localhost:3000/dog_profiles", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          uid: uid,
-          client: client,
-          "access-token": accessToken,
-        },
-        body: JSON.stringify({ dog_profile: dogData }),
-      });
-      if (!response.ok) {
-        const data = await response.json(); // Get the JSON data from the response
-        setMessage();
-        if (data.errors) {
-          throw new Error(data.errors.name[0]); // Extract the name error message
-        } else {
-          throw new Error(`Server responded with a ${response.status} status.`);
+    if (!dogUpdate) {
+      setMessage(`Creating Profile for ${dogData.name}`);
+      setErrors();
+      try {
+        const response = await fetch("http://localhost:3000/dog_profiles", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            uid: uid,
+            client: client,
+            "access-token": accessToken,
+          },
+          body: JSON.stringify({ dog_profile: dogData }),
+        });
+        if (!response.ok) {
+          const data = await response.json(); // Get the JSON data from the response
+          setMessage();
+          checkDogProfiles();
+          if (data.errors) {
+            throw new Error(data.errors.name[0]); // Extract the name error message
+          } else {
+            throw new Error(
+              `Server responded with a ${response.status} status.`
+            );
+          }
         }
+        const data = await response.json();
+        if (data.name == dogData.name) {
+          console.log("Success:", data);
+          checkDogProfiles();
+          setCurrentQuestionIndex(0);
+          setDogProfile(data);
+          setActiveTab(1);
+          setDashTab(2);
+        }
+      } catch (error) {
+        checkDogProfiles();
+        setMessage();
+        setSubmitErrors(error.message); // Store the extracted error message
+        console.error("Error:", error);
       }
-      const data = await response.json();
-      if (data.name == dogData.name) {
-        console.log("Success:", data);
-        setCurrentQuestionIndex(0);
-
-        setActiveTab(1);
+    } else {
+      setMessage(`Updating Profile for ${dogId}`);
+      try {
+        const response = await fetch(
+          `http://localhost:3000/dog_profiles/${dogId}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              uid: uid,
+              client: client,
+              "access-token": accessToken,
+            },
+            body: JSON.stringify({ dog_profile: dogData }),
+          }
+        );
+        if (!response.ok) {
+          const data = await response.json();
+          setMessage();
+          if (data.errors) {
+            throw new Error(data.errors[0]);
+          } else {
+            throw new Error(
+              `Server responded with a ${response.status} status.`
+            );
+          }
+        }
+        const data = await response.json();
+        if (data.data.name == dogData.name) {
+          console.log("Success:", data.data);
+          setShowSideBtns(true);
+          checkDogProfiles();
+          setCurrentQuestionIndex(0);
+          setDogProfile(data.data);
+          setActiveTab(1);
+          setDashTab(2);
+          setMessage();
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        setSubmitErrors(error.message);
+        setMessage();
       }
-    } catch (error) {
-      setMessage();
-      setSubmitErrors(error.message); // Store the extracted error message
-      console.error("Error:", error);
     }
   }
 

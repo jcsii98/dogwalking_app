@@ -1,9 +1,17 @@
 import DogPng from "../assets/dog.png";
 
-export default function DogProfileCard({ dog }) {
+export default function DogProfileCard(props) {
+  const { key, dog, setDogProfile, setDashTab } = props;
+
+  const handleClick = () => {
+    setDogProfile(dog);
+    setDashTab(2);
+  };
+
   return (
     <>
       <div
+        onClick={handleClick}
         className="cursor-pointer font-medium text-sm flex-shrink-0 flex flex-col justify-center items-center space-y-4"
         key={dog.id}
       >

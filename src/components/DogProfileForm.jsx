@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
 import DogProfileSummary from "./DogProfileSummary";
 
-export default function DogProfileForm() {
+export default function DogProfileForm(props) {
+  const {
+    setShowSideBtns,
+    setDashTab,
+    setDogProfile,
+    dogUpdate,
+    dogId,
+    checkDogProfiles,
+  } = props;
   const [dogData, setDogData] = useState({});
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [inputValue, setInputValue] = useState("");
-  const [showSummary, setShowSummary] = useState(false);
   const [activeTab, setActiveTab] = useState(1);
 
   const questions = [
@@ -76,11 +83,13 @@ export default function DogProfileForm() {
   const handleBack = () => {
     // Decrement the question index
     if (currentQuestionIndex == 0) {
+      if (setShowSideBtns) {
+        setShowSideBtns(true);
+      }
       setActiveTab(1);
       setDogData({});
     } else {
       setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
-      setShowSummary(false);
       // Set the inputValue to the previously entered data
       switch (currentQuestionIndex - 1) {
         case 0:
@@ -106,6 +115,10 @@ export default function DogProfileForm() {
   };
 
   const handleBegin = () => {
+    if (setShowSideBtns) {
+      // Check if setShowSideBtns is defined
+      setShowSideBtns(false);
+    }
     setDogData({});
     setInputValue("");
     setActiveTab(2);
@@ -119,7 +132,7 @@ export default function DogProfileForm() {
               onClick={handleBegin}
               className="font-medium hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
             >
-              Add Dog Profile
+              {dogUpdate ? <>Edit Dog Profile</> : <>Add Dog Profile</>}
             </button>
           </>
         )}
@@ -167,12 +180,17 @@ export default function DogProfileForm() {
         {activeTab == 3 && (
           <>
             <DogProfileSummary
+              setShowSideBtns={setShowSideBtns}
+              checkDogProfiles={checkDogProfiles}
+              dogUpdate={dogUpdate}
+              dogId={dogId}
               setActiveTab={setActiveTab}
               setCurrentQuestionIndex={setCurrentQuestionIndex}
               setDogData={setDogData}
               currentQuestionIndex={currentQuestionIndex}
-              setShowSummary={setShowSummary}
               dogData={dogData}
+              setDashTab={setDashTab}
+              setDogProfile={setDogProfile}
             />
           </>
         )}
