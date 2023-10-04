@@ -57,101 +57,102 @@ export default function DogProfile(props) {
   };
   return (
     <>
-      <div className="w-[1400px] h-full">
-        <div className="flex justify-between space-x-[100px]">
-          <div className="w-[330px]">
-            <div className="bg-white rounded-md p-6">
-              {" "}
-              <div className="flex items-center">
-                <div className="bg-slate-400 rounded-full w-20 h-20 flex items-center justify-center">
-                  <img
-                    className="w-14 h-14 rounded-full"
-                    src={DogPng}
-                    alt="Profile"
-                  />
-                </div>
-                <div className="ml-6 text-slate-700 font-bold text-2xl">
-                  {dogName}
-                </div>
-              </div>
-              <div className="pt-8">
-                <div className="text-xl font-medium text-slate-600">Age</div>
-                <div className="text-xl font-medium">{dogAge}</div>
-              </div>
-              <div className="pt-8">
-                <div className="text-xl font-medium text-slate-600">
-                  Weight (lbs)
-                </div>
-                <div className="text-xl font-medium">{dogWeight}</div>
-              </div>
-              <div className="pt-8">
-                <div className="text-xl font-medium text-slate-600">Breed</div>
-                <div className="text-xl font-medium">{dogBreed}</div>
-              </div>
-              <div className="pt-8">
-                <div className="text-xl font-medium text-slate-600">Sex</div>
-                <div className="text-xl font-medium">{dogSex}</div>
-              </div>
-            </div>
+      <div className="flex flex-col space-y-10 items-center justify-between bg-white rounded-md p-6 border-slate-300 border-[1px]">
+        <div className="flex flex-col items-center">
+          <div className="text-slate-700 font-bold text-6xl pb-8">
+            {dogName}
           </div>
-          <div className="w-[1000px] bg-white rounded-md p-6 flex justify-center items-center space-x-10">
-            {showConfirm ? (
-              <>
-                <div className="flex flex-col justify-center items-center">
-                  <div className="pb-6 font-medium text-2xl">
-                    You are about to delete {dogName}'s profile. Are you sure?
-                  </div>
-                  <div className="flex justify-center space-x-10">
-                    <button
-                      onClick={() => {
-                        setShowConfirm(false);
-                      }}
-                      className="font-medium hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
-                    >
-                      Go Back
-                    </button>
-                    <button
-                      onClick={handleDelete}
-                      className="font-medium hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
-                    >
-                      Yes
-                    </button>
-                  </div>
+          <div className="bg-slate-400 rounded-full">
+            <img
+              className="place-self-center w-20 h-20 rounded-full"
+              src={DogPng}
+              alt="Profile"
+            />
+          </div>
+        </div>
+        <table class="border-separate border-spacing-4">
+          <thead>
+            <tr>
+              <th class="px-4">Age</th>
+              <th class="px-4">Weight (lbs)</th>
+              <th class="px-4">Breed</th>
+              <th class="px-4">Sex</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="border border-slate-600 py-2 px-4 rounded-md text-center">
+                {dogAge}
+              </td>
+              <td class="border border-slate-600 py-2 px-4 rounded-md text-center">
+                {dogWeight}
+              </td>
+              <td class="border border-slate-600 py-2 px-4 rounded-md text-center">
+                {dogBreed}
+              </td>
+              <td class="border border-slate-600 py-2 px-4 rounded-md text-center">
+                {dogSex}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div className="bg-white rounded-md p-6 border-slate-300 border-[1px] flex justify-center space-x-4">
+          {showConfirm ? (
+            <>
+              <div className="flex flex-col justify-center items-center">
+                <div className="pb-6 font-medium text-2xl">
+                  You are about to delete {dogName}'s profile. Are you sure?
                 </div>
-              </>
-            ) : (
-              <>
-                {showSideBtns && (
-                  <>
-                    <button
-                      onClick={handleBack}
-                      className="font-medium hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
-                    >
-                      Go Back
-                    </button>
-                  </>
-                )}
+                <div className="flex justify-center space-x-10">
+                  <button
+                    onClick={() => {
+                      setShowConfirm(false);
+                    }}
+                    className="font-medium hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
+                  >
+                    Go Back
+                  </button>
+                  <button
+                    onClick={handleDelete}
+                    className="font-medium hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
+                  >
+                    Yes
+                  </button>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              {showSideBtns && (
+                <>
+                  <button
+                    onClick={handleBack}
+                    className="font-medium hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
+                  >
+                    Go Back
+                  </button>
+                </>
+              )}
 
-                <DogProfileForm
-                  checkDogProfiles={checkDogProfiles}
-                  setDogProfile={setDogProfile}
-                  setShowSideBtns={setShowSideBtns}
-                  dogUpdate={true}
-                  dogId={dogId}
-                />
-                {showSideBtns && (
-                  <>
-                    <button
-                      onClick={confirmDelete}
-                      className="font-medium hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
-                    >
-                      Delete
-                    </button>
-                  </>
-                )}
-              </>
-            )}
-          </div>
+              <DogProfileForm
+                checkDogProfiles={checkDogProfiles}
+                setDogProfile={setDogProfile}
+                setShowSideBtns={setShowSideBtns}
+                dogUpdate={true}
+                dogId={dogId}
+              />
+              {showSideBtns && (
+                <>
+                  <button
+                    onClick={confirmDelete}
+                    className="font-medium hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
+                  >
+                    Delete
+                  </button>
+                </>
+              )}
+            </>
+          )}
         </div>
       </div>
     </>

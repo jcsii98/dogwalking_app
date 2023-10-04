@@ -159,9 +159,9 @@ export default function DogProfileSummary(props) {
   return (
     <>
       <div className="w-full h-full">
-        <div className="text-3xl font-bold pb-4">Dog Profile Summary</div>
-        <div className="flex">
-          <div className="w-[50%] pr-6">
+        <div className="text-3xl font-bold pb-4">Profile Summary</div>
+        <div className="flex space-x-4">
+          <div className="w-[50%]">
             <div className="pb-4">
               <div className="font-medium pb-2 text-slate-700">Name</div>
               <div className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2">
@@ -224,7 +224,7 @@ export default function DogProfileSummary(props) {
             ))}
           {submitErrors && <p className="text-red-500">{submitErrors}</p>}
         </div>
-        <div className="flex justify-center space-x-12">
+        <div className="flex justify-center space-x-4">
           <button
             className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
             onClick={() => {

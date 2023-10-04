@@ -5,6 +5,7 @@ import { TbEdit } from "react-icons/tb";
 import { TbEditOff } from "react-icons/tb";
 import React, { useState, useEffect } from "react";
 import AddressAutofill from "./AddressAutofill.jsx";
+import ResourceRestricted from "./ResourceRestricted";
 
 export default function ProfileCard(props) {
   const { userData, setUserData } = props;
@@ -76,7 +77,7 @@ export default function ProfileCard(props) {
       <div className="max-w-screen-xl w-full flex justify-between space-x-20">
         <div className="basis-1/3">
           <div className="bg-white rounded-md p-6 border-slate-300 border-[1px]">
-            <div className="font-medium text-md text-slate-700 pb-4 border-b-[1px]">
+            <div className="font-medium text-md text-slate-700 pb-6 border-b-[1px]">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <img
@@ -114,9 +115,6 @@ export default function ProfileCard(props) {
                 Contact
               </div>
               <div className="text-base font-medium">0919 509 3049</div>
-            </div>
-            <div className="pt-4">
-              <div className="text-lg font-medium text-slate-600">Address</div>
             </div>
             {isEditing ? (
               <>
@@ -167,26 +165,11 @@ export default function ProfileCard(props) {
           </div>
         </div>
         <div className="basis-2/3 flex flex-col">
-          <div className="bg-white rounded-md p-6 border-slate-300 border-[1px]">
-            {userData.status == "pending" && (
-              <>
-                <div className="flex flex-col justify-center items-center">
-                  <div className="pb-10 pl-2 text-6xl font-black text-slate-500">
-                    Oops!
-                  </div>
-                  <img src={Dog3} className="pb-4 h-40" />
-                  <div className="text-white text-lg font-normal p-4 bg-slate-400 rounded-md">
-                    Looks like your profile is not yet verified. To complete the
-                    verification process and ensure a smooth experience, please
-                    update your profile with the necessary information,
-                    including your address. This will help us verify your
-                    account and provide you with the best possible service.
-                    Thank you for your cooperation!
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
+          {userData.status == "pending" && (
+            <>
+              <ResourceRestricted resource={false} />
+            </>
+          )}
         </div>
       </div>
     </>
