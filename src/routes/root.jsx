@@ -18,17 +18,14 @@ export default function Root() {
 
     if (uid && client && accessToken) {
       try {
-        const response = await fetch(
-          "https://dogwalking-api.onrender.com/user/",
-          {
-            method: "GET",
-            headers: {
-              uid: uid,
-              client: client,
-              "access-token": accessToken,
-            },
-          }
-        );
+        const response = await fetch("http://localhost:3000/user/", {
+          method: "GET",
+          headers: {
+            uid: uid,
+            client: client,
+            "access-token": accessToken,
+          },
+        });
         if (response.ok) {
           const responseData = await response.json();
           console.log(responseData);
@@ -64,8 +61,9 @@ export default function Root() {
         </>
       ) : (
         <>
-          <div className="bg-[#f4f2f3] w-screen h-screen overflow-hidden">
+          <div className="flex flex-col bg-[#f4f2f3] w-screen h-screen overflow-hidden">
             <HeaderNav
+              userData={userData}
               setIsLoggedIn={setIsLoggedIn}
               isLoggedIn={isLoggedIn}
               setShowForm={setShowForm}
@@ -73,20 +71,22 @@ export default function Root() {
             />
             {isLoggedIn ? (
               <>
-                {activeNavTab == 1 && (
-                  <>
-                    <DashPage userData={userData} />
-                  </>
-                )}
-                {activeNavTab == 2 && (
-                  <>
-                    <MyAccount
-                      setUserData={setUserData}
-                      userData={userData}
-                      setIsLoggedIn={setIsLoggedIn}
-                    />
-                  </>
-                )}
+                <div className="flex-grow">
+                  {activeNavTab == 2 && (
+                    <>
+                      <DashPage userData={userData} />
+                    </>
+                  )}
+                  {activeNavTab == 1 && (
+                    <>
+                      <MyAccount
+                        setUserData={setUserData}
+                        userData={userData}
+                        setIsLoggedIn={setIsLoggedIn}
+                      />
+                    </>
+                  )}
+                </div>
               </>
             ) : (
               <>

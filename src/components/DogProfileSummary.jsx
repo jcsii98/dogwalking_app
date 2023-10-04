@@ -17,8 +17,6 @@ export default function DogProfileSummary(props) {
   const [message, setMessage] = useState();
   const [submitErrors, setSubmitErrors] = useState();
 
-  const isValidName = (name) =>
-    typeof name === "string" && name.trim().length >= 2;
   const isValidAge = (age) => {
     const parsedAge = parseInt(age, 10);
     return Number.isInteger(parsedAge) && parsedAge > 1 && parsedAge < 30;
@@ -31,12 +29,6 @@ export default function DogProfileSummary(props) {
   };
   const isValidSex = (sex) => {
     return sex.toLowerCase() === "male" || sex.toLowerCase() === "female";
-  };
-
-  const validateName = () => {
-    if (!isValidName(dogData.name)) {
-      setErrors((prevErrors) => [...prevErrors, "Invalid name!"]);
-    }
   };
 
   const validateAge = () => {
@@ -70,37 +62,34 @@ export default function DogProfileSummary(props) {
     const uid = localStorage.getItem("uid");
     const client = localStorage.getItem("client");
     const accessToken = localStorage.getItem("access-token");
+    // for creating profiles
     if (!dogUpdate) {
       setMessage(`Creating Profile for ${dogData.name}`);
       setErrors();
       try {
-        const response = await fetch(
-          "https://dogwalking-api.onrender.com/dog_profiles",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              uid: uid,
-              client: client,
-              "access-token": accessToken,
-            },
-            body: JSON.stringify({ dog_profile: dogData }),
-          }
-        );
+        const response = await fetch("http://localhost:3000/dog_profiles", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            uid: uid,
+            client: client,
+            "access-token": accessToken,
+          },
+          body: JSON.stringify({ dog_profile: dogData }),
+        });
+
+        const data = await response.json();
         if (!response.ok) {
-          const data = await response.json(); // Get the JSON data from the response
-          setMessage();
-          checkDogProfiles();
+          setMessage("");
           if (data.errors) {
-            throw new Error(data.errors.name[0]); // Extract the name error message
+            throw new Error(data.errors[0]);
           } else {
             throw new Error(
               `Server responded with a ${response.status} status.`
             );
           }
         }
-        const data = await response.json();
-        if (data.name == dogData.name) {
+        if (data.name === dogData.name) {
           console.log("Success:", data);
           checkDogProfiles();
           setCurrentQuestionIndex(0);
@@ -110,15 +99,17 @@ export default function DogProfileSummary(props) {
         }
       } catch (error) {
         checkDogProfiles();
-        setMessage();
-        setSubmitErrors(error.message); // Store the extracted error message
+        setMessage("");
+        setSubmitErrors(error.message);
         console.error("Error:", error);
       }
+
+      // for updating profiles
     } else {
       setMessage(`Updating Profile for ${dogId}`);
       try {
         const response = await fetch(
-          `https://dogwalking-api.onrender.com/dog_profiles/${dogId}`,
+          `http://localhost:3000/dog_profiles/${dogId}`,
           {
             method: "PATCH",
             headers: {
@@ -149,7 +140,6 @@ export default function DogProfileSummary(props) {
           setCurrentQuestionIndex(0);
           setDogProfile(data.data);
           setActiveTab(1);
-          setDashTab(2);
           setMessage();
         }
       } catch (error) {
@@ -161,8 +151,7 @@ export default function DogProfileSummary(props) {
   }
 
   useEffect(() => {
-    setErrors([]); // Clear previous errors
-    validateName();
+    setErrors([]);
     validateAge();
     validateWeight();
     validateSex();
@@ -175,13 +164,7 @@ export default function DogProfileSummary(props) {
           <div className="w-[50%] pr-6">
             <div className="pb-4">
               <div className="font-medium pb-2 text-slate-700">Name</div>
-              <div
-                className={`focus:outline-none ${
-                  isValidName(dogData.name)
-                    ? "focus:border-slate-600 border-[1px] border-slate-400"
-                    : "border-red-500 border-[1px]"
-                } rounded-md w-full py-2 px-2`}
-              >
+              <div className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2">
                 {dogData.name}
               </div>
             </div>
@@ -233,11 +216,12 @@ export default function DogProfileSummary(props) {
         </div>
         <div className="flex flex-col">
           {message && <p className="text-slate-500">{message}</p>}
-          {errors.map((error, index) => (
-            <p key={index} className="text-red-500">
-              {error}
-            </p>
-          ))}
+          {errors &&
+            errors.map((error, index) => (
+              <p key={index} className="text-red-500">
+                {error}
+              </p>
+            ))}
           {submitErrors && <p className="text-red-500">{submitErrors}</p>}
         </div>
         <div className="flex justify-center space-x-12">
@@ -253,7 +237,7 @@ export default function DogProfileSummary(props) {
           <button
             className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
             type="button"
-            disabled={errors.length !== 0}
+            // disabled={errors.length !== 0}
             onClick={submitDogProfile}
           >
             Submit

@@ -1,5 +1,6 @@
 export default function HeaderNav(props) {
   const {
+    userData,
     setShowForm,
     isLoggedIn,
     setIsLoggedIn,
@@ -15,7 +16,7 @@ export default function HeaderNav(props) {
 
   return (
     <>
-      <div className="py-6 px-8 flex justify-center">
+      <div className="py-4 px-8 flex justify-center border-b-[1.5px]">
         <div className="max-w-screen-xl w-full flex justify-between items-center">
           <div className="text-black font-extrabold text-3xl">Fido.</div>
           <nav>
@@ -25,7 +26,7 @@ export default function HeaderNav(props) {
                   <li>
                     <a
                       href="#"
-                      className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
+                      className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-slate-600 py-2 my-2 rounded-lg border-slate-600 border-[1px] px-4"
                     >
                       Home
                     </a>
@@ -33,7 +34,7 @@ export default function HeaderNav(props) {
                   <li>
                     <a
                       href="#"
-                      className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
+                      className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-slate-600 py-2 my-2 rounded-lg border-slate-600 border-[1px] px-4"
                     >
                       Become a Dog Walker
                     </a>
@@ -42,7 +43,7 @@ export default function HeaderNav(props) {
                     <a
                       onClick={() => setShowForm(true)}
                       href="#"
-                      className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
+                      className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-slate-600 py-2 my-2 rounded-lg border-slate-600 border-[1px] px-4"
                     >
                       Get Started
                     </a>
@@ -51,14 +52,15 @@ export default function HeaderNav(props) {
               )}
               {isLoggedIn && (
                 <>
+                  {userData.kind == "2" && <></>}
                   <li>
                     <button
                       type="button"
                       onClick={() => {
-                        setActiveNavTab(2);
+                        setActiveNavTab(1);
                       }}
                       href="#"
-                      className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
+                      className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-slate-600 py-2 my-2 rounded-lg border-slate-600 border-[1px] px-4"
                     >
                       My Account
                     </button>
@@ -66,11 +68,11 @@ export default function HeaderNav(props) {
                   <li>
                     <button
                       onClick={() => {
-                        setActiveNavTab(1);
+                        setActiveNavTab(2);
                       }}
                       type="button"
                       href="#"
-                      className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
+                      className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-slate-600 py-2 my-2 rounded-lg border-slate-600 border-[1px] px-4"
                     >
                       Dashboard
                     </button>
@@ -79,7 +81,7 @@ export default function HeaderNav(props) {
                     <a
                       onClick={handleSignOut}
                       href="#"
-                      className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
+                      className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-slate-600 py-2 my-2 rounded-lg border-slate-600 border-[1px] px-4"
                     >
                       Sign Out
                     </a>

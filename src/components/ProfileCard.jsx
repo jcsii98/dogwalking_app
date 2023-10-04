@@ -38,7 +38,7 @@ export default function ProfileCard(props) {
     const accessToken = localStorage.getItem("access-token");
 
     try {
-      const response = await fetch("https://dogwalking-api.onrender.com/user", {
+      const response = await fetch("http://localhost:3000/user", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -75,7 +75,7 @@ export default function ProfileCard(props) {
     <>
       <div className="max-w-screen-xl w-full flex justify-between space-x-20">
         <div className="basis-1/3">
-          <div className="bg-white rounded-md p-6">
+          <div className="bg-white rounded-md p-6 border-slate-300 border-[1px]">
             <div className="font-medium text-md text-slate-700 pb-4 border-b-[1px]">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
@@ -167,13 +167,15 @@ export default function ProfileCard(props) {
           </div>
         </div>
         <div className="basis-2/3 flex flex-col">
-          <div className="bg-white rounded-md p-6">
+          <div className="bg-white rounded-md p-6 border-slate-300 border-[1px]">
             {userData.status == "pending" && (
               <>
-                <div className="flex flex-col justify-center items-center space-x-4">
-                  <div className="pb-10 pl-4 text-6xl font-black">Oops!</div>
+                <div className="flex flex-col justify-center items-center">
+                  <div className="pb-10 pl-2 text-6xl font-black text-slate-500">
+                    Oops!
+                  </div>
                   <img src={Dog3} className="pb-4 h-40" />
-                  <div className="text-lg font-normal p-4 bg-slate-200 rounded-md">
+                  <div className="text-white text-lg font-normal p-4 bg-slate-400 rounded-md">
                     Looks like your profile is not yet verified. To complete the
                     verification process and ensure a smooth experience, please
                     update your profile with the necessary information,

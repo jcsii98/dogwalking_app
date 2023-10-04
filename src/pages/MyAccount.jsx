@@ -13,17 +13,14 @@ export default function MyAccount(props) {
     const accessToken = localStorage.getItem("access-token");
     if (uid && client && accessToken) {
       try {
-        const response = await fetch(
-          "https://dogwalking-api.onrender.com/user/",
-          {
-            method: "GET",
-            headers: {
-              uid: uid,
-              client: client,
-              "access-token": accessToken,
-            },
-          }
-        );
+        const response = await fetch("http://localhost:3000/user/", {
+          method: "GET",
+          headers: {
+            uid: uid,
+            client: client,
+            "access-token": accessToken,
+          },
+        });
         if (response.ok) {
           const responseData = await response.json();
           console.log(responseData);
@@ -53,17 +50,19 @@ export default function MyAccount(props) {
   }, []);
   return (
     <>
-      <div className="py-6 px-8 flex justify-center">
-        <div className="max-w-screen-xl w-full flex justify-between space-x-20">
-          {" "}
-          {/* Added max-width, margin auto and padding */}
-          {isLoading ? (
-            <LoadingComponent />
-          ) : userData.kind == 2 ? (
-            <ProfileCard userData={userData} setUserData={setUserData} />
-          ) : null}
+      {isLoading ? (
+        <LoadingComponent />
+      ) : (
+        <div className="py-6 px-8 flex justify-center">
+          <div className="max-w-screen-xl w-full flex justify-between space-x-20">
+            {userData.kind == 2 && (
+              <>
+                <ProfileCard userData={userData} setUserData={setUserData} />
+              </>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

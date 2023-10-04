@@ -4,6 +4,7 @@ import { BsChevronDown } from "react-icons/bs";
 import DogProfileCard from "../components/DogProfileCard";
 import LoadingComponent from "../components/LoadingComponent";
 import DogProfile from "../components/DogProfile";
+import DogHandlerForm from "../components/DogHandlerForm";
 
 export default function DashPage(props) {
   const { userData } = props;
@@ -20,18 +21,15 @@ export default function DashPage(props) {
     const client = localStorage.getItem("client");
     const accessToken = localStorage.getItem("access-token");
     try {
-      const response = await fetch(
-        "https://dogwalking-api.onrender.com/dog_profiles",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            uid: uid,
-            client: client,
-            "access-token": accessToken,
-          },
-        }
-      );
+      const response = await fetch("http://localhost:3000/dog_profiles", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          uid: uid,
+          client: client,
+          "access-token": accessToken,
+        },
+      });
       const data = await response.json();
 
       console.log(data);
@@ -39,7 +37,7 @@ export default function DashPage(props) {
         setDogProfilesData();
         setIsLoading(false);
       } else {
-        setDogProfilesData(data);
+        setDogProfilesData(data.data);
         setIsLoading(false);
       }
     } catch (error) {
@@ -57,15 +55,15 @@ export default function DashPage(props) {
   }, []);
   return (
     <>
-      <div className="py-6 px-8 flex justify-center">
-        <div className="max-w-screen-xl w-full flex justify-between space-x-20">
-          {isLoading ? (
-            <>
-              {/* <LoadingComponent /> */}
-              <LoadingComponent />
-            </>
-          ) : (
-            <>
+      {isLoading ? (
+        <>
+          {/* <LoadingComponent /> */}
+          <LoadingComponent />
+        </>
+      ) : (
+        <>
+          <div className="py-6 px-8 flex justify-center">
+            <div className="max-w-screen-xl w-full flex justify-between space-x-20">
               {/* dashboard for dog walkers */}
               {userData.kind == 1 && <></>}
 
@@ -75,45 +73,57 @@ export default function DashPage(props) {
                   {dashTab == 1 && (
                     <>
                       <div id="container-1" className="basis-1/3">
-                        <div className="bg-white rounded-md p-6">
-                          {/* other dashboard stuff here */}
+                        <div className="bg-white rounded-md p-6 border-slate-300 border-[1px]">
+                          <DogProfileForm
+                            checkDogProfiles={checkDogProfiles}
+                            setDogProfile={setDogProfile}
+                            setDashTab={setDashTab}
+                          />
                         </div>
                       </div>
                       <div id="container-2" className="basis-2/3 flex flex-col">
                         {/* accordion */}
                         <div className="">
                           <div
-                            className="group bg-white rounded-md p-6 mb-[40px]"
+                            className={`bg-white rounded-md p-6 mb-[40px] border-slate-300 border-[1px] 
+                            ${dogProfilesData?.length && "cursor-pointer"}
+                            `}
                             tabIndex="0"
-                            onClick={() => setIsOpen(!isOpen)} // Toggle the isOpen state
+                            onClick={() => {
+                              if (dogProfilesData?.length > 0) {
+                                setIsOpen(!isOpen);
+                              }
+                            }}
                           >
-                            <div className="flex cursor-pointer items-center justify-between">
+                            <div className="flex items-center justify-between w-full">
                               <div className="font-bold text-xl flex">
                                 <div>Active Dog Profiles</div>
                                 <div className="text-slate-500 pl-2">
-                                  - {!dogProfilesData && <>0</>}
-                                  {dogProfilesData && (
-                                    <>{dogProfilesData.data.length}</>
-                                  )}
+                                  - {dogProfilesData?.length || 0}
                                 </div>
                               </div>
-                              <BsChevronDown
-                                className={`h-6 w-6 transition-all duration-500 text-black ${
-                                  isOpen ? "rotate-180" : ""
-                                }`}
-                              />
+                              {dogProfilesData &&
+                                dogProfilesData.length == 1 && (
+                                  <>
+                                    <BsChevronDown
+                                      className={`h-6 w-6 transition-all duration-500 text-black ${
+                                        isOpen ? "rotate-180" : ""
+                                      }`}
+                                    />
+                                  </>
+                                )}
                             </div>
                             <div
                               className={`transition-all ${
                                 isOpen
-                                  ? "visible max-h-screen opacity-100"
+                                  ? "visible max-h-screen opacity-100 pt-4"
                                   : "invisible max-h-0 opacity-0"
                               } duration-500`}
                             >
-                              <div className="h-[150px] bg-slate-100 mt-4 p-6 flex items-center">
+                              <div className="h-[150px] bg-slate-100 p-6 flex items-center">
                                 <div className="flex overflow-x-auto items-center space-x-10">
                                   {dogProfilesData &&
-                                    dogProfilesData.data.map((dog) => (
+                                    dogProfilesData.map((dog) => (
                                       <>
                                         <DogProfileCard
                                           key={dog.id}
@@ -129,17 +139,7 @@ export default function DashPage(props) {
                             </div>
                           </div>
                         </div>
-
-                        <div className="text-md text-slate-700 font-medium pb-2">
-                          Setting up a Dog Profile
-                        </div>
-                        <div className="bg-white rounded-md p-6">
-                          <DogProfileForm
-                            checkDogProfiles={checkDogProfiles}
-                            setDogProfile={setDogProfile}
-                            setDashTab={setDashTab}
-                          />
-                        </div>
+                        <DogHandlerForm />
                       </div>
                     </>
                   )}
@@ -155,10 +155,10 @@ export default function DashPage(props) {
                   )}
                 </>
               )}
-            </>
-          )}
-        </div>
-      </div>
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 }
