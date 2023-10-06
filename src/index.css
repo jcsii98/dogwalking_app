@@ -43,3 +43,8 @@ button:disabled {
   line-height: 20px;
   max-width: 360px;
 }
+
+.mapboxgl-ctrl-geocoder,
+.mapboxgl-ctrl-geocoder .suggestions {
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.1) !important;
+}

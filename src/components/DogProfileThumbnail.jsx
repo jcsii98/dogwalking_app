@@ -1,11 +1,12 @@
 import DogPng from "../assets/dog.png";
 
-export default function DogProfileCard(props) {
+export default function DogProfileThumbnail(props) {
   const { dog, setDogProfile, setDashTab } = props;
 
   const handleClick = () => {
     setDogProfile(dog);
-    setDashTab(2);
+    setDashTab("Dog Profile");
+    console.log("Setting Dash Tab to Dog Profile");
   };
 
   return (

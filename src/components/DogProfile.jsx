@@ -15,7 +15,7 @@ export default function DogProfile(props) {
   const dogWeight = dogProfile.weight;
 
   const handleBack = () => {
-    setDashTab(1);
+    setDashTab("Home");
     setDogProfile();
   };
 

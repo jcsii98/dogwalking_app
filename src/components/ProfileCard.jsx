@@ -1,4 +1,5 @@
-import UserPng from "../assets/user.png";
+import Boy from "../assets/boy.png";
+import Woman from "../assets/woman.png";
 import Paw from "../assets/paw.png";
 import Dog3 from "../assets/dog3.png";
 import { TbEdit } from "react-icons/tb";
@@ -15,6 +16,8 @@ export default function ProfileCard(props) {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [showUpdate, setShowUpdate] = useState(false);
+
+  const isGirl = userData.id % 2 === 0;
 
   const toggleIsEditing = () => {
     setShowUpdate(false);
@@ -82,7 +85,7 @@ export default function ProfileCard(props) {
                 <div className="flex items-center">
                   <img
                     className="place-self-center w-14 h-14 rounded-full mr-4"
-                    src={UserPng}
+                    src={isGirl ? Woman : Boy}
                     alt="Profile"
                   />
                   <div className="text-lg font-medium">{userData.name}</div>

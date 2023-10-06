@@ -1,21 +1,50 @@
 import React, { useState, useEffect } from "react";
 import DogProfileForm from "../components/DogProfileForm";
-import { BsChevronDown } from "react-icons/bs";
-import DogProfileCard from "../components/DogProfileCard";
+import DogProfileThumbnail from "../components/DogProfileThumbnail";
 import LoadingComponent from "../components/LoadingComponent";
 import DogProfile from "../components/DogProfile";
-import DogHandlerForm from "../components/DogHandlerForm";
+import DogHandlerSearchForm from "../components/DogHandlerSearchForm";
+import HandlerProfile from "../components/HandlerProfile";
+import ActiveBookings from "../components/ActiveBookings";
+import BookingDash from "../components/BookingDash";
+import ActiveDogProfiles from "../components/ActiveDogProfiles";
 
 export default function DashPage(props) {
   const { userData } = props;
   const [dogProfilesData, setDogProfilesData] = useState();
+  const [bookingsData, setBookingsData] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  // accordion open
-  const [isOpen, setIsOpen] = useState(false);
 
-  const [dashTab, setDashTab] = useState(1);
+  const [dashTab, setDashTab] = useState("Home");
   const [dogProfile, setDogProfile] = useState();
+  const [bookingDash, setBookingDash] = useState();
+  const [handlerProfile, setHandlerProfile] = useState();
 
+  const checkBookings = async (event) => {
+    const uid = localStorage.getItem("uid");
+    const client = localStorage.getItem("client");
+    const accessToken = localStorage.getItem("access-token");
+
+    try {
+      const response = await fetch("http://localhost:3000/bookings", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          uid: uid,
+          client: client,
+          "access-token": accessToken,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        setBookingsData(data);
+      } else {
+      }
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
   const checkDogProfiles = async (event) => {
     const uid = localStorage.getItem("uid");
     const client = localStorage.getItem("client");
@@ -49,6 +78,7 @@ export default function DashPage(props) {
   useEffect(() => {
     const timer = setTimeout(() => {
       checkDogProfiles();
+      checkBookings();
     }, 1500);
 
     return () => clearTimeout(timer);
@@ -70,68 +100,18 @@ export default function DashPage(props) {
               {/* dashboard for dog owners */}
               {userData.kind == 2 && (
                 <>
-                  {dashTab == 1 && (
+                  {dashTab == "Home" && (
                     <>
-                      {" "}
                       <div className="flex justify-between space-x-20">
                         <div
                           id="container-1"
                           className="basis-1/3 flex flex-col"
                         >
-                          <div
-                            className={`mb-4 bg-white rounded-md p-6 border-slate-300 border-[1px] 
-                            ${dogProfilesData?.length && "cursor-pointer"}
-                            `}
-                            tabIndex="0"
-                            onClick={() => {
-                              if (dogProfilesData?.length > 0) {
-                                setIsOpen(!isOpen);
-                              }
-                            }}
-                          >
-                            <div className="flex items-center justify-between w-full">
-                              <div className="font-bold text-xl flex">
-                                <div>Active Dog Profiles</div>
-                                <div className="text-slate-500 pl-2">
-                                  - {dogProfilesData?.length || 0}
-                                </div>
-                              </div>
-                              {dogProfilesData &&
-                                dogProfilesData.length == 1 && (
-                                  <>
-                                    <BsChevronDown
-                                      className={`h-6 w-6 transition-all duration-500 text-black ${
-                                        isOpen ? "rotate-180" : ""
-                                      }`}
-                                    />
-                                  </>
-                                )}
-                            </div>
-                            <div
-                              className={`transition-all ${
-                                isOpen
-                                  ? "visible max-h-screen opacity-100 pt-4"
-                                  : "invisible max-h-0 opacity-0"
-                              } duration-500`}
-                            >
-                              <div className="h-[150px] bg-slate-100 rounded-md p-6 flex items-center">
-                                <div className="flex overflow-x-auto items-center space-x-10">
-                                  {dogProfilesData &&
-                                    dogProfilesData.map((dog) => (
-                                      <>
-                                        <DogProfileCard
-                                          key={dog.id}
-                                          setDashTab={setDashTab}
-                                          setDogProfile={setDogProfile}
-                                          dog={dog}
-                                        />
-                                      </>
-                                    ))}
-                                </div>
-                              </div>
-                              {/* dog profiles here */}
-                            </div>
-                          </div>
+                          <ActiveDogProfiles
+                            setDogProfile={setDogProfile}
+                            setDashTab={setDashTab}
+                            dogProfilesData={dogProfilesData}
+                          />
                           <div className="text-md text-slate-700 font-medium pb-2">
                             <>Setting up Dog Profiles</>
                           </div>
@@ -147,18 +127,49 @@ export default function DashPage(props) {
                           id="container-2"
                           className="basis-2/3 flex flex-col"
                         >
-                          <DogHandlerForm userData={userData} />
+                          <ActiveBookings
+                            setDashTab={setDashTab}
+                            bookingsData={bookingsData}
+                            setBookingDash={setBookingDash}
+                          />
+                          <div className="text-md text-slate-700 font-medium pb-2">
+                            <>Finding nearby dog walkers</>
+                          </div>
+                          <DogHandlerSearchForm
+                            dogProfilesData={dogProfilesData}
+                            setHandlerProfile={setHandlerProfile}
+                            setDashTab={setDashTab}
+                            userData={userData}
+                          />
                         </div>
                       </div>
                     </>
                   )}
-                  {dashTab == 2 && (
+                  {dashTab == "Dog Profile" && (
                     <>
                       <DogProfile
                         checkDogProfiles={checkDogProfiles}
                         setDashTab={setDashTab}
                         setDogProfile={setDogProfile}
                         dogProfile={dogProfile}
+                      />
+                    </>
+                  )}
+                  {dashTab == 3 && (
+                    <>
+                      <HandlerProfile
+                        setDashTab={setDashTab}
+                        dogProfilesData={dogProfilesData}
+                        handlerProfile={handlerProfile}
+                      />
+                    </>
+                  )}
+                  {dashTab == 4 && (
+                    <>
+                      <BookingDash
+                        userData={userData}
+                        setDashTab={setDashTab}
+                        bookingDash={bookingDash}
                       />
                     </>
                   )}
