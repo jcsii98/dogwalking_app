@@ -3,7 +3,13 @@ import { BsChevronDown } from "react-icons/bs";
 import BookingForm from "../Booking/BookingForm";
 
 export default function HandlerJobs(props) {
-  const { handlerProfile, dogProfilesData, setDashTab, setBookingDash } = props;
+  const {
+    handlerProfile,
+    dogProfilesData,
+    setDashTab,
+    setBookingDash,
+    setBookingDetails,
+  } = props;
   const [isLoading, setIsLoading] = useState(true);
   const [handlerJobData, setHandlerJobData] = useState();
   const [schedules, setSchedules] = useState([]);
@@ -165,6 +171,7 @@ export default function HandlerJobs(props) {
               {isCreating && (
                 <>
                   <BookingForm
+                    setBookingDetails={setBookingDetails}
                     setBookingDash={setBookingDash}
                     setDashTab={setDashTab}
                     handlerJobData={handlerJobData}

@@ -7,6 +7,7 @@ export default function BookingSummary(props) {
     bookingData,
     setActiveTab,
     setBookingDash,
+    setBookingDetails,
   } = props;
 
   const [message, setMessage] = useState();
@@ -44,6 +45,7 @@ export default function BookingSummary(props) {
         console.log(responseData);
         console.log("Setting Dash Tab to Booking Dash");
         setBookingDash(responseData);
+        setBookingDetails(responseData);
         setDashTab("Booking Dash");
       } else {
         console.log("error 1");

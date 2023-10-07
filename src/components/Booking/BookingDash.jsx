@@ -3,8 +3,14 @@ import DogPng from "../../assets/dog.png";
 import BookingChatroom from "./BookingChatroom";
 
 export default function BookingDash(props) {
-  const { setDashTab, bookingDash, userData, checkBookings } = props;
-  const [bookingDetails, setBookingDetails] = useState();
+  const {
+    setDashTab,
+    bookingDash,
+    userData,
+    checkBookings,
+    setBookingDetails,
+  } = props;
+
   const [bookingDogs, setBookingDogs] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -275,6 +281,7 @@ export default function BookingDash(props) {
             </div>
             <div className="basis-2/3 p-6 border-[1px] rounded-md bg-white">
               <BookingChatroom
+                setBookingDetails={setBookingDetails}
                 fetchChat={fetchChat}
                 userData={userData}
                 messages={messages}

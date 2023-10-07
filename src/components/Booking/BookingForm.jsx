@@ -10,6 +10,7 @@ export default function BookingForm(props) {
     dogProfilesData,
     handlerJobData,
     setBookingDash,
+    setBookingDetails,
   } = props;
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [bookingData, setBookingData] = useState({});
@@ -189,6 +190,7 @@ export default function BookingForm(props) {
         {activeTab == 2 && (
           <>
             <BookingSummary
+              setBookingDetails={setBookingDetails}
               setBookingDash={setBookingDash}
               setDashTab={setDashTab}
               setActiveTab={setActiveTab}

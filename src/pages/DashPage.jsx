@@ -19,6 +19,7 @@ export default function DashPage(props) {
   const [dogProfile, setDogProfile] = useState();
 
   const [bookingDash, setBookingDash] = useState();
+  const [bookingDetails, setBookingDetails] = useState();
   const [handlerProfile, setHandlerProfile] = useState();
 
   const checkBookings = async () => {
@@ -230,6 +231,7 @@ export default function DashPage(props) {
                   {dashTab == "Handler Profile" && (
                     <>
                       <HandlerProfile
+                        setBookingDetails={setBookingDetails}
                         setBookingDash={setBookingDash}
                         setDashTab={setDashTab}
                         dogProfilesData={dogProfilesData}
