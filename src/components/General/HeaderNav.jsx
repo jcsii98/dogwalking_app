@@ -24,29 +24,23 @@ export default function HeaderNav(props) {
               {!isLoggedIn && (
                 <>
                   <li>
-                    <a
-                      href="#"
-                      className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-slate-600 py-2 my-2 rounded-lg border-slate-600 border-[1px] px-4"
-                    >
+                    <button className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-slate-600 py-2 my-2 rounded-lg border-slate-600 border-[1px] px-4">
                       Home
-                    </a>
+                    </button>
                   </li>
                   <li>
-                    <a
-                      href="#"
-                      className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-slate-600 py-2 my-2 rounded-lg border-slate-600 border-[1px] px-4"
-                    >
+                    <button className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-slate-600 py-2 my-2 rounded-lg border-slate-600 border-[1px] px-4">
                       Become a Dog Walker
-                    </a>
+                    </button>
                   </li>
                   <li>
-                    <a
+                    <button
+                      type="button"
                       onClick={() => setShowForm(true)}
-                      href="#"
                       className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-slate-600 py-2 my-2 rounded-lg border-slate-600 border-[1px] px-4"
                     >
                       Get Started
-                    </a>
+                    </button>
                   </li>
                 </>
               )}
@@ -59,7 +53,7 @@ export default function HeaderNav(props) {
                       onClick={() => {
                         setActiveNavTab(1);
                       }}
-                      href="#"
+                      href=""
                       className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-slate-600 py-2 my-2 rounded-lg border-slate-600 border-[1px] px-4"
                     >
                       My Account
@@ -71,20 +65,18 @@ export default function HeaderNav(props) {
                         setActiveNavTab(2);
                       }}
                       type="button"
-                      href="#"
                       className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-slate-600 py-2 my-2 rounded-lg border-slate-600 border-[1px] px-4"
                     >
                       Dashboard
                     </button>
                   </li>
                   <li>
-                    <a
+                    <button
                       onClick={handleSignOut}
-                      href="#"
                       className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-slate-600 py-2 my-2 rounded-lg border-slate-600 border-[1px] px-4"
                     >
                       Sign Out
-                    </a>
+                    </button>
                   </li>
                 </>
               )}
