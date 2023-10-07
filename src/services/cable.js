@@ -1,7 +1,7 @@
 import { createConsumer } from "@rails/actioncable";
 
 const consumer = createConsumer(
-  `ws://dogwalking-api.onrender.com/cable?uid=${localStorage.getItem(
+  `wss://dogwalking-api.onrender.com/cable?uid=${localStorage.getItem(
     "uid"
   )}&client=${localStorage.getItem(
     "client"
