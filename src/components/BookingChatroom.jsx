@@ -3,6 +3,7 @@ import Boy from "../assets/boy.png";
 import Woman from "../assets/woman.png";
 import Paper from "../assets/paper.png";
 import Message from "./Message";
+import cable from "../services/cable";
 
 export default function BookingChatroom(props) {
   const { bookingDetails, messages, userData, fetchChat } = props;
@@ -52,6 +53,27 @@ export default function BookingChatroom(props) {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  useEffect(() => {
+    const subscription = cable.subscriptions.create(
+      { channel: "ChatroomChannel", id: bookingDetails.id },
+      {
+        connected() {
+          console.log("Connected to ChatroomChannel!");
+        },
+        received(data) {
+          // Update your component's state when a new message arrives
+          // You can use your existing fetchChat() function, or directly append the new message to the messages state.
+          fetchChat();
+        },
+      }
+    );
+
+    // Clean up the subscription on unmount
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [bookingDetails.id]);
   return (
     <>
       <div className="h-full flex flex-col justify-between">
@@ -78,11 +100,12 @@ export default function BookingChatroom(props) {
         <div className="mt-4 h-[40px]">
           <form onSubmit={handleSubmit} className="flex items-center">
             <input
+              value={inputValue}
               onChange={handleInputChange}
               type="text"
               className="pl-4 py-4 w-full rounded-full focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 h-[40px]"
             ></input>
-            <button className="ml-6" type="button">
+            <button className="ml-6" type="submit">
               <img className="w-8 h-8" src={Paper}></img>
             </button>
           </form>

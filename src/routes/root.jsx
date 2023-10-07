@@ -4,6 +4,7 @@ import LoadingPage from "../pages/LoadingPage";
 import DashPage from "../pages/DashPage";
 import HeaderNav from "../components/HeaderNav";
 import MyAccount from "../pages/MyAccount";
+
 export default function Root() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
