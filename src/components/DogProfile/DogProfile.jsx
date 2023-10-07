@@ -1,4 +1,4 @@
-import DogPng from "../assets/dog.png";
+import DogPng from "../../assets/dog.png";
 import DogProfileForm from "./DogProfileForm";
 import React, { useState, useEffect } from "react";
 
@@ -62,7 +62,7 @@ export default function DogProfile(props) {
           <div className="text-slate-700 font-bold text-6xl pb-8">
             {dogName}
           </div>
-          <div className="bg-slate-400 rounded-full">
+          <div className="bg-slate-400 rounded-full w-24 h-24 flex justify-center items-center">
             <img
               className="place-self-center w-20 h-20 rounded-full"
               src={DogPng}

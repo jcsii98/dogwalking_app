@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
-import DogPng from "../assets/dog.png";
+import DogPng from "../../assets/dog.png";
 import BookingChatroom from "./BookingChatroom";
 
 export default function BookingDash(props) {
-  const { setDashTab, bookingDash, userData } = props;
+  const { setDashTab, bookingDash, userData, checkBookings } = props;
   const [bookingDetails, setBookingDetails] = useState();
   const [bookingDogs, setBookingDogs] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [showConfirm, setShowConfirm] = useState(false);
 
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const [message, setMessage] = useState();
   const [error, setError] = useState();
   const [messages, setMessages] = useState();
@@ -82,6 +83,10 @@ export default function BookingDash(props) {
     setShowConfirm(false);
   };
 
+  const toggleConfirmDelete = () => {
+    setConfirmDelete((prev) => !prev);
+  };
+
   const handleApprove = async () => {
     setMessage("Approving");
     try {
@@ -115,13 +120,46 @@ export default function BookingDash(props) {
     }
   };
 
+  const handleDeleteBooking = async () => {
+    const uid = localStorage.getItem("uid");
+    const client = localStorage.getItem("client");
+    const accessToken = localStorage.getItem("access-token");
+    const bookingId = bookingDash.id;
+    try {
+      const response = await fetch(
+        `https://dogwalking-api.onrender.com/bookings/${bookingId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            uid: uid,
+            client: client,
+            "access-token": accessToken,
+          },
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        if (data.status == "success") {
+          checkBookings();
+          setDashTab("Home");
+        }
+        console.log(data);
+      } else {
+      }
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
+
   useEffect(() => {
     const timer = setTimeout(() => {
       fetchBooking();
       fetchChat();
-    }, 1000);
+    }, 0);
     return () => clearTimeout(timer);
   }, []);
+
   return (
     <>
       {isLoading ? (
@@ -154,11 +192,10 @@ export default function BookingDash(props) {
                         key={item.id}
                         className="cursor-pointer font-medium text-sm flex-shrink-0 flex flex-col justify-center items-center space-y-4"
                       >
-                        <div className="bg-white rounded-full">
+                        <div className="bg-slate-300 rounded-full w-16 h-16 flex justify-center items-center">
                           <img
-                            className="place-self-center w-14 h-14 rounded-full"
                             src={DogPng}
-                            alt="Profile"
+                            className="place-self-center w-14 h-14 rounded-full"
                           />
                         </div>
                         <div className="">{dog.name}</div>
@@ -166,6 +203,38 @@ export default function BookingDash(props) {
                     );
                   })}
               </div>
+              {bookingDash.status !== "approved" && (
+                <>
+                  {confirmDelete ? (
+                    <>
+                      <div>Are you sure you want to cancel this booking?</div>
+
+                      <button
+                        onClick={toggleConfirmDelete}
+                        type="button"
+                        className="hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-slate-600 py-2 my-2 rounded-lg border-slate-600 border-[1px] px-4"
+                      >
+                        No
+                      </button>
+                      <button
+                        onClick={handleDeleteBooking}
+                        type="button"
+                        className="hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-slate-600 py-2 my-2 rounded-lg border-slate-600 border-[1px] px-4"
+                      >
+                        Yes
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      onClick={toggleConfirmDelete}
+                      type="button"
+                      className="hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-slate-600 py-2 my-2 rounded-lg border-slate-600 border-[1px] px-4"
+                    >
+                      Cancel Booking
+                    </button>
+                  )}
+                </>
+              )}
               {userData.kind == "1" && bookingDash.status !== "approved" && (
                 <>
                   {showConfirm && (

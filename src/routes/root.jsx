@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import HomePage from "../pages/HomePage";
 import LoadingPage from "../pages/LoadingPage";
 import DashPage from "../pages/DashPage";
-import HeaderNav from "../components/HeaderNav";
+import HeaderNav from "../components/General/HeaderNav";
 import MyAccount from "../pages/MyAccount";
 
 export default function Root() {

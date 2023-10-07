@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
-import DogProfileForm from "../components/DogProfileForm";
-import DogProfileThumbnail from "../components/DogProfileThumbnail";
-import LoadingComponent from "../components/LoadingComponent";
-import DogProfile from "../components/DogProfile";
-import DogHandlerSearchForm from "../components/DogHandlerSearchForm";
-import HandlerProfile from "../components/HandlerProfile";
-import ActiveBookings from "../components/ActiveBookings";
-import BookingDash from "../components/BookingDash";
-import ActiveDogProfiles from "../components/ActiveDogProfiles";
-import Job from "../components/Job";
+import DogProfileForm from "../components/DogProfile/DogProfileForm";
+import LoadingComponent from "../components/General/LoadingComponent";
+import DogProfile from "../components/DogProfile/DogProfile";
+import DogHandlerSearchForm from "../components/Handler/DogHandlerSearchForm";
+import HandlerProfile from "../components/Handler/HandlerProfile";
+import ActiveBookings from "../components/General/ActiveBookings";
+import BookingDash from "../components/Booking/BookingDash";
+import ActiveDogProfiles from "../components/DogProfile/ActiveDogProfiles";
+import Job from "../components/General/Job";
 
 export default function DashPage(props) {
   const { userData, job } = props;
@@ -113,7 +112,7 @@ export default function DashPage(props) {
     };
 
     // Using a timeout to delay fetching slightly
-    const timer = setTimeout(fetchData, 1500);
+    const timer = setTimeout(fetchData, 0);
 
     return () => clearTimeout(timer);
   }, []);
@@ -181,30 +180,7 @@ export default function DashPage(props) {
                   {dashTab == "Home" && (
                     <>
                       <div className="flex justify-between space-x-20">
-                        <div
-                          id="container-1"
-                          className="basis-1/3 flex flex-col"
-                        >
-                          <ActiveDogProfiles
-                            setDogProfile={setDogProfile}
-                            setDashTab={setDashTab}
-                            dogProfilesData={dogProfilesData}
-                          />
-                          <div className="text-md text-slate-700 font-medium pb-2">
-                            <>Setting up Dog Profiles</>
-                          </div>
-                          <div className="bg-white rounded-md p-6 border-slate-300 border-[1px]">
-                            <DogProfileForm
-                              checkDogProfiles={checkDogProfiles}
-                              setDogProfile={setDogProfile}
-                              setDashTab={setDashTab}
-                            />
-                          </div>
-                        </div>
-                        <div
-                          id="container-2"
-                          className="basis-2/3 flex flex-col"
-                        >
+                        <div className="basis-1/3 flex flex-col">
                           <ActiveBookings
                             userData={userData}
                             setDashTab={setDashTab}
@@ -220,6 +196,23 @@ export default function DashPage(props) {
                             setDashTab={setDashTab}
                             userData={userData}
                           />
+                        </div>
+                        <div className="basis-2/3 flex flex-col">
+                          <ActiveDogProfiles
+                            setDogProfile={setDogProfile}
+                            setDashTab={setDashTab}
+                            dogProfilesData={dogProfilesData}
+                          />
+                          <div className="text-md text-slate-700 font-medium pb-2">
+                            <>Setting up Dog Profiles</>
+                          </div>
+                          <div className="bg-white rounded-md p-6 border-slate-300 border-[1px]">
+                            <DogProfileForm
+                              checkDogProfiles={checkDogProfiles}
+                              setDogProfile={setDogProfile}
+                              setDashTab={setDashTab}
+                            />
+                          </div>
                         </div>
                       </div>
                     </>
@@ -247,6 +240,7 @@ export default function DashPage(props) {
                   {dashTab == "Booking Dash" && (
                     <>
                       <BookingDash
+                        checkBookings={checkBookings}
                         userData={userData}
                         setDashTab={setDashTab}
                         bookingDash={bookingDash}

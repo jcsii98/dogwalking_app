@@ -1,6 +1,5 @@
 import { AiOutlineLoading } from "react-icons/ai";
-import DogPng from "../assets/dog.png";
-import Dog4 from "../assets/dog4.png";
+import Dog4 from "../../assets/dog4.png";
 export default function LoadingComponent() {
   return (
     <>

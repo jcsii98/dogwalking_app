@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import DogProfileCard from "./DogProfileThumbnail";
-import DogPng from "../assets/dog.png";
+
+import DogPng from "../../assets/dog.png";
 import BookingSummary from "./BookingSummary";
 
 export default function BookingForm(props) {

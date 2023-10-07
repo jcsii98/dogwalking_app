@@ -1,5 +1,5 @@
-import Boy from "../assets/boy.png";
-import Woman from "../assets/woman.png";
+import Boy from "../../assets/boy.png";
+import Woman from "../../assets/woman.png";
 
 export default function BookingThumbnail(props) {
   const { booking, setBookingDash, setDashTab, userData } = props;
@@ -24,7 +24,7 @@ export default function BookingThumbnail(props) {
         key={booking.id}
       >
         {" "}
-        <div className="bg-white rounded-full">
+        <div className="hover:bg-slate-400 bg-white rounded-full w-16 h-16 flex justify-center items-center">
           <img
             src={isGirl() ? Woman : Boy}
             alt={isGirl() ? "Girl" : "Boy"}

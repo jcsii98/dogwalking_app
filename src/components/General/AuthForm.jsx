@@ -1,4 +1,4 @@
-import dog1 from "../assets/dog1.jpg";
+import dog1 from "../../assets/dog1.jpg";
 import React, { useState } from "react";
 export default function AuthForm(props) {
   const { setShowForm, setIsLoggedIn, setUserData } = props;

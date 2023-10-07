@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import AuthForm from "../components/AuthForm";
-import HeaderNav from "../components/HeaderNav";
+import AuthForm from "../components/General/AuthForm";
+
 import dog2 from "../assets/dog2.jpg";
 
 export default function HomePage(props) {
@@ -27,7 +27,7 @@ export default function HomePage(props) {
           </div>
         </div>
       )}
-      <div className="py-6 px-8 flex justify-center h-full">
+      <div className="px-8 flex justify-center h-full">
         <div className="max-w-screen-xl w-full flex justify-between space-x-20">
           <div className="basis-2/3 flex flex-col items-center">
             <div className="py-4">

@@ -1,6 +1,6 @@
-import Paw from "../assets/paw.png";
-import Boy from "../assets/boy.png";
-import Woman from "../assets/woman.png";
+import Paw from "../../assets/paw.png";
+import Boy from "../../assets/boy.png";
+import Woman from "../../assets/woman.png";
 import HandlerJobs from "./HandlerJobs";
 
 export default function HandlerProfile(props) {

@@ -1,7 +1,7 @@
-import Boy from "../assets/boy.png";
-import Woman from "../assets/woman.png";
-import Paw from "../assets/paw.png";
-import Dog3 from "../assets/dog3.png";
+import Boy from "../../assets/boy.png";
+import Woman from "../../assets/woman.png";
+import Paw from "../../assets/paw.png";
+
 import { TbEdit } from "react-icons/tb";
 import { TbEditOff } from "react-icons/tb";
 import React, { useState, useEffect } from "react";
@@ -83,11 +83,14 @@ export default function ProfileCard(props) {
             <div className="font-medium text-md text-slate-700 pb-6 border-b-[1px]">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <img
-                    className="place-self-center w-14 h-14 rounded-full mr-4"
-                    src={isGirl ? Woman : Boy}
-                    alt="Profile"
-                  />
+                  <div className="flex justify-center items-center w-16 h-16 bg-slate-400 rounded-full mr-4">
+                    <img
+                      className="place-self-center w-14 h-14 rounded-full"
+                      src={isGirl ? Woman : Boy}
+                      alt="Profile"
+                    />
+                  </div>
+
                   <div className="text-lg font-medium">{userData.name}</div>
                   {userData.status == "approved" && (
                     <img className="ml-4 w-3 h-3 place-self-center" src={Paw} />

@@ -1,30 +1,33 @@
-import { BsChevronDown } from "react-icons/bs";
 import React, { useState, useEffect } from "react";
-import DogProfileThumbnail from "./DogProfileThumbnail";
-export default function ActiveDogProfiles(props) {
-  const { dogProfilesData, setDashTab, setDogProfile } = props;
+import { BsChevronDown } from "react-icons/bs";
+import BookingThumbnail from "../Booking/BookingThumbnail";
+
+export default function ActiveBookings(props) {
+  const { bookingsData, setBookingDash, setDashTab, userData } = props;
+
   const [isOpen, setIsOpen] = useState(false);
+
   return (
     <>
       <div
         className={`mb-4 bg-white rounded-md p-6 border-slate-300 border-[1px] 
-                            ${dogProfilesData?.length && "cursor-pointer"}
+                            ${bookingsData?.length && "cursor-pointer"}
                             `}
         tabIndex="0"
         onClick={() => {
-          if (dogProfilesData?.length > 0) {
+          if (bookingsData?.length > 0) {
             setIsOpen(!isOpen);
           }
         }}
       >
         <div className="flex items-center justify-between w-full">
           <div className="font-bold text-xl flex">
-            <div>Active Dog Profiles</div>
+            <div>Active Bookings</div>
             <div className="text-slate-500 pl-2">
-              - {dogProfilesData?.length || 0}
+              - {bookingsData?.length || 0}
             </div>
           </div>
-          {dogProfilesData && dogProfilesData.length == 1 && (
+          {bookingsData && bookingsData.length > 0 && (
             <>
               <BsChevronDown
                 className={`h-6 w-6 transition-all duration-500 text-black ${
@@ -43,20 +46,18 @@ export default function ActiveDogProfiles(props) {
         >
           <div className="h-[150px] bg-slate-100 rounded-md p-6 flex items-center">
             <div className="flex overflow-x-auto items-center space-x-10">
-              {dogProfilesData &&
-                dogProfilesData.map((dog) => (
-                  <>
-                    <DogProfileThumbnail
-                      key={dog.id}
-                      setDashTab={setDashTab}
-                      setDogProfile={setDogProfile}
-                      dog={dog}
-                    />
-                  </>
+              {bookingsData &&
+                bookingsData.map((booking) => (
+                  <BookingThumbnail
+                    key={booking.id}
+                    userData={userData}
+                    setDashTab={setDashTab}
+                    setBookingDash={setBookingDash}
+                    booking={booking}
+                  />
                 ))}
             </div>
           </div>
-          {/* dog profiles here */}
         </div>
       </div>
     </>

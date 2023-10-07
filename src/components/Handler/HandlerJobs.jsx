@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BsChevronDown } from "react-icons/bs";
-import BookingForm from "./BookingForm";
+import BookingForm from "../Booking/BookingForm";
 
 export default function HandlerJobs(props) {
   const { handlerProfile, dogProfilesData, setDashTab, setBookingDash } = props;

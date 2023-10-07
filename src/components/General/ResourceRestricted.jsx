@@ -1,4 +1,4 @@
-import Dog3 from "../assets/dog3.png";
+import Dog3 from "../../assets/dog3.png";
 
 export default function ResourceRestricted(props) {
   const { resource } = props;

@@ -1,6 +1,6 @@
-import ProfileCard from "../components/ProfileCard";
+import ProfileCard from "../components/General/ProfileCard";
 import React, { useState, useEffect } from "react";
-import LoadingComponent from "../components/LoadingComponent";
+import LoadingComponent from "../components/General/LoadingComponent";
 
 export default function MyAccount(props) {
   const { userData, setUserData, setIsLoggedIn } = props;
@@ -47,7 +47,7 @@ export default function MyAccount(props) {
   useEffect(() => {
     const timer = setTimeout(() => {
       checkUserData();
-    }, 1000);
+    }, 0);
 
     return () => clearTimeout(timer);
   }, []);
