@@ -247,7 +247,7 @@ export default function DashPage(props) {
                       />
                     </>
                   )}
-                  {dashTab == 3 && (
+                  {dashTab == "Handler Profile" && (
                     <>
                       <HandlerProfile
                         setDashTab={setDashTab}

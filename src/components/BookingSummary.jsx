@@ -37,7 +37,7 @@ export default function BookingSummary(props) {
         const responseData = await response.json();
         console.log(responseData);
         console.log("Setting Dash Tab to 3");
-        setDashTab(4);
+        setDashTab("Dog Profile");
       } else {
         console.log("error 1");
       }

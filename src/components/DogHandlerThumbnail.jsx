@@ -7,7 +7,7 @@ export default function DogHandlerThumbnail(props) {
 
   const handleClick = () => {
     setHandlerProfile(handler);
-    setDashTab(3);
+    setDashTab("Handler Profile");
   };
   const distanceAway = () => {
     return Math.round(handler.distance);
