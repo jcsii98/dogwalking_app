@@ -8,6 +8,7 @@ export default function BookingDash(props) {
     bookingDash,
     userData,
     checkBookings,
+    bookingDetails,
     setBookingDetails,
   } = props;
 

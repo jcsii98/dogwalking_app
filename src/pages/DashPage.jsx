@@ -242,6 +242,8 @@ export default function DashPage(props) {
                   {dashTab == "Booking Dash" && (
                     <>
                       <BookingDash
+                        bookingDetails={bookingDetails}
+                        setBookingDetails={setBookingDetails}
                         checkBookings={checkBookings}
                         userData={userData}
                         setDashTab={setDashTab}
