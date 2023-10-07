@@ -4,7 +4,13 @@ import DogPng from "../assets/dog.png";
 import BookingSummary from "./BookingSummary";
 
 export default function BookingForm(props) {
-  const { setDashTab, setIsCreating, dogProfilesData, handlerJobData } = props;
+  const {
+    setDashTab,
+    setIsCreating,
+    dogProfilesData,
+    handlerJobData,
+    setBookingDash,
+  } = props;
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [bookingData, setBookingData] = useState({});
   const [inputValue, setInputValue] = useState("");
@@ -183,6 +189,7 @@ export default function BookingForm(props) {
         {activeTab == 2 && (
           <>
             <BookingSummary
+              setBookingDash={setBookingDash}
               setDashTab={setDashTab}
               setActiveTab={setActiveTab}
               bookingData={bookingData}

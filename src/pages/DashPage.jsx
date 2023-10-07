@@ -22,111 +22,98 @@ export default function DashPage(props) {
   const [bookingDash, setBookingDash] = useState();
   const [handlerProfile, setHandlerProfile] = useState();
 
-  const checkBookings = async (event) => {
+  const checkBookings = async () => {
     const uid = localStorage.getItem("uid");
     const client = localStorage.getItem("client");
     const accessToken = localStorage.getItem("access-token");
+    const headers = {
+      "Content-Type": "application/json",
+      uid,
+      client,
+      "access-token": accessToken,
+    };
 
+    let url;
     if (userData.kind == "2") {
-      try {
-        const response = await fetch(
-          "https://dogwalking-api.onrender.com/bookings",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              uid: uid,
-              client: client,
-              "access-token": accessToken,
-            },
-          }
-        );
-        if (response.ok) {
-          const data = await response.json();
-          console.log(data);
-          setBookingsData(data);
-          return Promise.resolve();
-        } else {
-          return Promise.reject();
-        }
-      } catch (error) {
-        console.log("Error:", error);
-      }
+      url = "https://dogwalking-api.onrender.com/bookings";
     } else {
       const jobId = job.id;
-      try {
-        const response = await fetch(
-          `https://dogwalking-api.onrender.com/bookings?dog_walking_job_id=${jobId}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              uid: uid,
-              client: client,
-              "access-token": accessToken,
-            },
-          }
-        );
-        if (response.ok) {
-          const data = await response.json();
-          console.log(data);
-          setBookingsData(data);
-          return Promise.resolve();
-        } else {
-          return Promise.reject();
-        }
-      } catch (error) {
-        console.log("Error:", error);
+      url = `https://dogwalking-api.onrender.com/bookings?dog_walking_job_id=${jobId}`;
+    }
+
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers,
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
+
+      const data = await response.json();
+      console.log(data);
+      setBookingsData(data);
+    } catch (error) {
+      console.error("Error in checkBookings:", error);
+      throw error;
     }
   };
-  const checkDogProfiles = async (event) => {
+
+  const checkDogProfiles = async () => {
     const uid = localStorage.getItem("uid");
     const client = localStorage.getItem("client");
     const accessToken = localStorage.getItem("access-token");
-    if (userData.kind == "2") {
-      try {
-        const response = await fetch(
-          "https://dogwalking-api.onrender.com/dog_profiles",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              uid: uid,
-              client: client,
-              "access-token": accessToken,
-            },
-          }
-        );
-        const data = await response.json();
 
-        console.log(data);
-        if (data.message) {
-          setDogProfilesData();
-          setIsLoading(false);
-          return Promise.reject();
-        } else {
-          setDogProfilesData(data.data);
-          setIsLoading(false);
-          return Promise.resolve();
-        }
-      } catch (error) {
-        console.log(error);
-        setIsLoading(false);
+    if (userData.kind != "2") {
+      return; // If user kind isn't 2, don't proceed with the request
+    }
+
+    const url = "https://dogwalking-api.onrender.com/dog_profiles";
+    const headers = {
+      "Content-Type": "application/json",
+      uid,
+      client,
+      "access-token": accessToken,
+    };
+
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers,
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
+
+      const data = await response.json();
+      console.log(data);
+
+      if (data.message) {
+        throw new Error(data.message);
+      } else {
+        setDogProfilesData(data.data);
+      }
+    } catch (error) {
+      console.error("Checking Dog Profiles:", error);
+      throw error;
     }
   };
 
   useEffect(() => {
-    const timer = setTimeout(async () => {
+    const fetchData = async () => {
       try {
         await Promise.all([checkDogProfiles(), checkBookings()]);
-        setIsLoading(false);
       } catch (error) {
-        console.log("Error when fetching data:", error);
-        setIsLoading(false); // Set to false even on error, or handle error differently if needed
+        console.error("Error when fetching data:", error);
+      } finally {
+        setIsLoading(false); // Ensure isLoading is set to false even if there's an error
       }
-    }, 1500);
+    };
+
+    // Using a timeout to delay fetching slightly
+    const timer = setTimeout(fetchData, 1500);
 
     return () => clearTimeout(timer);
   }, []);
@@ -250,6 +237,7 @@ export default function DashPage(props) {
                   {dashTab == "Handler Profile" && (
                     <>
                       <HandlerProfile
+                        setBookingDash={setBookingDash}
                         setDashTab={setDashTab}
                         dogProfilesData={dogProfilesData}
                         handlerProfile={handlerProfile}

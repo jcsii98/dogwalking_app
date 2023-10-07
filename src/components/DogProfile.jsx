@@ -50,7 +50,7 @@ export default function DogProfile(props) {
       console.log(data);
       checkDogProfiles();
       setShowConfirm(false);
-      setDashTab(1);
+      setDashTab("Home");
     } catch (error) {
       console.error("There was an error deleting the profile:", error);
     }

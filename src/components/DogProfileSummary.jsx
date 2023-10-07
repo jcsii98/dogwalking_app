@@ -98,7 +98,7 @@ export default function DogProfileSummary(props) {
           setCurrentQuestionIndex(0);
           setDogProfile(data);
           setActiveTab(1);
-          setDashTab(2);
+          setDashTab("Dog Profile");
         }
       } catch (error) {
         checkDogProfiles();

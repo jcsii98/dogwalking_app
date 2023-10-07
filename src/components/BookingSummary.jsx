@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 
 export default function BookingSummary(props) {
-  const { setDashTab, handlerJobData, bookingData, setActiveTab } = props;
+  const {
+    setDashTab,
+    handlerJobData,
+    bookingData,
+    setActiveTab,
+    setBookingDash,
+  } = props;
 
   const [message, setMessage] = useState();
 
@@ -36,8 +42,9 @@ export default function BookingSummary(props) {
         setMessage("");
         const responseData = await response.json();
         console.log(responseData);
-        console.log("Setting Dash Tab to 3");
-        setDashTab("Dog Profile");
+        console.log("Setting Dash Tab to Booking Dash");
+        setBookingDash(responseData);
+        setDashTab("Booking Dash");
       } else {
         console.log("error 1");
       }

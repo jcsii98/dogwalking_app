@@ -4,7 +4,7 @@ import Woman from "../assets/woman.png";
 import HandlerJobs from "./HandlerJobs";
 
 export default function HandlerProfile(props) {
-  const { handlerProfile, dogProfilesData, setDashTab } = props;
+  const { handlerProfile, dogProfilesData, setDashTab, setBookingDash } = props;
 
   const isGirl = handlerProfile.id % 2 === 0;
   return (
@@ -30,6 +30,7 @@ export default function HandlerProfile(props) {
         </div>
         <div className="basis-2/3 flex flex-col">
           <HandlerJobs
+            setBookingDash={setBookingDash}
             setDashTab={setDashTab}
             handlerProfile={handlerProfile}
             dogProfilesData={dogProfilesData}
