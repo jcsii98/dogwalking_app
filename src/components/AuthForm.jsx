@@ -26,13 +26,16 @@ export default function AuthForm(props) {
       // This is the Sign Up Request
       try {
         // Assuming you're using the fetch API
-        const response = await fetch("http://localhost:3000/auth/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(signUpFormData),
-        });
+        const response = await fetch(
+          "https://dogwalking-api.onrender.com/auth/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(signUpFormData),
+          }
+        );
 
         const data = await response.json();
 
@@ -57,13 +60,16 @@ export default function AuthForm(props) {
       // This is the Sign In Request
       try {
         // Again, assuming you're using the fetch API
-        const response = await fetch("http://localhost:3000/auth/sign_in", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(signInFormData),
-        });
+        const response = await fetch(
+          "https://dogwalking-api.onrender.com/auth/sign_in",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(signInFormData),
+          }
+        );
 
         const data = await response.json();
         console.log(data);

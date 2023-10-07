@@ -10,8 +10,10 @@ export default function Root() {
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState(null);
   const [showForm, setShowForm] = useState(false);
+  const [job, setJob] = useState();
 
   const [activeNavTab, setActiveNavTab] = useState(1);
+
   const rememberMe = async () => {
     const uid = localStorage.getItem("uid");
     const client = localStorage.getItem("client");
@@ -19,14 +21,17 @@ export default function Root() {
 
     if (uid && client && accessToken) {
       try {
-        const response = await fetch("http://localhost:3000/user/", {
-          method: "GET",
-          headers: {
-            uid: uid,
-            client: client,
-            "access-token": accessToken,
-          },
-        });
+        const response = await fetch(
+          "https://dogwalking-api.onrender.com/user/",
+          {
+            method: "GET",
+            headers: {
+              uid: uid,
+              client: client,
+              "access-token": accessToken,
+            },
+          }
+        );
         if (response.ok) {
           const responseData = await response.json();
           console.log(responseData);
@@ -47,6 +52,38 @@ export default function Root() {
     }
   };
 
+  const fetchJob = async (event) => {
+    const uid = localStorage.getItem("uid");
+    const client = localStorage.getItem("client");
+    const accessToken = localStorage.getItem("access-token");
+    if (userData.kind == "1") {
+      try {
+        const response = await fetch(
+          "https://dogwalking-api.onrender.com/dog_walking_jobs",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              uid: uid,
+              client: client,
+              "access-token": accessToken,
+            },
+          }
+        );
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data);
+          setJob(data.data[0]);
+        } else {
+        }
+      } catch (error) {
+        console.log("Error:", error);
+      }
+    } else {
+      return;
+    }
+  };
+
   useEffect(() => {
     const timer = setTimeout(() => {
       rememberMe();
@@ -54,6 +91,12 @@ export default function Root() {
 
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (userData && userData.kind === "1") {
+      fetchJob();
+    }
+  }, [userData]);
   return (
     <>
       {isLoading ? (
@@ -75,7 +118,7 @@ export default function Root() {
                 <div className="flex-grow">
                   {activeNavTab == 2 && (
                     <>
-                      <DashPage userData={userData} />
+                      <DashPage job={job} userData={userData} />
                     </>
                   )}
                   {activeNavTab == 1 && (

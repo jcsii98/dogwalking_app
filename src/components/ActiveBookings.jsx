@@ -3,7 +3,7 @@ import { BsChevronDown } from "react-icons/bs";
 import BookingThumbnail from "./BookingThumbnail";
 
 export default function ActiveBookings(props) {
-  const { bookingsData, setBookingDash, setDashTab } = props;
+  const { bookingsData, setBookingDash, setDashTab, userData } = props;
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -50,6 +50,7 @@ export default function ActiveBookings(props) {
                 bookingsData.map((booking) => (
                   <>
                     <BookingThumbnail
+                      userData={userData}
                       setDashTab={setDashTab}
                       setBookingDash={setBookingDash}
                       booking={booking}
@@ -58,7 +59,6 @@ export default function ActiveBookings(props) {
                 ))}
             </div>
           </div>
-          {/* dog profiles here */}
         </div>
       </div>
     </>

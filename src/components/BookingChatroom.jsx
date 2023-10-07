@@ -24,7 +24,7 @@ export default function BookingChatroom(props) {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/bookings/${bookingId}/chatroom/messages`,
+        `https://dogwalking-api.onrender.com/bookings/${bookingId}/chatroom/messages`,
         {
           method: "POST",
           headers: {
@@ -49,7 +49,7 @@ export default function BookingChatroom(props) {
     }
   };
   const isWalkerGirl = bookingDetails.user_walker_id % 2 === 0;
-
+  const isOwnerGirl = bookingDetails.user_owner_id % 2 === 0;
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -62,29 +62,41 @@ export default function BookingChatroom(props) {
           console.log("Connected to ChatroomChannel!");
         },
         received(data) {
-          // Update your component's state when a new message arrives
-          // You can use your existing fetchChat() function, or directly append the new message to the messages state.
+          console.log("Received new message:", data);
           fetchChat();
         },
       }
     );
 
-    // Clean up the subscription on unmount
     return () => {
       subscription.unsubscribe();
     };
   }, [bookingDetails.id]);
+
   return (
     <>
       <div className="h-full flex flex-col justify-between">
         <div className="flex flex-col">
           <div className="h-[75px] bg-white flex items-center pb-4 border-b-[1px]">
-            <img
-              src={isWalkerGirl ? Woman : Boy}
-              alt={isWalkerGirl ? "Girl" : "Boy"}
-              className="place-self-center w-14 h-14 rounded-full"
-            />
-            <div className="">{bookingDetails.user_walker_name}</div>
+            {userData.kind == "2" ? (
+              <>
+                <img
+                  src={isWalkerGirl ? Woman : Boy}
+                  alt={isWalkerGirl ? "Girl" : "Boy"}
+                  className="place-self-center w-14 h-14 rounded-full"
+                />
+                <div className="">{bookingDetails.user_walker_name}</div>
+              </>
+            ) : (
+              <>
+                <img
+                  src={isOwnerGirl ? Woman : Boy}
+                  alt={isOwnerGirl ? "Girl" : "Boy"}
+                  className="place-self-center w-14 h-14 rounded-full"
+                />
+                <div className="">{bookingDetails.user_owner_name}</div>
+              </>
+            )}
           </div>
           <div className="max-h-[290px] flex-grow overflow-y-auto bg-slate-100 rounded-md px-2">
             {messages &&

@@ -18,7 +18,7 @@ export default function HandlerJobs(props) {
     const handlerId = handlerProfile.id;
     try {
       const response = await fetch(
-        `http://localhost:3000/dog_walking_jobs?user_id=${handlerId}`,
+        `https://dogwalking-api.onrender.com/dog_walking_jobs?user_id=${handlerId}`,
         {
           method: "GET",
           headers: {
@@ -51,7 +51,7 @@ export default function HandlerJobs(props) {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/dog_walking_jobs/${jobId}/schedules`,
+        `https://dogwalking-api.onrender.com/dog_walking_jobs/${jobId}/schedules`,
         {
           method: "GET",
           headers: {

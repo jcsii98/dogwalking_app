@@ -42,7 +42,7 @@ export default function ProfileCard(props) {
     const accessToken = localStorage.getItem("access-token");
 
     try {
-      const response = await fetch("http://localhost:3000/user", {
+      const response = await fetch("https://dogwalking-api.onrender.com/user", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

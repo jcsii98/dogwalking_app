@@ -7,7 +7,10 @@ export default function BookingDash(props) {
   const [bookingDetails, setBookingDetails] = useState();
   const [bookingDogs, setBookingDogs] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [showConfirm, setShowConfirm] = useState(false);
 
+  const [message, setMessage] = useState();
+  const [error, setError] = useState();
   const [messages, setMessages] = useState();
 
   const fetchBooking = async (event) => {
@@ -17,7 +20,7 @@ export default function BookingDash(props) {
     const bookingId = bookingDash.id;
     try {
       const response = await fetch(
-        `http://localhost:3000/bookings/${bookingId}`,
+        `https://dogwalking-api.onrender.com/bookings/${bookingId}`,
         {
           method: "GET",
           headers: {
@@ -49,7 +52,7 @@ export default function BookingDash(props) {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/bookings/${bookingId}/chatroom`,
+        `https://dogwalking-api.onrender.com/bookings/${bookingId}/chatroom`,
         {
           method: "GET",
           headers: {
@@ -71,6 +74,47 @@ export default function BookingDash(props) {
     }
   };
 
+  const confirmApprove = () => {
+    setShowConfirm(true);
+  };
+
+  const cancelApprove = () => {
+    setShowConfirm(false);
+  };
+
+  const handleApprove = async () => {
+    setMessage("Approving");
+    try {
+      const uid = localStorage.getItem("uid");
+      const client = localStorage.getItem("client");
+      const accessToken = localStorage.getItem("access-token");
+      const bookingId = bookingDash.id;
+
+      const response = await fetch(
+        `https://dogwalking-api.onrender.com/bookings/${bookingId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            uid: uid,
+            client: client,
+            "access-token": accessToken,
+          },
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        setMessage("Booking Approved");
+      } else {
+        setError("An error has occured 1");
+      }
+    } catch (error) {
+      console.log("Error:", error);
+      setError("An error has occured 2");
+    }
+  };
+
   useEffect(() => {
     const timer = setTimeout(() => {
       fetchBooking();
@@ -88,7 +132,12 @@ export default function BookingDash(props) {
             <div className="basis-1/3 p-6 border-[1px] rounded-md bg-white">
               <div className="font-bold text-xl">Booking Details</div>
               <div className="">
-                Dog Handler: {bookingDetails.user_walker_name}
+                Dog Handler:{" "}
+                {userData.kind == "2" ? (
+                  <>{bookingDetails.user_walker_name}</>
+                ) : (
+                  <>{bookingDetails.user_owner_name}</>
+                )}
               </div>
               <div className="">Booking ID: {bookingDetails.id}</div>
               <div className="">Date: {bookingDetails.date}</div>
@@ -117,6 +166,43 @@ export default function BookingDash(props) {
                     );
                   })}
               </div>
+              {userData.kind == "1" && bookingDash.status !== "approved" && (
+                <>
+                  {showConfirm && (
+                    <div className="pb-6 font-medium text-2xl">
+                      Confirm Booking?
+                    </div>
+                  )}
+                  <div className="flex w-full justify-around">
+                    {showConfirm ? (
+                      <>
+                        <button
+                          onClick={cancelApprove}
+                          type="button"
+                          className="hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-slate-600 py-2 my-2 rounded-lg border-slate-600 border-[1px] px-4"
+                        >
+                          No
+                        </button>
+                        <button
+                          onClick={handleApprove}
+                          type="button"
+                          className="hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-slate-600 py-2 my-2 rounded-lg border-slate-600 border-[1px] px-4"
+                        >
+                          Yes
+                        </button>
+                      </>
+                    ) : (
+                      <button
+                        onClick={confirmApprove}
+                        type="button"
+                        className="hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-slate-600 py-2 my-2 rounded-lg border-slate-600 border-[1px] px-4"
+                      >
+                        Approve
+                      </button>
+                    )}
+                  </div>
+                </>
+              )}
             </div>
             <div className="basis-2/3 p-6 border-[1px] rounded-md bg-white">
               <BookingChatroom

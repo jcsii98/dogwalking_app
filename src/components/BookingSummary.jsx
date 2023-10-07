@@ -19,16 +19,19 @@ export default function BookingSummary(props) {
 
     setMessage(`Creating booking for ${handlerJobData.name}`);
     try {
-      const response = await fetch("http://localhost:3000/bookings", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          uid: uid,
-          client: client,
-          "access-token": accessToken,
-        },
-        body: JSON.stringify(requestBody),
-      });
+      const response = await fetch(
+        "https://dogwalking-api.onrender.com/bookings",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            uid: uid,
+            client: client,
+            "access-token": accessToken,
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
       if (response.ok) {
         setMessage("");
         const responseData = await response.json();

@@ -45,7 +45,7 @@ export default function DogHandlerSearchForm(props) {
     setTimeout(async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/user_search?radius=${searchRange}`,
+          `https://dogwalking-api.onrender.com/user_search?radius=${searchRange}`,
           {
             method: "GET",
             headers: {
