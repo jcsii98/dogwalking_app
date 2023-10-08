@@ -83,7 +83,7 @@ export default function BookingChatroom(props) {
           switch (data.type) {
             case "message":
               console.log("Received new message:", data.message);
-              fetchChat();
+              fetchChat(bookingDash.booking.id);
               break;
             case "booking_deleted":
               console.log(`Booking with ID ${data.booking_id} was deleted.`);

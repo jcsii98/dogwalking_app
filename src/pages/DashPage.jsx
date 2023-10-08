@@ -135,6 +135,8 @@ export default function DashPage(props) {
   };
 
   const fetchChat = async (bookingId) => {
+    console.log("BookingId in fetchChat:", bookingId);
+
     const uid = localStorage.getItem("uid");
     const client = localStorage.getItem("client");
     const accessToken = localStorage.getItem("access-token");
