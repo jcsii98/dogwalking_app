@@ -7,8 +7,15 @@ import Message from "../General/Message";
 import cable from "../../services/cable";
 
 export default function BookingChatroom(props) {
-  const { bookingDetails, messages, userData, fetchChat } = props;
+  const { apiUrl, bookingChat, bookingDash, userData, fetchChat } = props;
+
+  // variable states
   const [inputValue, setInputValue] = useState("");
+  const [localMessages, setLocalMessages] = useState(
+    bookingChat.messages || []
+  );
+
+  // ui states
 
   const messagesEndRef = useRef(null);
 
@@ -21,11 +28,18 @@ export default function BookingChatroom(props) {
     const uid = localStorage.getItem("uid");
     const client = localStorage.getItem("client");
     const accessToken = localStorage.getItem("access-token");
-    const bookingId = bookingDetails.id;
+    const bookingId = bookingDash.booking.id;
+
+    const newMessage = {
+      content: inputValue,
+      user_id: userData.id,
+    };
+
+    setLocalMessages([...localMessages, newMessage]);
 
     try {
       const response = await fetch(
-        `https://dogwalking-api.onrender.com/bookings/${bookingId}/chatroom/messages`,
+        `${apiUrl}/bookings/${bookingId}/chatroom/messages`,
         {
           method: "POST",
           headers: {
@@ -40,31 +54,52 @@ export default function BookingChatroom(props) {
       if (response.ok) {
         const data = await response.json();
         console.log(data);
-        fetchChat();
+
         setInputValue("");
       } else {
         console.error("Server responded with an error:", data);
+        setLocalMessages(localMessages.filter((msg) => msg !== newMessage));
       }
     } catch (error) {
       console.log("Error:", error);
     }
   };
-  const isWalkerGirl = bookingDetails.user_walker_id % 2 === 0;
-  const isOwnerGirl = bookingDetails.user_owner_id % 2 === 0;
+  const isWalkerGirl = bookingDash.booking.user_walker_id % 2 === 0;
+  const isOwnerGirl = bookingDash.booking.user_owner_id % 2 === 0;
+
+  // scroll down
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  }, [localMessages]);
 
   useEffect(() => {
     const subscription = cable.subscriptions.create(
-      { channel: "ChatroomChannel", id: bookingDetails.id },
+      { channel: "ChatroomChannel", id: bookingDash.booking.id },
       {
         connected() {
           console.log("Connected to ChatroomChannel!");
         },
         received(data) {
-          console.log("Received new message:", data);
-          fetchChat();
+          switch (data.type) {
+            case "message":
+              console.log("Received new message:", data.message);
+              fetchChat();
+              break;
+            case "booking_deleted":
+              console.log(`Booking with ID ${data.booking_id} was deleted.`);
+              // Handle the deletion
+              break;
+            case "booking_updated":
+              console.log("Booking was updated:", data.booking);
+              // Handle the booking update
+              break;
+            case "booking_approved":
+              console.log("Booking was approved:", data.booking);
+              // Handle the booking approval
+              break;
+            default:
+              console.log("Received unknown data type:", data);
+          }
         },
       }
     );
@@ -72,12 +107,15 @@ export default function BookingChatroom(props) {
     return () => {
       subscription.unsubscribe();
     };
-  }, [bookingDetails.id]);
+  }, [bookingDash.booking.id]);
 
+  useEffect(() => {
+    setLocalMessages(bookingChat.messages);
+  }, [bookingChat.messages]);
   return (
     <>
-      <div className="h-full flex flex-col justify-between">
-        <div className="flex-grow flex flex-col">
+      <div className="flex flex-col justify-between p-6 border-[1px] rounded-md bg-white">
+        <div id="one" className="flex flex-col">
           <div className="h-auto bg-white flex items-center pb-4">
             {userData.kind == "2" ? (
               <>
@@ -89,7 +127,7 @@ export default function BookingChatroom(props) {
                   />
                 </div>
                 <div className="pl-4 font-medium text-lg">
-                  {bookingDetails.user_walker_name}
+                  {bookingDash.booking.user_walker_name}
                 </div>
               </>
             ) : (
@@ -101,17 +139,21 @@ export default function BookingChatroom(props) {
                     className="place-self-center w-14 h-14 rounded-full"
                   />
                 </div>
-                <div className="pl-4">{bookingDetails.user_owner_name}</div>
+                <div className="pl-4">
+                  {bookingDash.booking.user_owner_name}
+                </div>
               </>
             )}
           </div>
-          <div className="h-[230px] overflow-y-auto bg-slate-300 rounded-md py-4 px-4 scroll-container">
-            <div className="flex flex-col justify-end">
-              {messages &&
-                messages.map((message) => (
-                  <>
-                    <Message userData={userData} message={message} />
-                  </>
+          <div className="flex flex-col justify-end h-[300px] flex-grow overflow-y-auto bg-slate-300 rounded-md py-4 px-4 scroll-container">
+            <div className="flex flex-col">
+              {localMessages &&
+                localMessages.map((message) => (
+                  <Message
+                    userData={userData}
+                    message={message}
+                    key={message.id}
+                  />
                 ))}
             </div>
 
@@ -119,7 +161,7 @@ export default function BookingChatroom(props) {
           </div>
         </div>
 
-        <div className="mt-4 h-[40px]">
+        <div id="2" className="mt-4 h-[40px]">
           <form onSubmit={handleSubmit} className="flex items-center">
             <input
               placeholder="Enter message"

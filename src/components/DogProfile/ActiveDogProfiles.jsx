@@ -2,7 +2,7 @@ import { BsChevronDown } from "react-icons/bs";
 import React, { useState, useEffect } from "react";
 import DogProfileThumbnail from "./DogProfileThumbnail";
 export default function ActiveDogProfiles(props) {
-  const { dogProfilesData, setDashTab, setDogProfile } = props;
+  const { dogProfilesData, setDashTab, setDogProfile, apiUrl } = props;
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
@@ -24,7 +24,7 @@ export default function ActiveDogProfiles(props) {
               - {dogProfilesData?.length || 0}
             </div>
           </div>
-          {dogProfilesData && dogProfilesData.length == 1 && (
+          {dogProfilesData && dogProfilesData.length > 0 && (
             <>
               <BsChevronDown
                 className={`h-6 w-6 transition-all duration-500 text-black ${
@@ -46,6 +46,7 @@ export default function ActiveDogProfiles(props) {
               {dogProfilesData &&
                 dogProfilesData.map((dog) => (
                   <DogProfileThumbnail
+                    apiUrl={apiUrl}
                     key={dog.id}
                     setDashTab={setDashTab}
                     setDogProfile={setDogProfile}

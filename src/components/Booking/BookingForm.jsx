@@ -5,6 +5,9 @@ import BookingSummary from "./BookingSummary";
 
 export default function BookingForm(props) {
   const {
+    apiUrl,
+    fetchBooking,
+    fetchChat,
     setDashTab,
     setIsCreating,
     dogProfilesData,
@@ -20,7 +23,7 @@ export default function BookingForm(props) {
 
   const questions = [
     "Who is/are going on the walk?",
-    "When is the walk? (yyyy-mm-dd)",
+    "When is the walk?",
     "How long is the walk? (hrs)",
   ];
 
@@ -161,7 +164,7 @@ export default function BookingForm(props) {
                 <>
                   <input
                     className="w-full focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md py-2 px-2"
-                    type="text"
+                    type={currentQuestionIndex == 1 ? "date" : "text"}
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                   />
@@ -190,6 +193,9 @@ export default function BookingForm(props) {
         {activeTab == 2 && (
           <>
             <BookingSummary
+              apiUrl={apiUrl}
+              fetchBooking={fetchBooking}
+              fetchChat={fetchChat}
               setBookingDetails={setBookingDetails}
               setBookingDash={setBookingDash}
               setDashTab={setDashTab}

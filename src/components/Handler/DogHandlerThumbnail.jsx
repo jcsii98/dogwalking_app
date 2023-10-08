@@ -1,7 +1,7 @@
 import Boy from "../../assets/boy.png";
 import Woman from "../../assets/woman.png";
 export default function DogHandlerThumbnail(props) {
-  const { handler, setDashTab, setHandlerProfile } = props;
+  const { handler, setDashTab, setHandlerProfile, apiUrl } = props;
 
   const isGirl = handler.id % 2 === 0;
 

@@ -9,6 +9,9 @@ export default function HandlerJobs(props) {
     setDashTab,
     setBookingDash,
     setBookingDetails,
+    fetchBooking,
+    fetchChat,
+    apiUrl,
   } = props;
   const [isLoading, setIsLoading] = useState(true);
   const [handlerJobData, setHandlerJobData] = useState();
@@ -24,7 +27,7 @@ export default function HandlerJobs(props) {
     const handlerId = handlerProfile.id;
     try {
       const response = await fetch(
-        `https://dogwalking-api.onrender.com/dog_walking_jobs?user_id=${handlerId}`,
+        `${apiUrl}/dog_walking_jobs?user_id=${handlerId}`,
         {
           method: "GET",
           headers: {
@@ -57,7 +60,7 @@ export default function HandlerJobs(props) {
 
     try {
       const response = await fetch(
-        `https://dogwalking-api.onrender.com/dog_walking_jobs/${jobId}/schedules`,
+        `${apiUrl}/dog_walking_jobs/${jobId}/schedules`,
         {
           method: "GET",
           headers: {
@@ -171,6 +174,9 @@ export default function HandlerJobs(props) {
               {isCreating && (
                 <>
                   <BookingForm
+                    apiUrl={apiUrl}
+                    fetchBooking={fetchBooking}
+                    fetchChat={fetchChat}
                     setBookingDetails={setBookingDetails}
                     setBookingDash={setBookingDash}
                     setDashTab={setDashTab}

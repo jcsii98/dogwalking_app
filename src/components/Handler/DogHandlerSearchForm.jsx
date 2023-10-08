@@ -5,7 +5,8 @@ import LoadingComponent from "../General/LoadingComponent";
 import DogHandlerThumbnail from "./DogHandlerThumbnail";
 
 export default function DogHandlerSearchForm(props) {
-  const { userData, setDashTab, setHandlerProfile, dogProfilesData } = props;
+  const { userData, setDashTab, setHandlerProfile, dogProfilesData, apiUrl } =
+    props;
   const [activeTab, setActiveTab] = useState(1);
   const [searchRange, setSearchRange] = useState("");
   const [message, setMessage] = useState();
@@ -45,7 +46,7 @@ export default function DogHandlerSearchForm(props) {
     setTimeout(async () => {
       try {
         const response = await fetch(
-          `https://dogwalking-api.onrender.com/user_search?radius=${searchRange}`,
+          `${apiUrl}/user_search?radius=${searchRange}`,
           {
             method: "GET",
             headers: {

@@ -9,7 +9,7 @@ import AddressAutofill from "./AddressAutofill.jsx";
 import ResourceRestricted from "./ResourceRestricted";
 
 export default function ProfileCard(props) {
-  const { userData, setUserData } = props;
+  const { userData, setUserData, apiUrl } = props;
 
   const [isEditing, setIsEditing] = useState(false);
   const [streetAddress, setStreetAddress] = useState("");
@@ -42,7 +42,7 @@ export default function ProfileCard(props) {
     const accessToken = localStorage.getItem("access-token");
 
     try {
-      const response = await fetch("https://dogwalking-api.onrender.com/user", {
+      const response = await fetch(`${apiUrl}/user`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -130,6 +130,7 @@ export default function ProfileCard(props) {
                   </div>
                   <div className="w-full">
                     <AddressAutofill
+                      apiUrl={apiUrl}
                       onSelected={handleAddressSelected}
                       onInputChange={handleInputChange}
                     />

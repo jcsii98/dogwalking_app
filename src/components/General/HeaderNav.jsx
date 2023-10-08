@@ -1,13 +1,24 @@
 export default function HeaderNav(props) {
   const {
+    setIsOwnerSignup,
     userData,
     setShowForm,
     isLoggedIn,
     setIsLoggedIn,
     setActiveNavTab,
     activeNavTab,
+    apiUrl,
   } = props;
 
+  const handleOwnerSignup = () => {
+    setIsOwnerSignup(true);
+    setShowForm(true);
+  };
+
+  const handleWalkerSignup = () => {
+    setIsOwnerSignup(false);
+    setShowForm(true);
+  };
   const handleSignOut = () => {
     setIsLoggedIn(false);
     localStorage.clear();
@@ -29,14 +40,18 @@ export default function HeaderNav(props) {
                     </button>
                   </li>
                   <li>
-                    <button className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-slate-600 py-2 my-2 rounded-lg border-slate-600 border-[1px] px-4">
+                    <button
+                      type="button"
+                      onClick={() => handleWalkerSignup()}
+                      className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-slate-600 py-2 my-2 rounded-lg border-slate-600 border-[1px] px-4"
+                    >
                       Become a Dog Walker
                     </button>
                   </li>
                   <li>
                     <button
                       type="button"
-                      onClick={() => setShowForm(true)}
+                      onClick={() => handleOwnerSignup()}
                       className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-slate-600 py-2 my-2 rounded-lg border-slate-600 border-[1px] px-4"
                     >
                       Get Started

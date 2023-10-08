@@ -5,11 +5,14 @@ import HandlerJobs from "./HandlerJobs";
 
 export default function HandlerProfile(props) {
   const {
+    fetchBooking,
+    fetchChat,
     handlerProfile,
     dogProfilesData,
     setDashTab,
     setBookingDash,
     setBookingDetails,
+    apiUrl,
   } = props;
 
   const isGirl = handlerProfile.id % 2 === 0;
@@ -36,6 +39,9 @@ export default function HandlerProfile(props) {
         </div>
         <div className="basis-2/3 flex flex-col">
           <HandlerJobs
+            apiUrl={apiUrl}
+            fetchBooking={fetchBooking}
+            fetchChat={fetchChat}
             setBookingDetails={setBookingDetails}
             setBookingDash={setBookingDash}
             setDashTab={setDashTab}

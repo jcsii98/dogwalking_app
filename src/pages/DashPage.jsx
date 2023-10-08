@@ -7,19 +7,24 @@ import HandlerProfile from "../components/Handler/HandlerProfile";
 import ActiveBookings from "../components/General/ActiveBookings";
 import BookingDash from "../components/Booking/BookingDash";
 import ActiveDogProfiles from "../components/DogProfile/ActiveDogProfiles";
-import Job from "../components/General/Job";
+import Job from "../components/Job/Job";
+import JobForm from "../components/Job/JobForm";
 
 export default function DashPage(props) {
-  const { userData, job } = props;
+  const { userData, job, fetchJob, apiUrl } = props;
+
+  // active dog profiles & bookings
   const [dogProfilesData, setDogProfilesData] = useState();
   const [bookingsData, setBookingsData] = useState();
+
+  // page UI states
   const [isLoading, setIsLoading] = useState(true);
-
   const [dashTab, setDashTab] = useState("Home");
-  const [dogProfile, setDogProfile] = useState();
 
+  // focus dogProfile and Booking and handlerProfile
+  const [dogProfile, setDogProfile] = useState();
   const [bookingDash, setBookingDash] = useState();
-  const [bookingDetails, setBookingDetails] = useState();
+  const [bookingChat, setBookingChat] = useState();
   const [handlerProfile, setHandlerProfile] = useState();
 
   const checkBookings = async () => {
@@ -35,10 +40,12 @@ export default function DashPage(props) {
 
     let url;
     if (userData.kind == "2") {
-      url = "https://dogwalking-api.onrender.com/bookings";
-    } else {
+      url = `${apiUrl}/bookings`;
+    } else if (job) {
       const jobId = job.id;
-      url = `https://dogwalking-api.onrender.com/bookings?dog_walking_job_id=${jobId}`;
+      url = `${apiUrl}/bookings?dog_walking_job_id=${jobId}`;
+    } else {
+      return;
     }
 
     try {
@@ -69,7 +76,7 @@ export default function DashPage(props) {
       return; // If user kind isn't 2, don't proceed with the request
     }
 
-    const url = "https://dogwalking-api.onrender.com/dog_profiles";
+    const url = `${apiUrl}/dog_profiles`;
     const headers = {
       "Content-Type": "application/json",
       uid,
@@ -101,10 +108,66 @@ export default function DashPage(props) {
     }
   };
 
+  const fetchBooking = async (bookingId) => {
+    const uid = localStorage.getItem("uid");
+    const client = localStorage.getItem("client");
+    const accessToken = localStorage.getItem("access-token");
+
+    try {
+      const response = await fetch(`${apiUrl}/bookings/${bookingId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          uid: uid,
+          client: client,
+          "access-token": accessToken,
+        },
+      });
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log(responseData);
+        setBookingDash(responseData);
+      } else {
+      }
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
+
+  const fetchChat = async (bookingId) => {
+    const uid = localStorage.getItem("uid");
+    const client = localStorage.getItem("client");
+    const accessToken = localStorage.getItem("access-token");
+
+    try {
+      const response = await fetch(`${apiUrl}/bookings/${bookingId}/chatroom`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          uid: uid,
+          client: client,
+          "access-token": accessToken,
+        },
+      });
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log(responseData);
+        setBookingChat(responseData);
+      } else {
+      }
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await Promise.all([checkDogProfiles(), checkBookings()]);
+        // If userData.kind is "2", await checkDogProfiles, otherwise resolve immediately
+        const dogProfilesPromise =
+          userData.kind === "2" ? checkDogProfiles() : Promise.resolve();
+
+        await Promise.all([dogProfilesPromise, checkBookings()]);
       } catch (error) {
         console.error("Error when fetching data:", error);
       } finally {
@@ -117,6 +180,7 @@ export default function DashPage(props) {
 
     return () => clearTimeout(timer);
   }, []);
+
   return (
     <>
       {isLoading ? (
@@ -133,32 +197,40 @@ export default function DashPage(props) {
                 <>
                   {dashTab == "Home" && (
                     <>
-                      <div className="flex flex-col">
-                        <div className="">
+                      <div className="flex justify-between space-x-20">
+                        <div className="basis-1/3 flex flex-col">
+                          {job && (
+                            <>
+                              <Job
+                                apiUrl={apiUrl}
+                                job={job}
+                                fetchJob={fetchJob}
+                              />
+                            </>
+                          )}
+
+                          {!job && (
+                            <>
+                              <div className="bg-white rounded-md p-6 border-slate-300 border-[1px]">
+                                <JobForm
+                                  apiUrl={apiUrl}
+                                  fetchJob={fetchJob}
+                                  userData={userData}
+                                />
+                              </div>
+                            </>
+                          )}
+                        </div>
+                        <div className="flex flex-col basis-2/3">
                           <ActiveBookings
+                            apiUrl={apiUrl}
+                            fetchChat={fetchChat}
+                            fetchBooking={fetchBooking}
                             userData={userData}
                             setDashTab={setDashTab}
                             bookingsData={bookingsData}
                             setBookingDash={setBookingDash}
                           />
-                        </div>
-                        <div className="flex flex-col">
-                          {/* <ActiveDogProfiles
-                            setDogProfile={setDogProfile}
-                            setDashTab={setDashTab}
-                            dogProfilesData={dogProfilesData}
-                          /> */}
-                          <Job />
-                          <div className="text-md text-slate-700 font-medium pb-2">
-                            <>Setting up a Job</>
-                          </div>
-                          <div className="bg-white rounded-md p-6 border-slate-300 border-[1px]">
-                            {/* <DogProfileForm
-                              checkDogProfiles={checkDogProfiles}
-                              setDogProfile={setDogProfile}
-                              setDashTab={setDashTab}
-                            /> */}
-                          </div>
                         </div>
                       </div>
                     </>
@@ -166,6 +238,12 @@ export default function DashPage(props) {
                   {dashTab == "Booking Dash" && (
                     <>
                       <BookingDash
+                        apiUrl={apiUrl}
+                        dogProfilesData={dogProfilesData}
+                        bookingChat={bookingChat}
+                        fetchChat={fetchChat}
+                        fetchBooking={fetchBooking}
+                        checkBookings={checkBookings}
                         userData={userData}
                         setDashTab={setDashTab}
                         bookingDash={bookingDash}
@@ -183,6 +261,9 @@ export default function DashPage(props) {
                       <div className="flex justify-between space-x-20">
                         <div className="basis-1/3 flex flex-col">
                           <ActiveBookings
+                            apiUrl={apiUrl}
+                            fetchChat={fetchChat}
+                            fetchBooking={fetchBooking}
                             userData={userData}
                             setDashTab={setDashTab}
                             bookingsData={bookingsData}
@@ -192,6 +273,7 @@ export default function DashPage(props) {
                             <>Finding nearby dog walkers</>
                           </div>
                           <DogHandlerSearchForm
+                            apiUrl={apiUrl}
                             dogProfilesData={dogProfilesData}
                             setHandlerProfile={setHandlerProfile}
                             setDashTab={setDashTab}
@@ -200,6 +282,7 @@ export default function DashPage(props) {
                         </div>
                         <div className="basis-2/3 flex flex-col">
                           <ActiveDogProfiles
+                            apiUrl={apiUrl}
                             setDogProfile={setDogProfile}
                             setDashTab={setDashTab}
                             dogProfilesData={dogProfilesData}
@@ -209,6 +292,7 @@ export default function DashPage(props) {
                           </div>
                           <div className="bg-white rounded-md p-6 border-slate-300 border-[1px]">
                             <DogProfileForm
+                              apiUrl={apiUrl}
                               checkDogProfiles={checkDogProfiles}
                               setDogProfile={setDogProfile}
                               setDashTab={setDashTab}
@@ -221,6 +305,7 @@ export default function DashPage(props) {
                   {dashTab == "Dog Profile" && (
                     <>
                       <DogProfile
+                        apiUrl={apiUrl}
                         checkDogProfiles={checkDogProfiles}
                         setDashTab={setDashTab}
                         setDogProfile={setDogProfile}
@@ -231,7 +316,9 @@ export default function DashPage(props) {
                   {dashTab == "Handler Profile" && (
                     <>
                       <HandlerProfile
-                        setBookingDetails={setBookingDetails}
+                        apiUrl={apiUrl}
+                        fetchBooking={fetchBooking}
+                        fetchChat={fetchChat}
                         setBookingDash={setBookingDash}
                         setDashTab={setDashTab}
                         dogProfilesData={dogProfilesData}
@@ -242,8 +329,11 @@ export default function DashPage(props) {
                   {dashTab == "Booking Dash" && (
                     <>
                       <BookingDash
-                        bookingDetails={bookingDetails}
-                        setBookingDetails={setBookingDetails}
+                        apiUrl={apiUrl}
+                        dogProfilesData={dogProfilesData}
+                        bookingChat={bookingChat}
+                        fetchChat={fetchChat}
+                        fetchBooking={fetchBooking}
                         checkBookings={checkBookings}
                         userData={userData}
                         setDashTab={setDashTab}

@@ -10,10 +10,13 @@ export default function Root() {
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState(null);
   const [showForm, setShowForm] = useState(false);
+  const [isOwnerSignup, setIsOwnerSignup] = useState();
+
   const [job, setJob] = useState();
 
   const [activeNavTab, setActiveNavTab] = useState(1);
 
+  const apiUrl = "https://dogwalking-api.onrender.com";
   const rememberMe = async () => {
     const uid = localStorage.getItem("uid");
     const client = localStorage.getItem("client");
@@ -21,17 +24,14 @@ export default function Root() {
 
     if (uid && client && accessToken) {
       try {
-        const response = await fetch(
-          "https://dogwalking-api.onrender.com/user/",
-          {
-            method: "GET",
-            headers: {
-              uid: uid,
-              client: client,
-              "access-token": accessToken,
-            },
-          }
-        );
+        const response = await fetch(`${apiUrl}/user/`, {
+          method: "GET",
+          headers: {
+            uid: uid,
+            client: client,
+            "access-token": accessToken,
+          },
+        });
         if (response.ok) {
           const responseData = await response.json();
           console.log(responseData);
@@ -58,22 +58,24 @@ export default function Root() {
     const accessToken = localStorage.getItem("access-token");
     if (userData.kind == "1") {
       try {
-        const response = await fetch(
-          "https://dogwalking-api.onrender.com/dog_walking_jobs",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              uid: uid,
-              client: client,
-              "access-token": accessToken,
-            },
-          }
-        );
+        const response = await fetch(`${apiUrl}/dog_walking_jobs`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            uid: uid,
+            client: client,
+            "access-token": accessToken,
+          },
+        });
         if (response.ok) {
           const data = await response.json();
           console.log(data);
-          setJob(data.data[0]);
+          if (data.message) {
+            console.log(data.message);
+            setJob(null);
+          } else {
+            setJob(data.data[0]);
+          }
         } else {
         }
       } catch (error) {
@@ -107,6 +109,8 @@ export default function Root() {
         <>
           <div className="flex flex-col bg-[#f4f2f3] w-screen h-screen overflow-hidden">
             <HeaderNav
+              apiUrl={apiUrl}
+              setIsOwnerSignup={setIsOwnerSignup}
               userData={userData}
               setIsLoggedIn={setIsLoggedIn}
               isLoggedIn={isLoggedIn}
@@ -118,12 +122,18 @@ export default function Root() {
                 <div className="flex-grow">
                   {activeNavTab == 2 && (
                     <>
-                      <DashPage job={job} userData={userData} />
+                      <DashPage
+                        apiUrl={apiUrl}
+                        fetchJob={fetchJob}
+                        job={job}
+                        userData={userData}
+                      />
                     </>
                   )}
                   {activeNavTab == 1 && (
                     <>
                       <MyAccount
+                        apiUrl={apiUrl}
                         setUserData={setUserData}
                         userData={userData}
                         setIsLoggedIn={setIsLoggedIn}
@@ -135,6 +145,8 @@ export default function Root() {
             ) : (
               <>
                 <HomePage
+                  apiUrl={apiUrl}
+                  isOwnerSignup={isOwnerSignup}
                   showForm={showForm}
                   setShowForm={setShowForm}
                   userData={userData}

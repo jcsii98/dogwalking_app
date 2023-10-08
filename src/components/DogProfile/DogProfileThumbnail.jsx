@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import DogPng from "../../assets/dog.png";
 
 export default function DogProfileThumbnail(props) {
-  const { dog, setDogProfile, setDashTab } = props;
+  const { dog, setDogProfile, setDashTab, apiUrl } = props;
   const [isHovered, setIsHovered] = useState(false);
 
   const handleClick = () => {

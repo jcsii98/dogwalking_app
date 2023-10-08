@@ -3,6 +3,7 @@ import DogProfileSummary from "./DogProfileSummary";
 
 export default function DogProfileForm(props) {
   const {
+    apiUrl,
     setShowSideBtns,
     setDashTab,
     setDogProfile,
@@ -180,6 +181,7 @@ export default function DogProfileForm(props) {
         {activeTab == 3 && (
           <>
             <DogProfileSummary
+              apiUrl={apiUrl}
               setShowSideBtns={setShowSideBtns}
               checkDogProfiles={checkDogProfiles}
               dogUpdate={dogUpdate}

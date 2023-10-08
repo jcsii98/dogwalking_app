@@ -1,10 +1,23 @@
 import dog1 from "../../assets/dog1.jpg";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 export default function AuthForm(props) {
-  const { setShowForm, setIsLoggedIn, setUserData } = props;
+  const { setShowForm, setIsLoggedIn, setUserData, isOwnerSignup, apiUrl } =
+    props;
   const [toggleAuth, setToggleAuth] = useState(true);
   const [message, setMessage] = useState();
   const [error, setError] = useState(null);
+  const [signInFormData, setSignInFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [signUpFormData, setSignUpFormData] = useState({
+    email: "",
+    name: "",
+    password: "",
+    password_confirmation: "",
+    kind: "",
+  });
 
   const handleToggleAuth = () => {
     setToggleAuth((prevToggle) => !prevToggle);
@@ -26,16 +39,13 @@ export default function AuthForm(props) {
       // This is the Sign Up Request
       try {
         // Assuming you're using the fetch API
-        const response = await fetch(
-          "https://dogwalking-api.onrender.com/auth/",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(signUpFormData),
-          }
-        );
+        const response = await fetch(`${apiUrl}/auth/`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(signUpFormData),
+        });
 
         const data = await response.json();
 
@@ -60,16 +70,13 @@ export default function AuthForm(props) {
       // This is the Sign In Request
       try {
         // Again, assuming you're using the fetch API
-        const response = await fetch(
-          "https://dogwalking-api.onrender.com/auth/sign_in",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(signInFormData),
-          }
-        );
+        const response = await fetch(`${apiUrl}/auth/sign_in`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(signInFormData),
+        });
 
         const data = await response.json();
         console.log(data);
@@ -79,6 +86,7 @@ export default function AuthForm(props) {
           console.log(data.errors);
         } else {
           console.log("Signed in as", signInFormData.email);
+          console.log(signUpFormData);
           setUserData(data.data);
           setMessage();
           localStorage.setItem("uid", response.headers.get("uid"));
@@ -95,19 +103,6 @@ export default function AuthForm(props) {
     }
   };
 
-  const [signInFormData, setSignInFormData] = useState({
-    email: "",
-    password: "",
-  });
-
-  const [signUpFormData, setSignUpFormData] = useState({
-    email: "",
-    name: "",
-    password: "",
-    password_confirmation: "",
-    kind: "2",
-  });
-
   const handleSignInChange = (e) => {
     const { name, value } = e.target;
     setSignInFormData((prevData) => ({
@@ -123,6 +118,14 @@ export default function AuthForm(props) {
       [name]: value,
     }));
   };
+
+  useEffect(() => {
+    if (isOwnerSignup) {
+      setSignUpFormData((prevData) => ({ ...prevData, kind: "2" }));
+    } else {
+      setSignUpFormData((prevData) => ({ ...prevData, kind: "1" }));
+    }
+  }, [isOwnerSignup]);
 
   return (
     <>

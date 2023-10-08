@@ -5,6 +5,8 @@ import dog2 from "../assets/dog2.jpg";
 
 export default function HomePage(props) {
   const {
+    apiUrl,
+    isOwnerSignup,
     showForm,
     setShowForm,
     userData,
@@ -20,6 +22,8 @@ export default function HomePage(props) {
         <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center">
           <div className="z-10">
             <AuthForm
+              apiUrl={apiUrl}
+              isOwnerSignup={isOwnerSignup}
               setUserData={setUserData}
               setIsLoggedIn={setIsLoggedIn}
               setShowForm={setShowForm}

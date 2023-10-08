@@ -3,7 +3,8 @@ import DogProfileForm from "./DogProfileForm";
 import React, { useState, useEffect } from "react";
 
 export default function DogProfile(props) {
-  const { dogProfile, setDashTab, setDogProfile, checkDogProfiles } = props;
+  const { apiUrl, dogProfile, setDashTab, setDogProfile, checkDogProfiles } =
+    props;
 
   const [showConfirm, setShowConfirm] = useState(false);
   const [showSideBtns, setShowSideBtns] = useState(true);
@@ -29,18 +30,15 @@ export default function DogProfile(props) {
     const accessToken = localStorage.getItem("access-token");
 
     try {
-      const response = await fetch(
-        `https://dogwalking-api.onrender.com/dog_profiles/${dogId}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            uid: uid,
-            client: client,
-            "access-token": accessToken,
-          },
-        }
-      );
+      const response = await fetch(`${apiUrl}/dog_profiles/${dogId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          uid: uid,
+          client: client,
+          "access-token": accessToken,
+        },
+      });
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -70,27 +68,27 @@ export default function DogProfile(props) {
             />
           </div>
         </div>
-        <table class="border-separate border-spacing-4">
+        <table className="border-separate border-spacing-4">
           <thead>
             <tr>
-              <th class="px-4">Age</th>
-              <th class="px-4">Weight (lbs)</th>
-              <th class="px-4">Breed</th>
-              <th class="px-4">Sex</th>
+              <th className="px-4">Age</th>
+              <th className="px-4">Weight (lbs)</th>
+              <th className="px-4">Breed</th>
+              <th className="px-4">Sex</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="border border-slate-600 py-2 px-4 rounded-md text-center">
+              <td className="border border-slate-600 py-2 px-4 rounded-md text-center">
                 {dogAge}
               </td>
-              <td class="border border-slate-600 py-2 px-4 rounded-md text-center">
+              <td className="border border-slate-600 py-2 px-4 rounded-md text-center">
                 {dogWeight}
               </td>
-              <td class="border border-slate-600 py-2 px-4 rounded-md text-center">
+              <td className="border border-slate-600 py-2 px-4 rounded-md text-center">
                 {dogBreed}
               </td>
-              <td class="border border-slate-600 py-2 px-4 rounded-md text-center">
+              <td className="border border-slate-600 py-2 px-4 rounded-md text-center">
                 {dogSex}
               </td>
             </tr>
@@ -135,6 +133,7 @@ export default function DogProfile(props) {
               )}
 
               <DogProfileForm
+                apiUrl={apiUrl}
                 checkDogProfiles={checkDogProfiles}
                 setDogProfile={setDogProfile}
                 setShowSideBtns={setShowSideBtns}

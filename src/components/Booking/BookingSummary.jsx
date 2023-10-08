@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 
 export default function BookingSummary(props) {
   const {
+    apiUrl,
     setDashTab,
+    fetchBooking,
+    fetchChat,
     handlerJobData,
     bookingData,
     setActiveTab,
     setBookingDash,
-    setBookingDetails,
   } = props;
 
   const [message, setMessage] = useState();
@@ -26,26 +28,26 @@ export default function BookingSummary(props) {
 
     setMessage(`Creating booking for ${handlerJobData.name}`);
     try {
-      const response = await fetch(
-        "https://dogwalking-api.onrender.com/bookings",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            uid: uid,
-            client: client,
-            "access-token": accessToken,
-          },
-          body: JSON.stringify(requestBody),
-        }
-      );
+      const response = await fetch(`${apiUrl}/bookings`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          uid: uid,
+          client: client,
+          "access-token": accessToken,
+        },
+        body: JSON.stringify(requestBody),
+      });
       if (response.ok) {
         setMessage("");
         const responseData = await response.json();
         console.log(responseData);
+
+        await Promise.all([
+          fetchBooking(responseData.id),
+          fetchChat(responseData.id),
+        ]);
         console.log("Setting Dash Tab to Booking Dash");
-        setBookingDash(responseData);
-        setBookingDetails(responseData);
         setDashTab("Booking Dash");
       } else {
         console.log("error 1");

@@ -3,7 +3,16 @@ import { BsChevronDown } from "react-icons/bs";
 import BookingThumbnail from "../Booking/BookingThumbnail";
 
 export default function ActiveBookings(props) {
-  const { bookingsData, setBookingDash, setDashTab, userData } = props;
+  const {
+    apiUrl,
+    bookingChat,
+    bookingsData,
+    setBookingDash,
+    setDashTab,
+    userData,
+    fetchBooking,
+    fetchChat,
+  } = props;
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -14,13 +23,15 @@ export default function ActiveBookings(props) {
                             ${bookingsData?.length && "cursor-pointer"}
                             `}
         tabIndex="0"
-        onClick={() => {
-          if (bookingsData?.length > 0) {
-            setIsOpen(!isOpen);
-          }
-        }}
       >
-        <div className="flex items-center justify-between w-full">
+        <div
+          onClick={() => {
+            if (bookingsData?.length > 0) {
+              setIsOpen(!isOpen);
+            }
+          }}
+          className="flex items-center justify-between w-full"
+        >
           <div className="font-bold text-xl flex">
             <div>Active Bookings</div>
             <div className="text-slate-500 pl-2">
@@ -49,6 +60,9 @@ export default function ActiveBookings(props) {
               {bookingsData &&
                 bookingsData.map((booking) => (
                   <BookingThumbnail
+                    apiUrl={apiUrl}
+                    fetchChat={fetchChat}
+                    fetchBooking={fetchBooking}
                     key={booking.id}
                     userData={userData}
                     setDashTab={setDashTab}
