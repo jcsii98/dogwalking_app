@@ -77,13 +77,9 @@ export default function BookingDash(props) {
           },
           received(data) {
             switch (data.type) {
-              case "user_connected":
-                console.log(`${data.user} has joined the chat!`);
-                setIsOnline(true);
-                break;
-              case "user_disconnected":
-                console.log(`${data.user} has left the chat!`);
-                setIsOnline(false);
+              case "users_online":
+                console.log("Online Users:", data.users);
+                setOnlineUsers(data.users);
                 break;
               case "booking_updated":
                 console.log("Booking was updated:", data.booking);
