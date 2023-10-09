@@ -22,7 +22,7 @@ export default function BookingForm(props) {
   const [activeTab, setActiveTab] = useState(1);
 
   const questions = [
-    "Who is/are going on the walk?",
+    "Who's going on the walk?",
     "When is the walk?",
     "How long is the walk? (hrs)",
   ];
@@ -126,34 +126,32 @@ export default function BookingForm(props) {
               </div>
               {currentQuestionIndex == 0 ? (
                 <>
-                  <div className="w-full h-[150px] bg-slate-100 rounded-md p-6 flex items-center">
+                  <div className="h-[150px] bg-slate-100 rounded-md p-6 flex items-center">
                     <div className="flex overflow-x-auto items-center space-x-10">
                       {dogProfilesData &&
                         dogProfilesData.map((dog) => (
                           <>
                             <div
                               onClick={() => handleClick(dog.id)}
-                              className={`p-4 rounded-md ${
-                                selectedDogIds.includes(dog.id)
-                                  ? "bg-slate-300"
-                                  : "bg-slate-200"
-                              }`}
+                              className="cursor-pointer font-medium text-sm flex-shrink-0 flex flex-col justify-center items-center space-y-4"
                               key={dog.id}
                             >
                               <div
-                                className="cursor-pointer font-medium text-sm flex-shrink-0 flex flex-col justify-center items-center space-y-4"
+                                className={`rounded-full h-16 w-16 flex items-center justify-center ${
+                                  selectedDogIds.includes(dog.id)
+                                    ? "bg-blue-300 hover:bg-slate-200"
+                                    : "bg-slate-200 hover:bg-blue-300"
+                                }`}
                                 key={dog.id}
                               >
                                 {" "}
-                                <div className="bg-white rounded-full">
-                                  <img
-                                    className="place-self-center w-14 h-14 rounded-full"
-                                    src={DogPng}
-                                    alt="Profile"
-                                  />
-                                </div>
-                                <div className="">{dog.name}</div>
+                                <img
+                                  className="place-self-center w-14 h-14 rounded-full"
+                                  src={DogPng}
+                                  alt="Profile"
+                                />
                               </div>
+                              <div className="">{dog.name}</div>
                             </div>
                           </>
                         ))}
@@ -203,16 +201,6 @@ export default function BookingForm(props) {
               bookingData={bookingData}
               handlerJobData={handlerJobData}
             />
-            <button
-              onClick={() => {
-                setActiveTab(1);
-              }}
-              className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
-              type="button"
-              // disabled={!inputValue.trim()}
-            >
-              Back
-            </button>
           </>
         )}
         {activeTab == 3 && <></>}

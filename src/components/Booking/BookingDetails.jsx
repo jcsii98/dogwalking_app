@@ -202,250 +202,258 @@ export default function BookingDetails(props) {
   }, [additionalDogs]);
   return (
     <>
-      <div className="flex items-center justify-between">
-        <div className="flex items-center">
-          {bookingDash.booking.status &&
-            bookingDash.booking.status == "approved" && (
-              <>
-                <MdVerified className="" />
-              </>
-            )}
-          <div className="font-bold text-xl">Booking Details</div>
+      <div className="p-6 border-[1px] rounded-md bg-white">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
+            {bookingDash.booking.status &&
+              bookingDash.booking.status == "approved" && (
+                <>
+                  <MdVerified className="" />
+                </>
+              )}
+
+            <div className="font-bold text-xl">Booking Details</div>
+          </div>
+
+          <RiDeleteBin6Line
+            className="cursor-pointer"
+            onClick={handleDeleteBooking}
+          />
         </div>
 
-        <RiDeleteBin6Line
-          className="cursor-pointer"
-          onClick={handleDeleteBooking}
-        />
-      </div>
-
-      <div className="flex space-x-4">
-        <div className="basis-1/2">
-          <div className="pt-2">
-            {userData.kind == "2" ? (
-              <>
-                <div className="text-base font-medium text-slate-600">
-                  Walker
-                </div>
-                <div className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2">
-                  {bookingDash.booking.user_walker_name}
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="text-base font-medium text-slate-600">
-                  Owner
-                </div>
-                <div className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2">
-                  {bookingDash.booking.user_owner_name}
-                </div>
-              </>
-            )}
-          </div>
-          <div className="pt-2">
-            <div className="text-base font-medium text-slate-600">Duration</div>
-            {isEditing ? (
-              <>
-                <input
-                  type="number"
-                  className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2"
-                  placeholder={bookingDash.booking.duration}
-                  value={duration}
-                  onChange={handleDurationChange}
-                ></input>
-              </>
-            ) : (
-              <>
-                <div className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2">
-                  {bookingDash.booking.duration}
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-
-        <div className="basis-1/2">
-          <div className="pt-2">
-            <div className="text-base font-medium text-slate-600">Amount</div>
-            <div className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2">
-              {bookingDash.booking.amount}
+        <div className="flex space-x-4">
+          <div className="basis-1/2">
+            <div className="pt-2">
+              {userData.kind == "2" ? (
+                <>
+                  <div className="text-base font-medium text-slate-600">
+                    Walker
+                  </div>
+                  <div className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2">
+                    {bookingDash.booking.user_walker_name}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="text-base font-medium text-slate-600">
+                    Owner
+                  </div>
+                  <div className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2">
+                    {bookingDash.booking.user_owner_name}
+                  </div>
+                </>
+              )}
             </div>
-          </div>
-          <div className="pt-2">
-            <div className="text-base font-medium text-slate-600">Date</div>
-            {isEditing ? (
-              <>
-                <input
-                  type="date"
-                  className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2"
-                  placeholder={bookingDash.booking.date}
-                  value={date}
-                  onChange={handleDateChange}
-                ></input>
-              </>
-            ) : (
-              <>
-                <div className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2">
-                  {bookingDash.booking.date}
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-      </div>
-
-      <div className="pt-4 font-bold text-xl">Booking Dogs</div>
-      <div className="bg-slate-100 rounded-md p-6 mt-4 flex items-center space-x-10">
-        {!isEditing && (
-          <>
-            {bookingDash.booking_dog_profiles &&
-              bookingDash.booking_dog_profiles.map((item) => (
-                <React.Fragment key={item.id}>
-                  <div
-                    onClick={isEditing ? () => removeDog(item.id) : null}
-                    className="font-medium text-sm flex-shrink-0 flex flex-col justify-center items-center space-y-4"
-                  >
-                    <div className="bg-slate-500  rounded-full w-20 h-20 flex justify-center items-center">
-                      <img
-                        src={DogPng}
-                        className="place-self-center w-16 h-16 rounded-full"
-                      />
-                    </div>
-                    <div className="">{item.dog_profile.name}</div>
-                  </div>
-                </React.Fragment>
-              ))}
-          </>
-        )}
-        {isEditing && !isAddingDog && (
-          <>
-            {bookingDash.booking_dog_profiles &&
-              bookingDash.booking_dog_profiles.map((item) => {
-                const dog = item.dog_profile;
-                const markedForRemoval = isBookingDogProfileMarkedForRemoval(
-                  item.id
-                );
-
-                console.log(
-                  "Dog ID:",
-                  item.id,
-                  "Marked for removal:",
-                  markedForRemoval
-                );
-
-                return (
-                  <div
-                    onClick={isEditing ? () => removeDog(item.id) : null}
-                    key={item.id}
-                    className="font-medium text-sm flex-shrink-0 flex flex-col justify-center items-center space-y-4"
-                  >
-                    <div
-                      className={
-                        isEditing
-                          ? markedForRemoval
-                            ? "cursor-pointer bg-red-300 hover:bg-slate-500 rounded-full w-20 h-20 flex justify-center items-center"
-                            : "cursor-pointer bg-slate-500 hover:bg-red-300 rounded-full w-20 h-20 flex justify-center items-center"
-                          : "bg-slate-500  rounded-full w-20 h-20 flex justify-center items-center"
-                      }
-                    >
-                      <img
-                        src={DogPng}
-                        className="place-self-center w-16 h-16 rounded-full"
-                      />
-                    </div>
-                    <div className="">{dog.name}</div>
-                  </div>
-                );
-              })}
-            <div className="font-medium text-sm flex-shrink-0 flex flex-col justify-center items-center space-y-4">
-              <div
-                onClick={toggleIsAddingDog}
-                className="cursor-pointer hover:bg-slate-400 bg-slate-300  rounded-full w-20 h-20 flex justify-center items-center"
-              >
-                <img
-                  src={Add}
-                  className="invert place-self-center w-10 h-10 rounded-full"
-                />
+            <div className="pt-2">
+              <div className="text-base font-medium text-slate-600">
+                Duration
               </div>
-              <div className="">Add Dog</div>
-            </div>
-          </>
-        )}
-        {isEditing && isAddingDog && (
-          <>
-            {dogProfilesData &&
-              (function () {
-                const filteredDogs = dogProfilesData.filter(
-                  (dog) => !bookedDogIds.includes(dog.id)
-                );
-
-                if (filteredDogs.length === 0) {
-                  // Return whatever you want to display when the list is empty
-                  return <div>No dogs available</div>;
-                }
-
-                return filteredDogs.map((dog) => (
-                  <div
-                    onClick={() => addDog(dog.id)}
-                    key={dog.id}
-                    className="font-medium text-sm flex-shrink-0 flex flex-col justify-center items-center space-y-4"
-                  >
-                    <div
-                      className={
-                        isDogMarkedForInclusion(dog.id)
-                          ? "bg-blue-300 rounded-full w-20 h-20 flex justify-center items-center"
-                          : "bg-slate-500 hover:bg-blue-300 rounded-full w-20 h-20 flex justify-center items-center"
-                      }
-                    >
-                      <img
-                        src={DogPng}
-                        className="place-self-center w-16 h-16 rounded-full"
-                      />
-                    </div>
-                    <div className="">{dog.name}</div>
+              {isEditing ? (
+                <>
+                  <input
+                    type="number"
+                    className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2"
+                    placeholder={bookingDash.booking.duration}
+                    value={duration}
+                    onChange={handleDurationChange}
+                  ></input>
+                </>
+              ) : (
+                <>
+                  <div className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2">
+                    {bookingDash.booking.duration || "TBD"}
                   </div>
-                ));
-              })()}
-          </>
-        )}
-      </div>
-      {userData.kind == "1" && bookingDash.booking.status !== "approved" && (
-        <>
-          <div className="mt-4 border-t-[1px] pt-4">
-            <button
-              onClick={handleApproveBooking}
-              className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 rounded-lg border-black border-[1px] px-4"
-              type="button"
-            >
-              Approve
-            </button>
+                </>
+              )}
+            </div>
           </div>
-        </>
-      )}
-      {userData.kind == "2" && bookingDash.booking.status !== "approved" && (
-        <>
-          <div className="flex mt-4 border-t-[1px] pt-4">
-            <button
-              onClick={toggleIsEditing}
-              className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 rounded-lg border-black border-[1px] px-4"
-              type="button"
-            >
-              {isEditing ? "Cancel" : "Edit"}
-            </button>
-            {isEditing && (
-              <>
+
+          <div className="basis-1/2">
+            <div className="pt-2">
+              <div className="text-base font-medium text-slate-600">Amount</div>
+              <div className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2">
+                {bookingDash.booking.amount}
+              </div>
+            </div>
+            <div className="pt-2">
+              <div className="text-base font-medium text-slate-600">Date</div>
+              {isEditing ? (
+                <>
+                  <input
+                    type="date"
+                    className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2"
+                    placeholder={bookingDash.booking.date}
+                    value={date}
+                    onChange={handleDateChange}
+                  ></input>
+                </>
+              ) : (
+                <>
+                  <div className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2">
+                    {bookingDash.booking.date || "TBD"}
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="pt-4 font-bold text-xl">Booking Dogs</div>
+        <div className="bg-slate-100 rounded-md p-6 mt-4 flex items-center space-x-10">
+          {!isEditing && (
+            <>
+              {bookingDash.booking_dog_profiles &&
+                bookingDash.booking_dog_profiles.map((item) => (
+                  <React.Fragment key={item.id}>
+                    <div
+                      onClick={isEditing ? () => removeDog(item.id) : null}
+                      className="font-medium text-sm flex-shrink-0 flex flex-col justify-center items-center space-y-4"
+                    >
+                      <div className="bg-slate-500  rounded-full w-20 h-20 flex justify-center items-center">
+                        <img
+                          src={DogPng}
+                          className="place-self-center w-16 h-16 rounded-full"
+                        />
+                      </div>
+                      <div className="">{item.dog_profile.name}</div>
+                    </div>
+                  </React.Fragment>
+                ))}
+            </>
+          )}
+          {isEditing && !isAddingDog && (
+            <>
+              {bookingDash.booking_dog_profiles &&
+                bookingDash.booking_dog_profiles.map((item) => {
+                  const dog = item.dog_profile;
+                  const markedForRemoval = isBookingDogProfileMarkedForRemoval(
+                    item.id
+                  );
+
+                  console.log(
+                    "Dog ID:",
+                    item.id,
+                    "Marked for removal:",
+                    markedForRemoval
+                  );
+
+                  return (
+                    <div
+                      onClick={isEditing ? () => removeDog(item.id) : null}
+                      key={item.id}
+                      className="font-medium text-sm flex-shrink-0 flex flex-col justify-center items-center space-y-4"
+                    >
+                      <div
+                        className={
+                          isEditing
+                            ? markedForRemoval
+                              ? "cursor-pointer bg-red-300 hover:bg-slate-500 rounded-full w-20 h-20 flex justify-center items-center"
+                              : "cursor-pointer bg-slate-500 hover:bg-red-300 rounded-full w-20 h-20 flex justify-center items-center"
+                            : "bg-slate-500  rounded-full w-20 h-20 flex justify-center items-center"
+                        }
+                      >
+                        <img
+                          src={DogPng}
+                          className="place-self-center w-16 h-16 rounded-full"
+                        />
+                      </div>
+                      <div className="">{dog.name}</div>
+                    </div>
+                  );
+                })}
+              <div className="font-medium text-sm flex-shrink-0 flex flex-col justify-center items-center space-y-4">
+                <div
+                  onClick={toggleIsAddingDog}
+                  className="cursor-pointer hover:bg-slate-400 bg-slate-300  rounded-full w-20 h-20 flex justify-center items-center"
+                >
+                  <img
+                    src={Add}
+                    className="invert place-self-center w-10 h-10 rounded-full"
+                  />
+                </div>
+                <div className="">Add Dog</div>
+              </div>
+            </>
+          )}
+          {isEditing && isAddingDog && (
+            <>
+              {dogProfilesData &&
+                (function () {
+                  const filteredDogs = dogProfilesData.filter(
+                    (dog) => !bookedDogIds.includes(dog.id)
+                  );
+
+                  if (filteredDogs.length === 0) {
+                    // Return whatever you want to display when the list is empty
+                    return <div>No dogs available</div>;
+                  }
+
+                  return filteredDogs.map((dog) => (
+                    <div
+                      onClick={() => addDog(dog.id)}
+                      key={dog.id}
+                      className="font-medium text-sm flex-shrink-0 flex flex-col justify-center items-center space-y-4"
+                    >
+                      <div
+                        className={
+                          isDogMarkedForInclusion(dog.id)
+                            ? "bg-blue-300 rounded-full w-20 h-20 flex justify-center items-center"
+                            : "bg-slate-500 hover:bg-blue-300 rounded-full w-20 h-20 flex justify-center items-center"
+                        }
+                      >
+                        <img
+                          src={DogPng}
+                          className="place-self-center w-16 h-16 rounded-full"
+                        />
+                      </div>
+                      <div className="">{dog.name}</div>
+                    </div>
+                  ));
+                })()}
+            </>
+          )}
+        </div>
+        {userData.kind == "1" &&
+          bookingDash.booking.status !== "approved" &&
+          bookingDash.booking.duration &&
+          bookingDash.booking.date && (
+            <>
+              <div className="mt-4 border-t-[1px] pt-4">
                 <button
-                  onClick={handleSubmit}
+                  onClick={handleApproveBooking}
                   className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 rounded-lg border-black border-[1px] px-4"
                   type="button"
                 >
-                  Save Changes
+                  Approve
                 </button>
-              </>
-            )}
-          </div>
-        </>
-      )}
+              </div>
+            </>
+          )}
+        {userData.kind == "2" && bookingDash.booking.status !== "approved" && (
+          <>
+            <div className="flex mt-4 border-t-[1px] pt-4">
+              <button
+                onClick={toggleIsEditing}
+                className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 rounded-lg border-black border-[1px] px-4"
+                type="button"
+              >
+                {isEditing ? "Cancel" : "Edit"}
+              </button>
+              {isEditing && (
+                <>
+                  <button
+                    onClick={handleSubmit}
+                    className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 rounded-lg border-black border-[1px] px-4"
+                    type="button"
+                  >
+                    Save Changes
+                  </button>
+                </>
+              )}
+            </div>
+          </>
+        )}
+      </div>
     </>
   );
 }

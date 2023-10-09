@@ -125,22 +125,41 @@ export default function HandlerJobs(props) {
             className={`mb-4 bg-white rounded-md p-6 border-slate-300 border-[1px]`}
             tabIndex="0"
           >
-            <div className="font-bold text-xl">{handlerJobData.name}</div>
-            <div className="flex flex-col pt-4">
-              {!isCreating && (
-                <>
-                  <div className="font-medium text-md">Basic Rates</div>
-                  <div className="">
-                    {"< 20 lbs"}: {handlerJobData.wgr1}
+            {!isCreating && (
+              <>
+                <div className="font-bold text-xl">{handlerJobData.name}</div>
+                <div className="font-medium text-md">Basic Rates</div>
+                <div className="flex flex-col justify-start items-start mt-2 p-6 rounded-md bg-slate-200">
+                  <div className="pb-4">
+                    <div className="font-medium pb-2 text-slate-700">
+                      {"< 20 lbs"}
+                    </div>
+                    <div className="bg-white focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md py-2 px-2 flex space-x-2">
+                      <p className="">{handlerJobData.wgr1}</p>{" "}
+                      <p className="text-slate-500">/ hr</p>
+                    </div>
                   </div>
-                  <div className="">
-                    {"< 60 lbs"}: {handlerJobData.wgr2}
+                  <div className="pb-4">
+                    <div className="font-medium pb-2 text-slate-700">
+                      {"< 60 lbs"}
+                    </div>
+                    <div className="bg-white focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md py-2 px-2 flex space-x-2">
+                      <p className="">{handlerJobData.wgr2}</p>{" "}
+                      <p className="text-slate-500">/ hr</p>
+                    </div>
                   </div>
-                  <div className="">
-                    {"> 60 lbs"}: {handlerJobData.wgr3}
+                  <div className="pb-4">
+                    <div className="font-medium pb-2 text-slate-700">
+                      {"> 60 lbs"}
+                    </div>
+                    <div className="bg-white focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md py-2 px-2 flex space-x-2">
+                      <p className="">{handlerJobData.wgr3}</p>{" "}
+                      <p className="text-slate-500">/ hr</p>
+                    </div>
                   </div>
+                </div>
 
-                  <div className="font-medium text-md">Preferred Schedules</div>
+                {/* <div className="font-medium text-md">Preferred Schedules</div>
                   <div className="flex space-x-4 overflow-x-auto max-w-[620px]">
                     {" "}
                     {schedules.map((schedule) => (
@@ -160,33 +179,32 @@ export default function HandlerJobs(props) {
                         </div>
                       </div>
                     ))}
-                  </div>
-                  <div className="pt-4">
-                    <button
-                      onClick={toggleCreate}
-                      className="font-medium hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
-                    >
-                      {isCreating ? <>Go back</> : <>Create booking</>}
-                    </button>
-                  </div>
-                </>
-              )}
-              {isCreating && (
-                <>
-                  <BookingForm
-                    apiUrl={apiUrl}
-                    fetchBooking={fetchBooking}
-                    fetchChat={fetchChat}
-                    setBookingDetails={setBookingDetails}
-                    setBookingDash={setBookingDash}
-                    setDashTab={setDashTab}
-                    handlerJobData={handlerJobData}
-                    setIsCreating={setIsCreating}
-                    dogProfilesData={dogProfilesData}
-                  />
-                </>
-              )}
-            </div>
+                  </div> */}
+                <div className="pt-4">
+                  <button
+                    onClick={toggleCreate}
+                    className="font-medium hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
+                  >
+                    Create booking
+                  </button>
+                </div>
+              </>
+            )}
+            {isCreating && (
+              <>
+                <BookingForm
+                  apiUrl={apiUrl}
+                  fetchBooking={fetchBooking}
+                  fetchChat={fetchChat}
+                  setBookingDetails={setBookingDetails}
+                  setBookingDash={setBookingDash}
+                  setDashTab={setDashTab}
+                  handlerJobData={handlerJobData}
+                  setIsCreating={setIsCreating}
+                  dogProfilesData={dogProfilesData}
+                />
+              </>
+            )}
           </div>
         </>
       )}

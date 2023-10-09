@@ -122,28 +122,26 @@ export default function Root() {
             />
             {isLoggedIn ? (
               <>
-                <div className="flex-grow">
-                  {activeNavTab == 2 && (
-                    <>
-                      <DashPage
-                        apiUrl={apiUrl}
-                        fetchJob={fetchJob}
-                        job={job}
-                        userData={userData}
-                      />
-                    </>
-                  )}
-                  {activeNavTab == 1 && (
-                    <>
-                      <MyAccount
-                        apiUrl={apiUrl}
-                        setUserData={setUserData}
-                        userData={userData}
-                        setIsLoggedIn={setIsLoggedIn}
-                      />
-                    </>
-                  )}
-                </div>
+                {activeNavTab == 2 && (
+                  <>
+                    <DashPage
+                      apiUrl={apiUrl}
+                      fetchJob={fetchJob}
+                      job={job}
+                      userData={userData}
+                    />
+                  </>
+                )}
+                {activeNavTab == 1 && (
+                  <>
+                    <MyAccount
+                      apiUrl={apiUrl}
+                      setUserData={setUserData}
+                      userData={userData}
+                      setIsLoggedIn={setIsLoggedIn}
+                    />
+                  </>
+                )}
               </>
             ) : (
               <>

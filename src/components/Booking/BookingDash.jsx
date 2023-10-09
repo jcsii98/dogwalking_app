@@ -118,9 +118,8 @@ export default function BookingDash(props) {
   }, [bookingDash.booking.id]);
   return (
     <>
-      <div className="flex justify-between space-x-20">
-        {" "}
-        <div className="basis-1/3 p-6 border-[1px] rounded-md bg-white">
+      <div className="flex justify-between space-x-20 align-start">
+        <div className="basis-1/3">
           <BookingDetails
             apiUrl={apiUrl}
             setDashTab={setDashTab}
