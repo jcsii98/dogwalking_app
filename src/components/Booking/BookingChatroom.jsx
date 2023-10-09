@@ -101,13 +101,12 @@ export default function BookingChatroom(props) {
                     className="place-self-center w-14 h-14 rounded-full"
                   />
                 </div>
-                <div className="pl-4">
+                <div className="pl-4 font-medium text-lg">
                   {bookingDash.booking.user_owner_name}
                 </div>
               </>
             )}
             <div
-              // className="rounded-full bg-green-300 w-[10px] h-[10px] ml-2"
               className={
                 onlineUsers.length == 2
                   ? "rounded-full bg-green-300 w-[10px] h-[10px] ml-2"
@@ -115,8 +114,8 @@ export default function BookingChatroom(props) {
               }
             ></div>
           </div>
-          <div className="flex flex-col justify-end h-[300px] flex-grow overflow-y-auto bg-slate-300 rounded-md py-4 px-4 scroll-container">
-            <div className="flex flex-col">
+          <div className="flex flex-col justify-end h-[300px] flex-grow bg-slate-300 rounded-md py-4 px-4 scroll-container">
+            <div className="flex flex-col pr-4 overflow-y-auto max-h-[300px] scroll-container">
               {localMessages &&
                 localMessages.map((message) => (
                   <Message
@@ -125,9 +124,8 @@ export default function BookingChatroom(props) {
                     key={message.id}
                   />
                 ))}
+              <div ref={messagesEndRef} />
             </div>
-
-            <div ref={messagesEndRef} />
           </div>
         </div>
 
@@ -141,7 +139,7 @@ export default function BookingChatroom(props) {
               className="pl-4 py-4 w-full rounded-full focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 h-[40px]"
             ></input>
             <button
-              className="ml-[12px] rounded-full p-[8px] border-[1px] bg-slate-400"
+              className="ml-[12px] rounded-full p-[8px] border-[1px] bg-slate-300 hover:bg-slate-400"
               type="submit"
             >
               <BiSolidSend size={25} style={{ color: "White" }} />
