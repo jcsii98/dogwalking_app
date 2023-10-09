@@ -6,7 +6,8 @@ import { BiSolidSend } from "react-icons/bi";
 import Message from "../General/Message";
 
 export default function BookingChatroom(props) {
-  const { apiUrl, bookingChat, bookingDash, userData, fetchChat } = props;
+  const { apiUrl, bookingChat, bookingDash, userData, fetchChat, isOnline } =
+    props;
 
   // variable states
   const [inputValue, setInputValue] = useState("");
@@ -19,7 +20,6 @@ export default function BookingChatroom(props) {
   };
 
   // ui states
-
   const messagesEndRef = useRef(null);
 
   const handleSubmit = async (event) => {
@@ -106,6 +106,13 @@ export default function BookingChatroom(props) {
                 </div>
               </>
             )}
+            <div
+              className={
+                isOnline
+                  ? "rounded-full bg-green-300 w-[10px] h-[10px] ml-2"
+                  : "rounded-full bg-red-300 w-[10px] h-[10px] ml-2"
+              }
+            ></div>
           </div>
           <div className="flex flex-col justify-end h-[300px] flex-grow overflow-y-auto bg-slate-300 rounded-md py-4 px-4 scroll-container">
             <div className="flex flex-col">

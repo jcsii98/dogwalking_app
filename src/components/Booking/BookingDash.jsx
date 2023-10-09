@@ -23,6 +23,7 @@ export default function BookingDash(props) {
   const [isEditing, setIsEditing] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const subscriptionRef = useRef(null); // Add this line
+  const [isOnline, setIsOnline] = useState(false);
 
   // variable states
   const [message, setMessage] = useState();
@@ -76,6 +77,14 @@ export default function BookingDash(props) {
           },
           received(data) {
             switch (data.type) {
+              case "user_connected":
+                console.log(`${data.user} has joined the chat!`);
+                setIsOnline(true);
+                break;
+              case "user_disconnected":
+                console.log(`${data.user} has left the chat!`);
+                setIsOnline(false);
+                break;
               case "booking_updated":
                 console.log("Booking was updated:", data.booking);
                 fetchBooking(data.booking.id);
