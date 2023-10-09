@@ -107,12 +107,12 @@ export default function BookingChatroom(props) {
               </>
             )}
             <div
-              className="rounded-full bg-green-300 w-[10px] h-[10px] ml-2"
-              // className={
-              //   isOnline
-              //     ? "rounded-full bg-green-300 w-[10px] h-[10px] ml-2"
-              //     : "rounded-full bg-red-300 w-[10px] h-[10px] ml-2"
-              // }
+              // className="rounded-full bg-green-300 w-[10px] h-[10px] ml-2"
+              className={
+                onlineUsers.length == 2
+                  ? "rounded-full bg-green-300 w-[10px] h-[10px] ml-2"
+                  : "rounded-full bg-red-300 w-[10px] h-[10px] ml-2"
+              }
             ></div>
           </div>
           <div className="flex flex-col justify-end h-[300px] flex-grow overflow-y-auto bg-slate-300 rounded-md py-4 px-4 scroll-container">
