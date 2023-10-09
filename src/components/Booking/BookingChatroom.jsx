@@ -6,7 +6,7 @@ import { BiSolidSend } from "react-icons/bi";
 import Message from "../General/Message";
 
 export default function BookingChatroom(props) {
-  const { apiUrl, bookingChat, bookingDash, userData, fetchChat, isOnline } =
+  const { apiUrl, bookingChat, bookingDash, userData, fetchChat, onlineUsers } =
     props;
 
   // variable states

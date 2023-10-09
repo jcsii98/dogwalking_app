@@ -23,7 +23,7 @@ export default function BookingDash(props) {
   const [isEditing, setIsEditing] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const subscriptionRef = useRef(null); // Add this line
-  const [isOnline, setIsOnline] = useState(false);
+  const [onlineUsers, setOnlineUsers] = useState([]);
 
   // variable states
   const [message, setMessage] = useState();
@@ -138,6 +138,7 @@ export default function BookingDash(props) {
         </div>
         <div className="basis-2/3">
           <BookingChatroom
+            onlineUsers={onlineUsers}
             apiUrl={apiUrl}
             bookingChat={bookingChat}
             bookingDash={bookingDash}
