@@ -422,30 +422,32 @@ export default function BookingDetails(props) {
           </div>
         </>
       )}
-      {userData.kind == "2" && (
-        <>
-          <div className="flex mt-4 border-t-[1px] pt-4">
-            <button
-              onClick={toggleIsEditing}
-              className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 rounded-lg border-black border-[1px] px-4"
-              type="button"
-            >
-              {isEditing ? "Cancel" : "Edit"}
-            </button>
-            {isEditing && (
-              <>
+      {userData.kind == "2" &&
+        bookingDash.booking.status !==
+          "approved"(
+            <>
+              <div className="flex mt-4 border-t-[1px] pt-4">
                 <button
-                  onClick={handleSubmit}
+                  onClick={toggleIsEditing}
                   className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 rounded-lg border-black border-[1px] px-4"
                   type="button"
                 >
-                  Save Changes
+                  {isEditing ? "Cancel" : "Edit"}
                 </button>
-              </>
-            )}
-          </div>
-        </>
-      )}
+                {isEditing && (
+                  <>
+                    <button
+                      onClick={handleSubmit}
+                      className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 rounded-lg border-black border-[1px] px-4"
+                      type="button"
+                    >
+                      Save Changes
+                    </button>
+                  </>
+                )}
+              </div>
+            </>
+          )}
     </>
   );
 }
