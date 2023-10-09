@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import DogPng from "../../assets/dog.png";
 import BookingChatroom from "./BookingChatroom";
 import BookingDetails from "./BookingDetails";
+import cable from "../../services/cable";
 
 export default function BookingDash(props) {
+  console.log("Rendering BookingDash...");
   const {
     apiUrl,
     dogProfilesData,
@@ -14,19 +16,17 @@ export default function BookingDash(props) {
     bookingDash,
     userData,
     checkBookings,
-    bookingDetails,
     setBookingDetails,
   } = props;
 
   // page UI states
   const [isEditing, setIsEditing] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const subscriptionRef = useRef(null); // Add this line
 
   // variable states
-  const [bookingDogs, setBookingDogs] = useState();
   const [message, setMessage] = useState();
   const [error, setError] = useState();
-  const [messages, setMessages] = useState();
 
   const toggleSetShowConfirm = () => {
     setShowConfirm((prev) => !prev);
@@ -40,7 +40,8 @@ export default function BookingDash(props) {
       const uid = localStorage.getItem("uid");
       const client = localStorage.getItem("client");
       const accessToken = localStorage.getItem("access-token");
-      const bookingId = bookingDash.id;
+
+      const bookingId = bookingDash.booking.id;
 
       const response = await fetch(`${apiUrl}/bookings/${bookingId}`, {
         method: "PATCH",
@@ -63,7 +64,45 @@ export default function BookingDash(props) {
       setError("An error has occured 2");
     }
   };
+  useEffect(() => {
+    console.log("Setting up subscription in BookingDash...");
 
+    if (!subscriptionRef.current) {
+      subscriptionRef.current = cable.subscriptions.create(
+        { channel: "ChatroomChannel", id: bookingDash.booking.id },
+        {
+          connected() {
+            console.log("Connected to ChatroomChannel from BookingDash!");
+          },
+          received(data) {
+            switch (data.type) {
+              case "booking_updated":
+                console.log("Booking was updated:", data.booking);
+                fetchBooking(data.booking.id);
+                break;
+              case "message":
+                console.log(
+                  "Received new message in BookingDash:",
+                  data.message
+                );
+                fetchChat(bookingDash.booking.id);
+                break;
+              default:
+                console.log("Received unknown data type:", data);
+            }
+          },
+        }
+      );
+    }
+
+    return () => {
+      console.log("Cleaning up subscription in BookingDash...");
+      if (subscriptionRef.current) {
+        subscriptionRef.current.unsubscribe();
+        subscriptionRef.current = null;
+      }
+    };
+  }, [bookingDash.booking.id]);
   return (
     <>
       <div className="flex justify-between space-x-20">
@@ -89,10 +128,8 @@ export default function BookingDash(props) {
             apiUrl={apiUrl}
             bookingChat={bookingChat}
             bookingDash={bookingDash}
-            setBookingDetails={setBookingDetails}
             fetchChat={fetchChat}
             userData={userData}
-            messages={messages}
           />
         </div>
       </div>

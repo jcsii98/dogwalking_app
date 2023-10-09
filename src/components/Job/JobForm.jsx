@@ -3,7 +3,8 @@ import { useState } from "react";
 export default function JobForm(props) {
   const { userData, fetchJob, apiUrl } = props;
   const [activeTab, setActiveTab] = useState(1);
-
+  const [jobPosted, setJobPosted] = useState(false);
+  const [jobSaved, setJobSaved] = useState(false);
   const [jobFormData, setJobFormData] = useState({
     dog_walking_job: {
       name: `${userData.name}'s Dog-walking Job`,
@@ -50,7 +51,9 @@ export default function JobForm(props) {
         console.log("Error", data);
       } else {
         // handle successful response
+        setJobPosted(true);
         await Promise.all([fetchJob()]);
+        setJobSaved(true);
       }
       console.log(data);
     } catch (error) {
@@ -105,16 +108,19 @@ export default function JobForm(props) {
                   className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2"
                 ></input>
               </div>
-
-              <div className="w-full">
-                <button
-                  onClick={handleSubmit}
-                  className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
-                  type="submit"
-                >
-                  Save Job
-                </button>
-              </div>
+              {!jobPosted && (
+                <>
+                  <div className="w-full">
+                    <button
+                      onClick={handleSubmit}
+                      className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
+                      type="submit"
+                    >
+                      Save Job
+                    </button>
+                  </div>
+                </>
+              )}
             </form>
           </>
         )}

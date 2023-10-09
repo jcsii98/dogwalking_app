@@ -183,6 +183,12 @@ export default function DashPage(props) {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    console.log("Updated bookingDash value:", bookingDash);
+  }, [bookingDash]);
+  useEffect(() => {
+    console.log("Updated bookingChat value:", bookingChat);
+  }, [bookingChat]);
   return (
     <>
       {isLoading ? (

@@ -3,6 +3,7 @@ import Add from "../../assets/add.png";
 import { TbEdit } from "react-icons/tb";
 import { TbEditOff } from "react-icons/tb";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { MdVerified } from "react-icons/md";
 import React, { useState, useEffect } from "react";
 import DogProfileThumbnail from "../DogProfile/DogProfileThumbnail";
 import BookingForm from "./BookingForm";
@@ -204,7 +205,16 @@ export default function BookingDetails(props) {
   return (
     <>
       <div className="flex items-center justify-between">
-        <div className="font-bold text-xl">Booking Details</div>
+        <div className="flex items-center">
+          {bookingDash.booking.status &&
+            bookingDash.booking.status == "approved" && (
+              <>
+                <MdVerified className="" />
+              </>
+            )}
+          <div className="font-bold text-xl">Booking Details</div>
+        </div>
+
         <RiDeleteBin6Line
           className="cursor-pointer"
           onClick={handleDeleteBooking}
@@ -401,11 +411,11 @@ export default function BookingDetails(props) {
           </>
         )}
       </div>
-      {userData.kind == "1" && (
+      {userData.kind == "1" && bookingDash.booking.status !== "approved" && (
         <>
           <div className="mt-4 border-t-[1px] pt-4">
             <button
-              // onClick={toggleIsEditing}
+              onClick={handleApproveBooking}
               className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 rounded-lg border-black border-[1px] px-4"
               type="button"
             >

@@ -4,7 +4,6 @@ import Woman from "../../assets/woman.png";
 
 import { BiSolidSend } from "react-icons/bi";
 import Message from "../General/Message";
-import cable from "../../services/cable";
 
 export default function BookingChatroom(props) {
   const { apiUrl, bookingChat, bookingDash, userData, fetchChat } = props;
@@ -15,13 +14,13 @@ export default function BookingChatroom(props) {
     bookingChat.messages || []
   );
 
-  // ui states
-
-  const messagesEndRef = useRef(null);
-
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
+
+  // ui states
+
+  const messagesEndRef = useRef(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -71,43 +70,6 @@ export default function BookingChatroom(props) {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [localMessages]);
-
-  useEffect(() => {
-    const subscription = cable.subscriptions.create(
-      { channel: "ChatroomChannel", id: bookingDash.booking.id },
-      {
-        connected() {
-          console.log("Connected to ChatroomChannel!");
-        },
-        received(data) {
-          switch (data.type) {
-            case "message":
-              console.log("Received new message:", data.message);
-              fetchChat(bookingDash.booking.id);
-              break;
-            case "booking_deleted":
-              console.log(`Booking with ID ${data.booking_id} was deleted.`);
-              // Handle the deletion
-              break;
-            case "booking_updated":
-              console.log("Booking was updated:", data.booking);
-              // Handle the booking update
-              break;
-            case "booking_approved":
-              console.log("Booking was approved:", data.booking);
-              // Handle the booking approval
-              break;
-            default:
-              console.log("Received unknown data type:", data);
-          }
-        },
-      }
-    );
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [bookingDash.booking.id]);
 
   useEffect(() => {
     setLocalMessages(bookingChat.messages);

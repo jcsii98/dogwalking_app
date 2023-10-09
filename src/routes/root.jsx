@@ -6,6 +6,8 @@ import HeaderNav from "../components/General/HeaderNav";
 import MyAccount from "../pages/MyAccount";
 
 export default function Root() {
+  console.log("Rendering Root...");
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState(null);
@@ -17,6 +19,7 @@ export default function Root() {
   const [activeNavTab, setActiveNavTab] = useState(1);
 
   const apiUrl = "https://dogwalking-api.onrender.com";
+
   const rememberMe = async () => {
     const uid = localStorage.getItem("uid");
     const client = localStorage.getItem("client");
