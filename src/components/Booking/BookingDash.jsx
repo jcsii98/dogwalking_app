@@ -89,9 +89,11 @@ export default function BookingDash(props) {
                 break;
               case "booking_approved":
                 console.log("Booking has been approved", data.booking);
+                fetchBooking(data.booking.id);
                 break;
               case "booking_deleted":
                 console.log("Booking has been deleted", data.booking);
+                Promise.all([checkBookings()]).then(() => setDashTab("Home"));
                 break;
               default:
                 console.log("Received unknown data type:", data);

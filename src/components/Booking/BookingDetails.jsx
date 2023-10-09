@@ -169,8 +169,6 @@ export default function BookingDetails(props) {
       if (response.ok) {
         const data = await response.json();
         if (data.status == "success") {
-          await Promise.all([checkBookings()]);
-          setDashTab("Home");
         }
         console.log(data);
       } else {
