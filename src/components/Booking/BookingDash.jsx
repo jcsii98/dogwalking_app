@@ -3,6 +3,7 @@ import DogPng from "../../assets/dog.png";
 import BookingChatroom from "./BookingChatroom";
 import BookingDetails from "./BookingDetails";
 import cable from "../../services/cable";
+import JobDetails from "../Handler/JobDetails";
 
 export default function BookingDash(props) {
   console.log("Rendering BookingDash...");

@@ -38,8 +38,7 @@ export default function DogHandlerSearchForm(props) {
     const uid = localStorage.getItem("uid");
     const client = localStorage.getItem("client");
     const accessToken = localStorage.getItem("access-token");
-
-    setMessage(`Searching for dog handlers within ${searchRange}km`);
+    setMessage();
     setError();
     setIsLoading(true);
 
@@ -58,7 +57,9 @@ export default function DogHandlerSearchForm(props) {
           }
         );
         if (!response.ok) {
-          setError("Failed to fetch data. Please try again.");
+          const errorData = await response.json();
+          console.log(errorData);
+          setError(errorData.message);
           setIsLoading(false);
           return;
         }
@@ -112,7 +113,7 @@ export default function DogHandlerSearchForm(props) {
                       </div>
                       <input
                         className="w-full focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md py-2 px-2"
-                        type="text"
+                        type="number"
                         placeholder="Enter range (kms)"
                         value={searchRange}
                         onChange={handleInputChange}
@@ -135,7 +136,7 @@ export default function DogHandlerSearchForm(props) {
                         </div>
                       </>
                     )}
-
+                    {error && <div className="pt-4 text-red-400">{error}</div>}
                     {message && (
                       <div className="pt-4 text-slate-400">{message}</div>
                     )}

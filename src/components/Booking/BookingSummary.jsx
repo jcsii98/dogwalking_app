@@ -88,20 +88,18 @@ export default function BookingSummary(props) {
           <div className="flex overflow-x-auto items-center space-x-10">
             {bookingData.booking_dog_profiles_attributes &&
               bookingData.booking_dog_profiles_attributes.map((dog) => (
-                <>
-                  <div
-                    className="font-medium text-sm flex-shrink-0 flex flex-col justify-center items-center space-y-4"
-                    key={dog.id}
-                  >
-                    <div className="bg-blue-300 rounded-full h-16 w-16 flex items-center justify-center">
-                      <img
-                        className="place-self-center w-14 h-14 rounded-full"
-                        src={DogPng}
-                      />
-                    </div>
-                    <div className="">{dog.name}</div>
+                <div
+                  className="font-medium text-sm flex-shrink-0 flex flex-col justify-center items-center space-y-4"
+                  key={dog.id}
+                >
+                  <div className="bg-blue-300 rounded-full h-16 w-16 flex items-center justify-center">
+                    <img
+                      className="place-self-center w-14 h-14 rounded-full"
+                      src={DogPng}
+                    />
                   </div>
-                </>
+                  <div className="">{dog.name}</div>
+                </div>
               ))}
           </div>
         </div>

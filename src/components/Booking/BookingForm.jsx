@@ -130,30 +130,28 @@ export default function BookingForm(props) {
                     <div className="flex overflow-x-auto items-center space-x-10">
                       {dogProfilesData &&
                         dogProfilesData.map((dog) => (
-                          <>
+                          <div
+                            onClick={() => handleClick(dog.id)}
+                            className="cursor-pointer font-medium text-sm flex-shrink-0 flex flex-col justify-center items-center space-y-4"
+                            key={dog.id}
+                          >
                             <div
-                              onClick={() => handleClick(dog.id)}
-                              className="cursor-pointer font-medium text-sm flex-shrink-0 flex flex-col justify-center items-center space-y-4"
+                              className={`rounded-full h-16 w-16 flex items-center justify-center ${
+                                selectedDogIds.includes(dog.id)
+                                  ? "bg-blue-300 hover:bg-slate-200"
+                                  : "bg-slate-200 hover:bg-blue-300"
+                              }`}
                               key={dog.id}
                             >
-                              <div
-                                className={`rounded-full h-16 w-16 flex items-center justify-center ${
-                                  selectedDogIds.includes(dog.id)
-                                    ? "bg-blue-300 hover:bg-slate-200"
-                                    : "bg-slate-200 hover:bg-blue-300"
-                                }`}
-                                key={dog.id}
-                              >
-                                {" "}
-                                <img
-                                  className="place-self-center w-14 h-14 rounded-full"
-                                  src={DogPng}
-                                  alt="Profile"
-                                />
-                              </div>
-                              <div className="">{dog.name}</div>
+                              {" "}
+                              <img
+                                className="place-self-center w-14 h-14 rounded-full"
+                                src={DogPng}
+                                alt="Profile"
+                              />
                             </div>
-                          </>
+                            <div className="">{dog.name}</div>
+                          </div>
                         ))}
                     </div>
                   </div>

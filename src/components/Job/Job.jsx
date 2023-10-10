@@ -27,13 +27,12 @@ export default function Job(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const jobId = job.id;
     const uid = localStorage.getItem("uid");
     const client = localStorage.getItem("client");
     const accessToken = localStorage.getItem("access-token");
 
     try {
-      const response = await fetch(`${apiUrl}/dog_walking_jobs/${jobId}`, {
+      const response = await fetch(`${apiUrl}/dog_walking_job`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
