@@ -103,6 +103,7 @@ export default function BookingDash(props) {
                 break;
               case "job_updated":
                 console.log("Job was updated:", data.job);
+                fetchBooking(data.booking_id);
                 break;
               default:
                 console.log("Received unknown data type:", data);
