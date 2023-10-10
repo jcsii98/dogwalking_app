@@ -15,7 +15,7 @@ export default function DashPage(props) {
 
   // active dog profiles & bookings
   const [dogProfilesData, setDogProfilesData] = useState();
-  const [bookingsData, setBookingsData] = useState();
+  const [bookingsData, setBookingsData] = useState([]);
 
   // page UI states
   const [isLoading, setIsLoading] = useState(true);
@@ -38,15 +38,7 @@ export default function DashPage(props) {
       "access-token": accessToken,
     };
 
-    let url;
-    if (userData.kind == "2") {
-      url = `${apiUrl}/bookings`;
-    } else if (job) {
-      const jobId = job.id;
-      url = `${apiUrl}/bookings?dog_walking_job_id=${jobId}`;
-    } else {
-      return;
-    }
+    let url = `${apiUrl}/bookings`;
 
     try {
       const response = await fetch(url, {
@@ -59,8 +51,11 @@ export default function DashPage(props) {
       }
 
       const data = await response.json();
-      console.log(data);
-      setBookingsData(data);
+      if (data.message) {
+        setBookingsData([]);
+      } else {
+        setBookingsData(data);
+      }
     } catch (error) {
       console.error("Error in checkBookings:", error);
       throw error;

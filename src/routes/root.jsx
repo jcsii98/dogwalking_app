@@ -18,7 +18,9 @@ export default function Root() {
 
   const [activeNavTab, setActiveNavTab] = useState(1);
 
-  const apiUrl = "https://dogwalking-api.onrender.com";
+  const apiUrl = "http://localhost:3000";
+  // http://localhost:3000
+  // https://dogwalking-api.onrender.com
 
   const rememberMe = async () => {
     const uid = localStorage.getItem("uid");
@@ -77,7 +79,7 @@ export default function Root() {
             console.log(data.message);
             setJob(null);
           } else {
-            setJob(data.data[0]);
+            setJob(data.data);
           }
         } else {
         }

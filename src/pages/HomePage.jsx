@@ -46,33 +46,27 @@ export default function HomePage(props) {
               <p className="font-bold text-4xl pb-6">Why Fido?</p>
               <div className="grid grid-cols-3">
                 <div className="mr-4 p-4 rounded-md bg-slate-200">
-                  <p className="text-md font-medium">
-                    Trusted Dog Walkers:
-                    <p className="font-light">
-                      We've handpicked a community of reliable and passionate
-                      dog walkers in your area who are ready to give your furry
-                      friend the attention and exercise they deserve.
-                    </p>
+                  <p className="text-md font-medium">Trusted Dog Walkers:</p>
+                  <p className="font-light">
+                    We've handpicked a community of reliable and passionate dog
+                    walkers in your area who are ready to give your furry friend
+                    the attention and exercise they deserve.
                   </p>
                 </div>
                 <div className="mr-4 p-4 rounded-md bg-slate-200">
-                  <p className="text-md font-medium">
-                    Personalized Matches:
-                    <p className="font-light mr-4">
-                      We understand that every dog is unique. Fido's advanced
-                      algorithm matches you with dog walkers who align with your
-                      dog's specific needs and personality.
-                    </p>
+                  <p className="text-md font-medium">Personalized Matches:</p>
+                  <p className="font-light mr-4">
+                    We understand that every dog is unique. Fido's advanced
+                    algorithm matches you with dog walkers who align with your
+                    dog's specific needs and personality.
                   </p>
                 </div>
                 <div className="mr-4 p-4 rounded-md bg-slate-200">
-                  <p className="text-md font-medium">
-                    Peace of Mind:
-                    <p className="font-light mr-4">
-                      Safety is our top priority. All our dog walkers undergo
-                      thorough background checks, ensuring your pet is in caring
-                      and capable hands.
-                    </p>
+                  <p className="text-md font-medium">Peace of Mind:</p>
+                  <p className="font-light mr-4">
+                    Safety is our top priority. All our dog walkers undergo
+                    thorough background checks, ensuring your pet is in caring
+                    and capable hands.
                   </p>
                 </div>
               </div>

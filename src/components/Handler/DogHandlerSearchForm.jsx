@@ -124,14 +124,12 @@ export default function DogHandlerSearchForm(props) {
                           <div className="flex overflow-x-auto items-center space-x-10">
                             {handlersFound.length > 0 &&
                               handlersFound.map((handler) => (
-                                <>
-                                  <DogHandlerThumbnail
-                                    setHandlerProfile={setHandlerProfile}
-                                    setDashTab={setDashTab}
-                                    key={handler.id}
-                                    handler={handler}
-                                  />
-                                </>
+                                <DogHandlerThumbnail
+                                  setHandlerProfile={setHandlerProfile}
+                                  setDashTab={setDashTab}
+                                  key={handler.id}
+                                  handler={handler}
+                                />
                               ))}
                           </div>
                         </div>

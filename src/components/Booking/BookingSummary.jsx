@@ -24,7 +24,7 @@ export default function BookingSummary(props) {
     const requestBody = {
       booking: {
         ...bookingData,
-        dog_walking_job_id: handlerJobData.id,
+        user_walker_id: handlerJobData.user_id,
       },
     };
 
@@ -108,14 +108,14 @@ export default function BookingSummary(props) {
       </div>
       <div className="">
         {message && <p className="text-slate-500">{message}</p>}
-        {errors &&
+        {/* {errors &&
           Object.keys(errors).map((key) =>
             errors[key].map((err) => (
               <p key={err} className="text-red-500">
                 {key}: {err}
               </p>
             ))
-          )}
+          )} */}
         <div className="flex space-x-10">
           <button
             onClick={() => {

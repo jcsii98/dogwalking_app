@@ -230,7 +230,7 @@ export default function BookingDetails(props) {
                     Walker
                   </div>
                   <div className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2">
-                    {bookingDash.booking.user_walker_name}
+                    {bookingDash.booking.user_walker.name}
                   </div>
                 </>
               ) : (
@@ -239,7 +239,7 @@ export default function BookingDetails(props) {
                     Owner
                   </div>
                   <div className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2">
-                    {bookingDash.booking.user_owner_name}
+                    {bookingDash.booking.user_owner.name}
                   </div>
                 </>
               )}

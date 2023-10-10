@@ -100,6 +100,9 @@ export default function BookingDash(props) {
                 console.log("Booking has been deleted", data.booking);
                 Promise.all([checkBookings()]).then(() => setDashTab("Home"));
                 break;
+              case "job_updated":
+                console.log("Job was updated:", data.job);
+                break;
               default:
                 console.log("Received unknown data type:", data);
             }

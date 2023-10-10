@@ -48,9 +48,9 @@ export default function BookingThumbnail(props) {
         </div>
         <div className="">
           {userData.kind == "1" ? (
-            <>{booking.user_owner_name}</>
+            <>{booking.user_owner.name}</>
           ) : (
-            <>{booking.user_walker_name}</>
+            <>{booking.user_walker.name}</>
           )}
         </div>
       </div>

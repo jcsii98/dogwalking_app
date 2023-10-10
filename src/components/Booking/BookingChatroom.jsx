@@ -89,7 +89,7 @@ export default function BookingChatroom(props) {
                   />
                 </div>
                 <div className="pl-4 font-medium text-lg">
-                  {bookingDash.booking.user_walker_name}
+                  {bookingDash.booking.user_walker.name}
                 </div>
               </>
             ) : (
@@ -102,7 +102,7 @@ export default function BookingChatroom(props) {
                   />
                 </div>
                 <div className="pl-4 font-medium text-lg">
-                  {bookingDash.booking.user_owner_name}
+                  {bookingDash.booking.user_owner.name}
                 </div>
               </>
             )}

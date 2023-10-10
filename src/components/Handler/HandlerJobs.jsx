@@ -19,7 +19,7 @@ export default function HandlerJobs(props) {
   const [message, setMessage] = useState();
   const [isCreating, setIsCreating] = useState(false);
 
-  const fetchJobs = async (event) => {
+  const fetchJob = async (event) => {
     const uid = localStorage.getItem("uid");
     const client = localStorage.getItem("client");
     const accessToken = localStorage.getItem("access-token");
@@ -39,8 +39,8 @@ export default function HandlerJobs(props) {
         }
       );
       const data = await response.json();
-      setHandlerJobData(data.data[0]);
-      fetchSchedules(data.data[0].id);
+      setHandlerJobData(data.data);
+      // fetchSchedules(data.data[0].id);
       setIsLoading(false);
       console.log(data);
     } catch (error) {
@@ -85,7 +85,7 @@ export default function HandlerJobs(props) {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      fetchJobs();
+      fetchJob();
     }, 1500);
     return () => clearTimeout(timer);
   }, []);
