@@ -68,51 +68,56 @@ export default function DogProfile(props) {
             />
           </div>
         </div>
-        <table className="border-separate border-spacing-4">
-          <thead>
-            <tr>
-              <th className="px-4">Age</th>
-              <th className="px-4">Weight (lbs)</th>
-              <th className="px-4">Breed</th>
-              <th className="px-4">Sex</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className="border border-slate-600 py-2 px-4 rounded-md text-center">
+        <div className="flex space-x-4 w-full">
+          <div className="w-[50%]">
+            <div className="pb-4">
+              <div className="font-medium pb-2 text-slate-700">Age</div>
+              <div className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2">
                 {dogAge}
-              </td>
-              <td className="border border-slate-600 py-2 px-4 rounded-md text-center">
+              </div>
+            </div>
+            <div className="pb-4">
+              <div className="font-medium pb-2 text-slate-700">Weight</div>
+              <div className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2">
                 {dogWeight}
-              </td>
-              <td className="border border-slate-600 py-2 px-4 rounded-md text-center">
+              </div>
+            </div>
+          </div>
+          <div className="w-[50%]">
+            <div className="pb-4">
+              <div className="font-medium pb-2 text-slate-700">Breed</div>
+              <div className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2">
                 {dogBreed}
-              </td>
-              <td className="border border-slate-600 py-2 px-4 rounded-md text-center">
+              </div>
+            </div>
+            <div className="pb-4">
+              <div className="font-medium pb-2 text-slate-700">Sex</div>
+              <div className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2">
                 {dogSex}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="bg-white rounded-md p-6 border-slate-300 border-[1px] flex justify-center space-x-4">
           {showConfirm ? (
             <>
               <div className="flex flex-col justify-center items-center">
-                <div className="pb-6 font-medium text-2xl">
+                <div className="pb-6 font-medium text-xl">
                   You are about to delete {dogName}'s profile. Are you sure?
                 </div>
-                <div className="flex justify-center space-x-10">
+                <div className="flex justify-between space-x-10 w-full">
                   <button
                     onClick={() => {
                       setShowConfirm(false);
                     }}
-                    className="font-medium hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
+                    className="w-full font-medium hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
                   >
-                    Go Back
+                    Cancel
                   </button>
                   <button
                     onClick={handleDelete}
-                    className="font-medium hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
+                    className="w-full font-medium hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
                   >
                     Yes
                   </button>
@@ -127,7 +132,7 @@ export default function DogProfile(props) {
                     onClick={handleBack}
                     className="font-medium hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
                   >
-                    Go Back
+                    Back
                   </button>
                 </>
               )}

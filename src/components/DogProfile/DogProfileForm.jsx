@@ -133,7 +133,7 @@ export default function DogProfileForm(props) {
               onClick={handleBegin}
               className="font-medium hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
             >
-              {dogUpdate ? <>Edit Dog Profile</> : <>Add Dog Profile</>}
+              {dogUpdate ? <>Edit</> : <>Add</>}
             </button>
           </>
         )}

@@ -78,8 +78,8 @@ export default function ProfileCard(props) {
 
   return (
     <>
-      <div className="max-w-screen-xl w-full flex justify-between space-x-20">
-        <div className="basis-1/3">
+      <div className="max-w-screen-xl w-full flex">
+        <div className="">
           <div className="bg-white rounded-md p-6 border-slate-300 border-[1px]">
             <div className="font-medium text-md text-slate-700 pb-6 border-b-[1px]">
               <div className="flex items-center justify-between">
@@ -169,13 +169,13 @@ export default function ProfileCard(props) {
             )}
           </div>
         </div>
-        <div className="basis-2/3 flex flex-col">
+        {/* <div className="flex flex-col">
           {userData.status == "pending" && userData.kind == "1" && (
             <>
               <Restricted resource={false} />
             </>
           )}
-        </div>
+        </div> */}
       </div>
     </>
   );

@@ -4,6 +4,7 @@ import LoadingPage from "../pages/LoadingPage";
 import DashPage from "../pages/DashPage";
 import HeaderNav from "../components/General/HeaderNav";
 import MyAccount from "../pages/MyAccount";
+import AuthForm from "../components/General/AuthForm";
 
 export default function Root() {
   console.log("Rendering Root...");
@@ -13,12 +14,13 @@ export default function Root() {
   const [userData, setUserData] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [isOwnerSignup, setIsOwnerSignup] = useState();
+  const [dashTab, setDashTab] = useState("Home");
 
   const [job, setJob] = useState();
 
   const [activeNavTab, setActiveNavTab] = useState(1);
 
-  const apiUrl = "https://dogwalking-api.onrender.com";
+  const apiUrl = "http://localhost:3000";
   // http://localhost:3000
   // https://dogwalking-api.onrender.com
 
@@ -112,8 +114,18 @@ export default function Root() {
         </>
       ) : (
         <>
-          <div className="flex flex-col bg-[#f4f2f3] w-screen h-screen overflow-hidden">
+          {showForm && (
+            <AuthForm
+              apiUrl={apiUrl}
+              isOwnerSignup={isOwnerSignup}
+              setUserData={setUserData}
+              setIsLoggedIn={setIsLoggedIn}
+              setShowForm={setShowForm}
+            />
+          )}
+          <div className="flex flex-col bg-[#f4f2f3] w-full h-full overflow-y-hidden">
             <HeaderNav
+              setDashTab={setDashTab}
               apiUrl={apiUrl}
               setIsOwnerSignup={setIsOwnerSignup}
               userData={userData}
@@ -127,6 +139,8 @@ export default function Root() {
                 {activeNavTab == 2 && (
                   <>
                     <DashPage
+                      dashTab={dashTab}
+                      setDashTab={setDashTab}
                       apiUrl={apiUrl}
                       fetchJob={fetchJob}
                       job={job}

@@ -125,8 +125,19 @@ export default function BookingDash(props) {
   }, [bookingDash.booking.id]);
   return (
     <>
-      <div className="flex justify-between space-x-20 align-start">
-        <div className="basis-1/3">
+      <div className="flex flex-col">
+        <div className="">
+          <BookingChatroom
+            onlineUsers={onlineUsers}
+            apiUrl={apiUrl}
+            bookingChat={bookingChat}
+            bookingDash={bookingDash}
+            fetchChat={fetchChat}
+            userData={userData}
+          />
+        </div>
+
+        <div className="">
           {focusedDog && (
             <>
               <BookingDogProfile
@@ -155,16 +166,6 @@ export default function BookingDash(props) {
               />
             </>
           )}
-        </div>
-        <div className="basis-2/3">
-          <BookingChatroom
-            onlineUsers={onlineUsers}
-            apiUrl={apiUrl}
-            bookingChat={bookingChat}
-            bookingDash={bookingDash}
-            fetchChat={fetchChat}
-            userData={userData}
-          />
         </div>
       </div>
     </>

@@ -76,7 +76,7 @@ export default function BookingChatroom(props) {
   }, [bookingChat.messages]);
   return (
     <>
-      <div className="flex flex-col justify-between p-6 border-[1px] rounded-md bg-white">
+      <div className="flex flex-col justify-between p-6 mb-4 border-[1px] rounded-md bg-white">
         <div id="one" className="flex flex-col">
           <div className="h-auto bg-white flex items-center pb-4">
             {userData.kind == "2" ? (

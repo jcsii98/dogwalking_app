@@ -12,7 +12,7 @@ import JobForm from "../components/Job/JobForm";
 import Restricted from "../components/General/Restricted";
 
 export default function DashPage(props) {
-  const { userData, job, fetchJob, apiUrl } = props;
+  const { userData, job, fetchJob, apiUrl, dashTab, setDashTab } = props;
 
   // active dog profiles & bookings
   const [dogProfilesData, setDogProfilesData] = useState();
@@ -20,7 +20,6 @@ export default function DashPage(props) {
 
   // page UI states
   const [isLoading, setIsLoading] = useState(true);
-  const [dashTab, setDashTab] = useState("Home");
 
   // focus dogProfile and Booking and handlerProfile
   const [dogProfile, setDogProfile] = useState();
@@ -194,169 +193,165 @@ export default function DashPage(props) {
         </>
       ) : (
         <>
-          <div className="py-6 px-8 flex justify-center">
-            <div className="max-w-screen-xl w-full">
-              {/* dashboard for dog walkers */}
-              {userData.kind == 1 && (
-                <>
-                  {dashTab == "Home" && (
-                    <>
-                      <div className="flex justify-between space-x-20">
-                        <div className="basis-1/3 flex flex-col">
-                          {job && (
-                            <>
-                              <Job
+          <div className="py-6 px-8 overflow-y-auto">
+            {/* dashboard for dog walkers */}
+            {userData.kind == 1 && (
+              <>
+                {dashTab == "Home" && (
+                  <>
+                    <div className="flex justify-between space-x-20">
+                      <div className="basis-1/3 flex flex-col">
+                        {job && (
+                          <>
+                            <Job
+                              apiUrl={apiUrl}
+                              job={job}
+                              fetchJob={fetchJob}
+                            />
+                          </>
+                        )}
+
+                        {!job && (
+                          <>
+                            <div className="bg-white rounded-md p-6 border-slate-300 border-[1px]">
+                              <JobForm
                                 apiUrl={apiUrl}
-                                job={job}
                                 fetchJob={fetchJob}
-                              />
-                            </>
-                          )}
-
-                          {!job && (
-                            <>
-                              <div className="bg-white rounded-md p-6 border-slate-300 border-[1px]">
-                                <JobForm
-                                  apiUrl={apiUrl}
-                                  fetchJob={fetchJob}
-                                  userData={userData}
-                                />
-                              </div>
-                            </>
-                          )}
-                        </div>
-                        <div className="flex flex-col basis-2/3">
-                          <ActiveBookings
-                            apiUrl={apiUrl}
-                            fetchChat={fetchChat}
-                            fetchBooking={fetchBooking}
-                            userData={userData}
-                            setDashTab={setDashTab}
-                            bookingsData={bookingsData}
-                            setBookingDash={setBookingDash}
-                          />
-                        </div>
-                      </div>
-                    </>
-                  )}
-                  {dashTab == "Booking Dash" && (
-                    <>
-                      <BookingDash
-                        apiUrl={apiUrl}
-                        dogProfilesData={dogProfilesData}
-                        bookingChat={bookingChat}
-                        fetchChat={fetchChat}
-                        fetchBooking={fetchBooking}
-                        checkBookings={checkBookings}
-                        userData={userData}
-                        setDashTab={setDashTab}
-                        bookingDash={bookingDash}
-                      />
-                    </>
-                  )}
-                </>
-              )}
-
-              {/* dashboard for dog owners */}
-              {userData.kind == 2 && (
-                <>
-                  {dashTab == "Home" && (
-                    <>
-                      <div className="flex justify-between space-x-20">
-                        <div className="basis-1/3 flex flex-col">
-                          <ActiveBookings
-                            apiUrl={apiUrl}
-                            fetchChat={fetchChat}
-                            fetchBooking={fetchBooking}
-                            userData={userData}
-                            setDashTab={setDashTab}
-                            bookingsData={bookingsData}
-                            setBookingDash={setBookingDash}
-                          />
-                          {userData.status == "approved" && (
-                            <>
-                              <div className="text-md text-slate-700 font-medium pb-2">
-                                <>Finding nearby dog walkers</>
-                              </div>
-                              <DogHandlerSearchForm
-                                apiUrl={apiUrl}
-                                dogProfilesData={dogProfilesData}
-                                setHandlerProfile={setHandlerProfile}
-                                setDashTab={setDashTab}
                                 userData={userData}
                               />
-                            </>
-                          )}
-                          {userData.status !== "approved" && (
-                            <>
-                              <Restricted resource={true} />
-                            </>
-                          )}
-                        </div>
-                        <div className="basis-2/3 flex flex-col">
-                          <ActiveDogProfiles
-                            apiUrl={apiUrl}
-                            setDogProfile={setDogProfile}
-                            setDashTab={setDashTab}
-                            dogProfilesData={dogProfilesData}
-                          />
-                          <div className="text-md text-slate-700 font-medium pb-2">
-                            <>Setting up Dog Profiles</>
-                          </div>
-                          <div className="bg-white rounded-md p-6 border-slate-300 border-[1px]">
-                            <DogProfileForm
-                              apiUrl={apiUrl}
-                              checkDogProfiles={checkDogProfiles}
-                              setDogProfile={setDogProfile}
-                              setDashTab={setDashTab}
-                            />
-                          </div>
-                        </div>
+                            </div>
+                          </>
+                        )}
                       </div>
-                    </>
-                  )}
-                  {dashTab == "Dog Profile" && (
-                    <>
-                      <DogProfile
+                      <div className="flex flex-col basis-2/3">
+                        <ActiveBookings
+                          apiUrl={apiUrl}
+                          fetchChat={fetchChat}
+                          fetchBooking={fetchBooking}
+                          userData={userData}
+                          setDashTab={setDashTab}
+                          bookingsData={bookingsData}
+                          setBookingDash={setBookingDash}
+                        />
+                      </div>
+                    </div>
+                  </>
+                )}
+                {dashTab == "Booking Dash" && (
+                  <>
+                    <BookingDash
+                      apiUrl={apiUrl}
+                      dogProfilesData={dogProfilesData}
+                      bookingChat={bookingChat}
+                      fetchChat={fetchChat}
+                      fetchBooking={fetchBooking}
+                      checkBookings={checkBookings}
+                      userData={userData}
+                      setDashTab={setDashTab}
+                      bookingDash={bookingDash}
+                    />
+                  </>
+                )}
+              </>
+            )}
+
+            {/* dashboard for dog owners */}
+            {userData.kind == 2 && (
+              <>
+                {dashTab == "Home" && (
+                  <>
+                    <div className="flex flex-col">
+                      <div className="text-md text-slate-700 font-medium pb-2">
+                        <>Setting up Dog Profiles</>
+                      </div>
+                      <div className="bg-white rounded-md p-6 mb-4 border-slate-300 border-[1px]">
+                        <DogProfileForm
+                          apiUrl={apiUrl}
+                          checkDogProfiles={checkDogProfiles}
+                          setDogProfile={setDogProfile}
+                          setDashTab={setDashTab}
+                        />
+                      </div>
+                      <ActiveDogProfiles
                         apiUrl={apiUrl}
-                        checkDogProfiles={checkDogProfiles}
-                        setDashTab={setDashTab}
                         setDogProfile={setDogProfile}
-                        dogProfile={dogProfile}
-                      />
-                    </>
-                  )}
-                  {dashTab == "Handler Profile" && (
-                    <>
-                      <HandlerProfile
-                        apiUrl={apiUrl}
-                        fetchBooking={fetchBooking}
-                        fetchChat={fetchChat}
-                        setBookingDash={setBookingDash}
                         setDashTab={setDashTab}
                         dogProfilesData={dogProfilesData}
-                        handlerProfile={handlerProfile}
                       />
-                    </>
-                  )}
-                  {dashTab == "Booking Dash" && (
-                    <>
-                      <BookingDash
+                    </div>
+                    <div className="flex flex-col">
+                      {userData.status == "approved" && (
+                        <>
+                          <div className="text-md text-slate-700 font-medium pb-2">
+                            <>Finding nearby dog walkers</>
+                          </div>
+                          <DogHandlerSearchForm
+                            apiUrl={apiUrl}
+                            dogProfilesData={dogProfilesData}
+                            setHandlerProfile={setHandlerProfile}
+                            setDashTab={setDashTab}
+                            userData={userData}
+                          />
+                        </>
+                      )}
+                      <ActiveBookings
                         apiUrl={apiUrl}
-                        dogProfilesData={dogProfilesData}
-                        bookingChat={bookingChat}
                         fetchChat={fetchChat}
                         fetchBooking={fetchBooking}
-                        checkBookings={checkBookings}
                         userData={userData}
                         setDashTab={setDashTab}
-                        bookingDash={bookingDash}
+                        bookingsData={bookingsData}
+                        setBookingDash={setBookingDash}
                       />
-                    </>
-                  )}
-                </>
-              )}
-            </div>
+                      {userData.status !== "approved" && (
+                        <>
+                          <Restricted resource={true} />
+                        </>
+                      )}
+                    </div>
+                  </>
+                )}
+                {dashTab == "Dog Profile" && (
+                  <>
+                    <DogProfile
+                      apiUrl={apiUrl}
+                      checkDogProfiles={checkDogProfiles}
+                      setDashTab={setDashTab}
+                      setDogProfile={setDogProfile}
+                      dogProfile={dogProfile}
+                    />
+                  </>
+                )}
+                {dashTab == "Handler Profile" && (
+                  <>
+                    <HandlerProfile
+                      apiUrl={apiUrl}
+                      fetchBooking={fetchBooking}
+                      fetchChat={fetchChat}
+                      setBookingDash={setBookingDash}
+                      setDashTab={setDashTab}
+                      dogProfilesData={dogProfilesData}
+                      handlerProfile={handlerProfile}
+                    />
+                  </>
+                )}
+                {dashTab == "Booking Dash" && (
+                  <>
+                    <BookingDash
+                      apiUrl={apiUrl}
+                      dogProfilesData={dogProfilesData}
+                      bookingChat={bookingChat}
+                      fetchChat={fetchChat}
+                      fetchBooking={fetchBooking}
+                      checkBookings={checkBookings}
+                      userData={userData}
+                      setDashTab={setDashTab}
+                      bookingDash={bookingDash}
+                    />
+                  </>
+                )}
+              </>
+            )}
           </div>
         </>
       )}

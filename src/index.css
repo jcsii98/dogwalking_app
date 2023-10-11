@@ -66,3 +66,11 @@ button:disabled {
 .scroll-container::-webkit-scrollbar-thumb:hover {
   background-color: rgba(0, 0, 0, 0.4); /* color of the scroll thumb on hover */
 }
+
+.bg-flip-x {
+  transform: scaleX(-1);
+}
+
+#root {
+  height: 100vh;
+}
