@@ -18,7 +18,7 @@ export default function HomePage(props) {
   return (
     <>
       {" "}
-      <div className="flex max-[1024px]:flex-col h-full">
+      <div className="flex max-[1024px]:flex-col h-full overflow-y-auto">
         <div
           id="c-1"
           style={{ backgroundImage: `url(${dog2})` }}
