@@ -88,7 +88,7 @@ export default function BookingChatroom(props) {
                     className="place-self-center w-14 h-14 rounded-full"
                   />
                 </div>
-                <div className="pl-4 font-medium text-lg">
+                <div className="pl-4 font-medium text-xl">
                   {bookingDash.booking.user_walker.name}
                 </div>
               </>
@@ -101,7 +101,7 @@ export default function BookingChatroom(props) {
                     className="place-self-center w-14 h-14 rounded-full"
                   />
                 </div>
-                <div className="pl-4 font-medium text-lg">
+                <div className="pl-4 font-medium text-xl">
                   {bookingDash.booking.user_owner.name}
                 </div>
               </>

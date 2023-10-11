@@ -55,23 +55,23 @@ export default function BookingDogProfile(props) {
       {!isLoading && (
         <>
           <div className="p-6 border-[1px] rounded-md bg-white">
-            <div className="flex flex-col items-center">
-              <div className="grid grid-cols-3">
-                <div className="bg-slate-400 rounded-full w-24 h-24 flex justify-center items-center col-start-2">
+            <div className="border-b-[1px] pb-4 mb-4 flex justify-between items-center">
+              <div className="flex items-center">
+                <div className="bg-slate-400 rounded-full w-16 h-16 flex justify-center items-center col-start-2">
                   <img
-                    className="place-self-center w-20 h-20 rounded-full"
+                    className="place-self-center w-14 h-14 rounded-full"
                     src={DogPng}
                     alt="Profile"
                   />
                 </div>
-                <FaRegWindowMinimize
-                  className="col-start-3 place-self-start justify-self-end cursor-pointer"
-                  onClick={handleBack}
-                />
+                <div className="pl-4 text-slate-700 font-bold text-4xl">
+                  {focusedDogData.name}
+                </div>
               </div>
-              <div className="py-4 text-slate-700 font-bold text-6xl">
-                {focusedDogData.name}
-              </div>
+              <FaRegWindowMinimize
+                className="col-start-3 place-self-start justify-self-end cursor-pointer"
+                onClick={handleBack}
+              />
             </div>
             <div className="flex space-x-4">
               <div className="basis-1/2">
@@ -83,7 +83,7 @@ export default function BookingDogProfile(props) {
                     {focusedDogData.age || "N/A"}
                   </div>
                 </div>
-                <div className="pt-2">
+                <div className="pt-4">
                   <div className="text-base font-medium text-slate-600">
                     Weight
                   </div>
@@ -102,7 +102,7 @@ export default function BookingDogProfile(props) {
                     {focusedDogData.breed || "N/A"}
                   </div>
                 </div>
-                <div className="pt-2">
+                <div className="pt-4">
                   <div className="text-base font-medium text-slate-600">
                     Sex
                   </div>

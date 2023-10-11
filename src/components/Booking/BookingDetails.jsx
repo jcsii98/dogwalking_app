@@ -352,8 +352,8 @@ export default function BookingDetails(props) {
                         className={
                           isEditing
                             ? markedForRemoval
-                              ? "cursor-pointer bg-red-300 hover:bg-slate-500 rounded-full w-20 h-20 flex justify-center items-center"
-                              : "cursor-pointer bg-slate-500 hover:bg-red-300 rounded-full w-20 h-20 flex justify-center items-center"
+                              ? "cursor-pointer bg-red-300 hover:bg-slate-400 rounded-full w-20 h-20 flex justify-center items-center"
+                              : "cursor-pointer bg-slate-400 hover:bg-red-300 rounded-full w-20 h-20 flex justify-center items-center"
                             : "bg-slate-500  rounded-full w-20 h-20 flex justify-center items-center"
                         }
                       >
