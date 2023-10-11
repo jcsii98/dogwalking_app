@@ -172,7 +172,7 @@ export default function ProfileCard(props) {
         <div className="basis-2/3 flex flex-col">
           {userData.status == "pending" && userData.kind == "1" && (
             <>
-              <ResourceRestricted resource={false} />
+              <Restricted resource={false} />
             </>
           )}
         </div>
