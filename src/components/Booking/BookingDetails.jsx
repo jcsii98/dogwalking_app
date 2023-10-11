@@ -224,13 +224,7 @@ export default function BookingDetails(props) {
             />
           </div>
         </div>
-        <div
-          className={`transition-all ${
-            isOpen
-              ? "visible max-h-screen opacity-100 pt-4"
-              : "invisible max-h-0 opacity-0"
-          } duration-500`}
-        >
+        <div className={isOpen ? "transition-all duration-500 pt-4" : "hidden"}>
           <div className="p-6 border-[1px] rounded-md bg-white">
             <div className="flex items-center justify-between">
               <div className="flex items-center">

@@ -126,47 +126,43 @@ export default function BookingDash(props) {
   return (
     <>
       <div className="flex flex-col">
-        <div className="">
-          <BookingChatroom
-            onlineUsers={onlineUsers}
-            apiUrl={apiUrl}
-            bookingChat={bookingChat}
-            bookingDash={bookingDash}
-            fetchChat={fetchChat}
-            userData={userData}
-          />
-        </div>
+        <BookingChatroom
+          onlineUsers={onlineUsers}
+          apiUrl={apiUrl}
+          bookingChat={bookingChat}
+          bookingDash={bookingDash}
+          fetchChat={fetchChat}
+          userData={userData}
+        />
 
-        <div className="">
-          {focusedDog && (
-            <>
-              <BookingDogProfile
-                apiUrl={apiUrl}
-                focusedDog={focusedDog}
-                setFocusedDog={setFocusedDog}
-              />
-            </>
-          )}
-          {!focusedDog && (
-            <>
-              <BookingDetails
-                setFocusedDog={setFocusedDog}
-                apiUrl={apiUrl}
-                setDashTab={setDashTab}
-                checkBookings={checkBookings}
-                dogProfilesData={dogProfilesData}
-                fetchBooking={fetchBooking}
-                toggleIsEditing={toggleIsEditing}
-                isEditing={isEditing}
-                setIsEditing={setIsEditing}
-                userData={userData}
-                bookingDash={bookingDash}
-                toggleSetShowConfirm={toggleSetShowConfirm}
-                handleApproveBooking={handleApproveBooking}
-              />
-            </>
-          )}
-        </div>
+        {focusedDog && (
+          <>
+            <BookingDogProfile
+              apiUrl={apiUrl}
+              focusedDog={focusedDog}
+              setFocusedDog={setFocusedDog}
+            />
+          </>
+        )}
+        {!focusedDog && (
+          <>
+            <BookingDetails
+              setFocusedDog={setFocusedDog}
+              apiUrl={apiUrl}
+              setDashTab={setDashTab}
+              checkBookings={checkBookings}
+              dogProfilesData={dogProfilesData}
+              fetchBooking={fetchBooking}
+              toggleIsEditing={toggleIsEditing}
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
+              userData={userData}
+              bookingDash={bookingDash}
+              toggleSetShowConfirm={toggleSetShowConfirm}
+              handleApproveBooking={handleApproveBooking}
+            />
+          </>
+        )}
       </div>
     </>
   );

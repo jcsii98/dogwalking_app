@@ -193,7 +193,7 @@ export default function DashPage(props) {
         </>
       ) : (
         <>
-          <div className="py-6 px-8 overflow-y-auto">
+          <div className="flex-grow mx-auto px-8 py-4 overflow-y-auto max-w-screen-xl w-full scroll-container">
             {/* dashboard for dog walkers */}
             {userData.kind == 1 && (
               <>

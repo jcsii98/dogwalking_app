@@ -64,21 +64,17 @@ export default function BookingSummary(props) {
   return (
     <>
       <div className="text-3xl font-bold pb-4">Booking Summary</div>
-      <div className="flex space-x-4">
-        <div className="flex">
-          <div className="pb-4">
-            <div className="font-medium pb-2 text-slate-700">Date</div>
-            <div className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2">
-              {bookingData.date || "TBD"}
-            </div>
+      <div className="flex justify-between space-x-4">
+        <div className="pb-4 w-full">
+          <div className="font-medium pb-2 text-slate-700">Date</div>
+          <div className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2">
+            {bookingData.date || "TBD"}
           </div>
-          <div className="pb-4">
-            <div className="font-medium pb-2 text-slate-700">
-              Duration (hrs)
-            </div>
-            <div className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2">
-              {bookingData.duration || "TBD"}
-            </div>
+        </div>
+        <div className="pb-4 w-full">
+          <div className="font-medium pb-2 text-slate-700">Duration (hrs)</div>
+          <div className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2">
+            {bookingData.duration || "TBD"}
           </div>
         </div>
       </div>
@@ -114,7 +110,7 @@ export default function BookingSummary(props) {
               </p>
             ))
           )} */}
-        <div className="flex space-x-10">
+        <div className="flex space-x-4">
           <button
             onClick={() => {
               setActiveTab(1);

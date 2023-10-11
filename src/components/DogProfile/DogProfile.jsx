@@ -55,7 +55,7 @@ export default function DogProfile(props) {
   };
   return (
     <>
-      <div className="flex flex-col space-y-10 items-center justify-between bg-white rounded-md p-6 border-slate-300 border-[1px]">
+      <div className="flex flex-col space-y-6 items-center justify-between max-w-screen-xl bg-white rounded-md p-6 border-slate-300 border-[1px]">
         <div className="flex flex-col items-center">
           <div className="text-slate-700 font-bold text-6xl pb-8">
             {dogName}
@@ -99,7 +99,7 @@ export default function DogProfile(props) {
           </div>
         </div>
 
-        <div className="bg-white rounded-md p-6 border-slate-300 border-[1px] flex justify-center space-x-4">
+        <div className="flex justify-between w-full">
           {showConfirm ? (
             <>
               <div className="flex flex-col justify-center items-center">

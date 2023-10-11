@@ -68,7 +68,10 @@ export default function BookingChatroom(props) {
 
   // scroll down
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    const messageContainer = messagesEndRef.current?.parentNode;
+    if (messageContainer) {
+      messageContainer.scrollTop = messageContainer.scrollHeight;
+    }
   }, [localMessages]);
 
   useEffect(() => {
@@ -76,7 +79,7 @@ export default function BookingChatroom(props) {
   }, [bookingChat.messages]);
   return (
     <>
-      <div className="flex flex-col justify-between p-6 mb-4 border-[1px] rounded-md bg-white">
+      <div className="flex flex-col justify-between p-6 mb-4 border-[1px] border-slate-300 rounded-md bg-white">
         <div id="one" className="flex flex-col">
           <div className="h-auto bg-white flex items-center pb-4">
             {userData.kind == "2" ? (

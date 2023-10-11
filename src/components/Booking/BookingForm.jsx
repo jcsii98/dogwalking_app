@@ -114,7 +114,7 @@ export default function BookingForm(props) {
   };
   return (
     <>
-      <div className="p-6 border-[1px] rounded-md">
+      <div className="">
         {activeTab == 1 && (
           <>
             <form

@@ -18,7 +18,7 @@ export default function HandlerProfile(props) {
   const isGirl = handlerProfile.id % 2 === 0;
   return (
     <>
-      <div className="max-w-screen-xl w-full flex justify-between space-x-20">
+      <div className="max-w-screen-xl w-full flex flex-col justify-between space-y-4">
         <div className="basis-1/3">
           <div className="bg-white rounded-md p-6 border-slate-300 border-[1px]">
             <div className="font-medium text-md text-slate-700 pb-6 border-b-[1px]">
@@ -37,7 +37,7 @@ export default function HandlerProfile(props) {
             </div>
           </div>
         </div>
-        <div className="basis-2/3 flex flex-col">
+        <div className="flex flex-col">
           <HandlerJobs
             apiUrl={apiUrl}
             fetchBooking={fetchBooking}

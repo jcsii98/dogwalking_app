@@ -122,7 +122,7 @@ export default function HandlerJobs(props) {
       ) : (
         <>
           <div
-            className={`mb-4 bg-white rounded-md p-6 border-slate-300 border-[1px]`}
+            className="mb-4 bg-white rounded-md p-6 border-slate-300 border-[1px]"
             tabIndex="0"
           >
             {!isCreating && (

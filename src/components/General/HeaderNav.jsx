@@ -118,18 +118,18 @@ export default function HeaderNav(props) {
             </ul>
           </nav>
           <div onClick={handleNav} className="block md:hidden">
-            {!nav ? <AiOutlineMenu size={20} /> : <AiOutlineClose size={20} />}
+            {!nav ? <AiOutlineMenu size={20} /> : <AiOutlineClose />}
           </div>
           <div
             className={
               !nav
-                ? "fixed left-[-100%]"
-                : "text-[#003049] md:hidden fixed left-0 top-0 w-[50%] border-r border-b rounded-md border-b-gray-900 border-r-gray-900 bg-[#f4f2f3] ease-in-out duration-500"
+                ? "fixed right-[-100%]"
+                : "text-[#003049] md:hidden fixed right-0 top-0 w-[50%] border-l border-b rounded-bl-md border-b-slate-300 border-l-slate-300 bg-[#f4f2f3] ease-in-out duration-500 mt-[69px]"
             }
           >
-            <div className="py-4 px-8 border-b-[1.5px]">
+            {/* <div className="py-4 px-8 border-b-[1.5px]">
               <div className="text-black font-extrabold text-3xl">Fido.</div>
-            </div>
+            </div> */}
             <div className="py-4 px-8">
               <ul className="uppercase">
                 {!isLoggedIn && (
