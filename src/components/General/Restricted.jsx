@@ -1,6 +1,6 @@
 import Dog3 from "../../assets/dog3.png";
 
-export default function ResourceRestricted(props) {
+export default function Restricted(props) {
   const { resource } = props;
   return (
     <>

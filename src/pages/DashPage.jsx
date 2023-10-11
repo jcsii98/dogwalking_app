@@ -9,6 +9,7 @@ import BookingDash from "../components/Booking/BookingDash";
 import ActiveDogProfiles from "../components/DogProfile/ActiveDogProfiles";
 import Job from "../components/Job/Job";
 import JobForm from "../components/Job/JobForm";
+import Restricted from "../components/General/Restricted";
 
 export default function DashPage(props) {
   const { userData, job, fetchJob, apiUrl } = props;
@@ -272,16 +273,25 @@ export default function DashPage(props) {
                             bookingsData={bookingsData}
                             setBookingDash={setBookingDash}
                           />
-                          <div className="text-md text-slate-700 font-medium pb-2">
-                            <>Finding nearby dog walkers</>
-                          </div>
-                          <DogHandlerSearchForm
-                            apiUrl={apiUrl}
-                            dogProfilesData={dogProfilesData}
-                            setHandlerProfile={setHandlerProfile}
-                            setDashTab={setDashTab}
-                            userData={userData}
-                          />
+                          {userData.status == "approved" && (
+                            <>
+                              <div className="text-md text-slate-700 font-medium pb-2">
+                                <>Finding nearby dog walkers</>
+                              </div>
+                              <DogHandlerSearchForm
+                                apiUrl={apiUrl}
+                                dogProfilesData={dogProfilesData}
+                                setHandlerProfile={setHandlerProfile}
+                                setDashTab={setDashTab}
+                                userData={userData}
+                              />
+                            </>
+                          )}
+                          {userData.status !== "approved" && (
+                            <>
+                              <Restricted resource={true} />
+                            </>
+                          )}
                         </div>
                         <div className="basis-2/3 flex flex-col">
                           <ActiveDogProfiles

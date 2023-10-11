@@ -1,6 +1,4 @@
 import { useState } from "react";
-import Dog3 from "../../assets/dog3.png";
-import ResourceRestricted from "../General/ResourceRestricted";
 import LoadingComponent from "../General/LoadingComponent";
 import DogHandlerThumbnail from "./DogHandlerThumbnail";
 

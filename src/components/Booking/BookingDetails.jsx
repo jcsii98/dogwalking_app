@@ -1,15 +1,13 @@
 import DogPng from "../../assets/dog.png";
 import Add from "../../assets/add.png";
-import { TbEdit } from "react-icons/tb";
-import { TbEditOff } from "react-icons/tb";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { MdVerified } from "react-icons/md";
 import React, { useState, useEffect } from "react";
-import DogProfileThumbnail from "../DogProfile/DogProfileThumbnail";
-import BookingForm from "./BookingForm";
+import Paw from "../../assets/paw.png";
 
 export default function BookingDetails(props) {
   const {
+    setFocusedDog,
     apiUrl,
     setDashTab,
     checkBookings,
@@ -54,6 +52,9 @@ export default function BookingDetails(props) {
     setDate(e.target.value);
   };
 
+  const handleDogClick = (dogProfileId) => {
+    setFocusedDog(dogProfileId);
+  };
   const addDog = (dogProfileId) => {
     let updatedDogsAttributes = [
       ...additionalDogs.booking_dog_profiles_attributes,
@@ -208,7 +209,7 @@ export default function BookingDetails(props) {
             {bookingDash.booking.status &&
               bookingDash.booking.status == "approved" && (
                 <>
-                  <MdVerified className="" />
+                  <img className="ml-4 w-3 h-3 place-self-center" src={Paw} />
                 </>
               )}
 
@@ -306,10 +307,14 @@ export default function BookingDetails(props) {
                 bookingDash.booking_dog_profiles.map((item) => (
                   <React.Fragment key={item.id}>
                     <div
-                      onClick={isEditing ? () => removeDog(item.id) : null}
-                      className="font-medium text-sm flex-shrink-0 flex flex-col justify-center items-center space-y-4"
+                      onClick={
+                        isEditing
+                          ? () => removeDog(item.id)
+                          : () => handleDogClick(item.dog_profile.id)
+                      }
+                      className="cursor-pointer font-medium text-sm flex-shrink-0 flex flex-col justify-center items-center space-y-4"
                     >
-                      <div className="bg-slate-500  rounded-full w-20 h-20 flex justify-center items-center">
+                      <div className="bg-slate-400 rounded-full w-20 h-20 flex justify-center items-center">
                         <img
                           src={DogPng}
                           className="place-self-center w-16 h-16 rounded-full"

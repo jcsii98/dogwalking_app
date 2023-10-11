@@ -4,6 +4,7 @@ import BookingChatroom from "./BookingChatroom";
 import BookingDetails from "./BookingDetails";
 import cable from "../../services/cable";
 import JobDetails from "../Handler/JobDetails";
+import BookingDogProfile from "./BookingDogProfile";
 
 export default function BookingDash(props) {
   console.log("Rendering BookingDash...");
@@ -25,6 +26,7 @@ export default function BookingDash(props) {
   const [showConfirm, setShowConfirm] = useState(false);
   const subscriptionRef = useRef(null); // Add this line
   const [onlineUsers, setOnlineUsers] = useState([]);
+  const [focusedDog, setFocusedDog] = useState();
 
   // variable states
   const [message, setMessage] = useState();
@@ -125,20 +127,34 @@ export default function BookingDash(props) {
     <>
       <div className="flex justify-between space-x-20 align-start">
         <div className="basis-1/3">
-          <BookingDetails
-            apiUrl={apiUrl}
-            setDashTab={setDashTab}
-            checkBookings={checkBookings}
-            dogProfilesData={dogProfilesData}
-            fetchBooking={fetchBooking}
-            toggleIsEditing={toggleIsEditing}
-            isEditing={isEditing}
-            setIsEditing={setIsEditing}
-            userData={userData}
-            bookingDash={bookingDash}
-            toggleSetShowConfirm={toggleSetShowConfirm}
-            handleApproveBooking={handleApproveBooking}
-          />
+          {focusedDog && (
+            <>
+              <BookingDogProfile
+                apiUrl={apiUrl}
+                focusedDog={focusedDog}
+                setFocusedDog={setFocusedDog}
+              />
+            </>
+          )}
+          {!focusedDog && (
+            <>
+              <BookingDetails
+                setFocusedDog={setFocusedDog}
+                apiUrl={apiUrl}
+                setDashTab={setDashTab}
+                checkBookings={checkBookings}
+                dogProfilesData={dogProfilesData}
+                fetchBooking={fetchBooking}
+                toggleIsEditing={toggleIsEditing}
+                isEditing={isEditing}
+                setIsEditing={setIsEditing}
+                userData={userData}
+                bookingDash={bookingDash}
+                toggleSetShowConfirm={toggleSetShowConfirm}
+                handleApproveBooking={handleApproveBooking}
+              />
+            </>
+          )}
         </div>
         <div className="basis-2/3">
           <BookingChatroom

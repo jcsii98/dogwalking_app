@@ -1,12 +1,11 @@
 import Boy from "../../assets/boy.png";
 import Woman from "../../assets/woman.png";
-import Paw from "../../assets/paw.png";
 
 import { TbEdit } from "react-icons/tb";
 import { TbEditOff } from "react-icons/tb";
 import React, { useState, useEffect } from "react";
 import AddressAutofill from "./AddressAutofill.jsx";
-import ResourceRestricted from "./ResourceRestricted";
+import Restricted from "./Restricted";
 
 export default function ProfileCard(props) {
   const { userData, setUserData, apiUrl } = props;
@@ -92,9 +91,6 @@ export default function ProfileCard(props) {
                   </div>
 
                   <div className="text-lg font-medium">{userData.name}</div>
-                  {userData.status == "approved" && (
-                    <img className="ml-4 w-3 h-3 place-self-center" src={Paw} />
-                  )}
                 </div>
 
                 <div className="">
@@ -172,7 +168,7 @@ export default function ProfileCard(props) {
           </div>
         </div>
         <div className="basis-2/3 flex flex-col">
-          {userData.status == "pending" && (
+          {userData.status == "pending" && userData.kind == "1" && (
             <>
               <ResourceRestricted resource={false} />
             </>
