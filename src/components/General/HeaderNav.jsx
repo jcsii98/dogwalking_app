@@ -35,13 +35,13 @@ export default function HeaderNav(props) {
   };
 
   const handleNavClicked = (tabIndex) => {
-    setNav(!nav);
+    setNav(false);
     setActiveNavTab(tabIndex);
   };
   const handleDashboardClicked = () => {
     setDashTab("Home");
     setActiveNavTab(2);
-    setNav(!nav);
+    setNav(false);
     console.log("dashboard clicked");
   };
 
