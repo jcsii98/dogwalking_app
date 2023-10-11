@@ -303,11 +303,11 @@ export default function DashPage(props) {
                         bookingsData={bookingsData}
                         setBookingDash={setBookingDash}
                       />
-                      {userData.status !== "approved" && (
+                      {/* {userData.status !== "approved" && (
                         <>
                           <Restricted resource={true} />
                         </>
-                      )}
+                      )} */}
                     </div>
                   </>
                 )}
