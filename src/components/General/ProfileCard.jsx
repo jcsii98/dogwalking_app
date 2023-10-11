@@ -66,6 +66,8 @@ export default function ProfileCard(props) {
         setMessage("Address has been updated");
         setUserData(data);
         setShowUpdate(false);
+        setIsEditing(false);
+
         console.log("Success");
         console.log(data);
       }
