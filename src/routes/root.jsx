@@ -20,7 +20,7 @@ export default function Root() {
 
   const [activeNavTab, setActiveNavTab] = useState(1);
 
-  const apiUrl = "https://dogwalking-api.onrender.com";
+  const apiUrl = "http://localhost:3000";
   // http://localhost:3000
   // https://dogwalking-api.onrender.com
 

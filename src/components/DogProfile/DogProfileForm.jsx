@@ -3,18 +3,20 @@ import DogProfileSummary from "./DogProfileSummary";
 
 export default function DogProfileForm(props) {
   const {
+    editing,
     apiUrl,
-    setShowSideBtns,
     setDashTab,
     setDogProfile,
     dogUpdate,
     dogId,
+    dogName,
     checkDogProfiles,
   } = props;
   const [dogData, setDogData] = useState({});
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [inputValue, setInputValue] = useState("");
-  const [activeTab, setActiveTab] = useState(1);
+  const [activeTab, setActiveTab] = useState("buttons");
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const questions = [
     "What is your dog's name?",
@@ -81,13 +83,19 @@ export default function DogProfileForm(props) {
     }
   };
 
+  const handleBegin = () => {
+    setDogData({});
+    setInputValue("");
+    setActiveTab("form");
+  };
+
+  const handleCancel = () => {
+    setDashTab("Home");
+  };
   const handleBack = () => {
     // Decrement the question index
     if (currentQuestionIndex == 0) {
-      if (setShowSideBtns) {
-        setShowSideBtns(true);
-      }
-      setActiveTab(1);
+      setActiveTab("buttons");
       setDogData({});
     } else {
       setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
@@ -115,30 +123,75 @@ export default function DogProfileForm(props) {
     }
   };
 
-  const handleBegin = () => {
-    if (setShowSideBtns) {
-      // Check if setShowSideBtns is defined
-      setShowSideBtns(false);
-    }
-    setDogData({});
-    setInputValue("");
-    setActiveTab(2);
+  const toggleDelete = () => {
+    setShowConfirm((prev) => !prev);
   };
+
   return (
     <>
-      <div className="flex items-center justify-center">
-        {activeTab == 1 && (
-          <>
-            <button
-              onClick={handleBegin}
-              className="font-medium hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
-            >
-              {dogUpdate ? <>Edit</> : <>Add</>}
-            </button>
-          </>
-        )}
-        {activeTab == 2 && (
-          <>
+      {activeTab == "buttons" && (
+        <>
+          {showConfirm ? (
+            <>
+              <div className="flex flex-col justify-center items-center">
+                <div className="">
+                  Are you sure you want to delete {dogName}'s profile?
+                </div>
+                <div className="flex justify-around w-full">
+                  <button
+                    onClick={toggleDelete}
+                    type="button"
+                    className="font-medium hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    className="font-medium hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
+                  >
+                    Yes
+                  </button>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex justify-center items-center space-x-4">
+                {editing && (
+                  <>
+                    <button
+                      onClick={handleCancel}
+                      className="font-medium hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
+                    >
+                      Back
+                    </button>
+                  </>
+                )}
+                <button
+                  onClick={handleBegin}
+                  className="font-medium hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
+                >
+                  {editing ? "Edit" : "Begin"}
+                </button>
+
+                {editing && (
+                  <>
+                    <button
+                      onClick={toggleDelete}
+                      className="font-medium hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
+                    >
+                      Delete
+                    </button>
+                  </>
+                )}
+              </div>
+            </>
+          )}
+        </>
+      )}
+      {activeTab == "form" && (
+        <>
+          <div className="flex justify-center items-center">
             <form
               onSubmit={handleSubmit}
               className="flex justify-between flex-col items-center"
@@ -176,27 +229,27 @@ export default function DogProfileForm(props) {
                 </button>
               </div>
             </form>
-          </>
-        )}
-        {activeTab == 3 && (
-          <>
-            <DogProfileSummary
-              apiUrl={apiUrl}
-              setShowSideBtns={setShowSideBtns}
-              checkDogProfiles={checkDogProfiles}
-              dogUpdate={dogUpdate}
-              dogId={dogId}
-              setActiveTab={setActiveTab}
-              setCurrentQuestionIndex={setCurrentQuestionIndex}
-              setDogData={setDogData}
-              currentQuestionIndex={currentQuestionIndex}
-              dogData={dogData}
-              setDashTab={setDashTab}
-              setDogProfile={setDogProfile}
-            />
-          </>
-        )}
-      </div>
+          </div>
+        </>
+      )}
+      {activeTab == 2 && (
+        <>
+          <DogProfileSummary
+            apiUrl={apiUrl}
+            setShowSideBtns={setShowSideBtns}
+            checkDogProfiles={checkDogProfiles}
+            dogUpdate={dogUpdate}
+            dogId={dogId}
+            setActiveTab={setActiveTab}
+            setCurrentQuestionIndex={setCurrentQuestionIndex}
+            setDogData={setDogData}
+            currentQuestionIndex={currentQuestionIndex}
+            dogData={dogData}
+            setDashTab={setDashTab}
+            setDogProfile={setDogProfile}
+          />
+        </>
+      )}
     </>
   );
 }

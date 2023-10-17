@@ -53,7 +53,7 @@ export default function MyAccount(props) {
       {isLoading ? (
         <LoadingComponent />
       ) : (
-        <div className="py-6 px-8 flex justify-center">
+        <div className="py-4 px-8 flex justify-center">
           <div className="max-w-screen-xl w-full flex justify-between space-x-20">
             <ProfileCard
               userData={userData}

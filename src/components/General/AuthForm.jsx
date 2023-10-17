@@ -151,7 +151,7 @@ export default function AuthForm(props) {
             <div className="flex flex-grow w-full h-full">
               <div
                 id="container-left"
-                className="sm:hidden md:basis-1/2 hidden md:block bg-center bg-no-repeat bg-cover"
+                className="rounded-bl-md sm:hidden md:basis-1/2 hidden md:block bg-center bg-no-repeat bg-cover"
                 style={{ backgroundImage: `url(${dog1})` }}
               ></div>
 
@@ -160,7 +160,7 @@ export default function AuthForm(props) {
                 className="md:basis-1/2 p-6 flex flex-col items-center w-full"
               >
                 <>
-                  <div className="pt-4 w-full">
+                  <div className="w-full">
                     <div className="text-start font-bold py-6 text-3xl">
                       {toggleAuth ? <>Sign up</> : <>Sign in</>}
                     </div>

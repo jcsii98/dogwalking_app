@@ -266,6 +266,7 @@ export default function DashPage(props) {
                       </div>
                       <div className="bg-white rounded-md p-6 mb-4 border-slate-300 border-[1px]">
                         <DogProfileForm
+                          editing={false}
                           apiUrl={apiUrl}
                           checkDogProfiles={checkDogProfiles}
                           setDogProfile={setDogProfile}
