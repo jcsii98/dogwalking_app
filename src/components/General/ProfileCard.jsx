@@ -80,7 +80,7 @@ export default function ProfileCard(props) {
     <>
       <div className="max-w-screen-xl w-full flex">
         <div className="">
-          <div className="bg-white rounded-md p-6 border-slate-300 border-[1px]">
+          <div className="min-w-[305px] bg-white rounded-md p-6 border-slate-300 border-[1px]">
             <div className="font-medium text-md text-slate-700 pb-6 border-b-[1px]">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
@@ -116,7 +116,7 @@ export default function ProfileCard(props) {
             </div>
             <div className="pt-4">
               <div className="text-base font-medium text-slate-600">
-                Contact
+                Contact (placeholder)
               </div>
               <div className="text-base font-medium">0919 509 3049</div>
             </div>

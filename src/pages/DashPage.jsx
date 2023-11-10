@@ -200,40 +200,40 @@ export default function DashPage(props) {
                 {dashTab == "Home" && (
                   <>
                     <div className="flex justify-between space-x-20">
-                      <div className="basis-1/3 flex flex-col">
-                        {job && (
-                          <>
+                      {job && (
+                        <>
+                          <div className="basis-1/3">
                             <Job
                               apiUrl={apiUrl}
                               job={job}
                               fetchJob={fetchJob}
+                            />{" "}
+                          </div>
+                          <div className="flex flex-col basis-2/3">
+                            <ActiveBookings
+                              apiUrl={apiUrl}
+                              fetchChat={fetchChat}
+                              fetchBooking={fetchBooking}
+                              userData={userData}
+                              setDashTab={setDashTab}
+                              bookingsData={bookingsData}
+                              setBookingDash={setBookingDash}
                             />
-                          </>
-                        )}
+                          </div>
+                        </>
+                      )}
 
-                        {!job && (
-                          <>
-                            <div className="bg-white rounded-md p-6 border-slate-300 border-[1px]">
-                              <JobForm
-                                apiUrl={apiUrl}
-                                fetchJob={fetchJob}
-                                userData={userData}
-                              />
-                            </div>
-                          </>
-                        )}
-                      </div>
-                      <div className="flex flex-col basis-2/3">
-                        <ActiveBookings
-                          apiUrl={apiUrl}
-                          fetchChat={fetchChat}
-                          fetchBooking={fetchBooking}
-                          userData={userData}
-                          setDashTab={setDashTab}
-                          bookingsData={bookingsData}
-                          setBookingDash={setBookingDash}
-                        />
-                      </div>
+                      {!job && (
+                        <>
+                          <div className="w-full bg-white rounded-md p-6 border-slate-300 border-[1px]">
+                            <JobForm
+                              apiUrl={apiUrl}
+                              fetchJob={fetchJob}
+                              userData={userData}
+                            />
+                          </div>
+                        </>
+                      )}
                     </div>
                   </>
                 )}

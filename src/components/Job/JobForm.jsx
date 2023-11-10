@@ -17,6 +17,10 @@ export default function JobForm(props) {
     setActiveTab(2);
   };
 
+  const handleCancel = () => {
+    setActiveTab(1);
+  };
+
   const handleJobChange = (e) => {
     const { name, value } = e.target;
     setJobFormData((prevData) => ({
@@ -62,16 +66,28 @@ export default function JobForm(props) {
   };
   return (
     <>
-      <div className="flex items-center justify-center">
+      <div className="w-full">
         {" "}
         {activeTab == 1 && (
           <>
-            <button
-              onClick={handleBegin}
-              className="font-medium hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
-            >
-              Add Job
-            </button>
+            <div className="flex flex-col justify-center">
+              <div className="pb-4">
+                <p className="font-bold text-slate-500 text-3xl">
+                  There is no dog-walking job associated with this account.
+                </p>
+              </div>
+              <div className="flex flex-col items-start">
+                <p className="text-slate-500 text-xl font-medium pb-4">
+                  Set up your own dog-walking job to begin!
+                </p>
+                <button
+                  onClick={handleBegin}
+                  className="hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-slate-600 py-2 my-2 rounded-lg border-slate-600 border-[1px] px-4"
+                >
+                  Add Job
+                </button>
+              </div>
+            </div>
           </>
         )}
         {activeTab == 2 && (
@@ -79,7 +95,9 @@ export default function JobForm(props) {
             <form className="flex flex-col">
               <div className="font-medium pb-2 text-slate-700">Rates</div>
               <div className="pb-4">
-                <div className="font-medium pb-2 text-slate-700">WGR1</div>
+                <div className="font-medium pb-2 text-slate-700">
+                  {"<"} 20 lbs
+                </div>
                 <input
                   value={jobFormData.dog_walking_job.wgr1}
                   name="wgr1"
@@ -89,7 +107,9 @@ export default function JobForm(props) {
                 ></input>
               </div>
               <div className="pb-4">
-                <div className="font-medium pb-2 text-slate-700">WGR2</div>
+                <div className="font-medium pb-2 text-slate-700">
+                  {"<"} 60 lbs
+                </div>
                 <input
                   value={jobFormData.dog_walking_job.wgr2}
                   name="wgr2"
@@ -99,7 +119,9 @@ export default function JobForm(props) {
                 ></input>
               </div>
               <div className="pb-4">
-                <div className="font-medium pb-2 text-slate-700">WGR3</div>
+                <div className="font-medium pb-2 text-slate-700">
+                  {">"} 60 lbs
+                </div>
                 <input
                   value={jobFormData.dog_walking_job.wgr3}
                   name="wgr3"
@@ -110,13 +132,20 @@ export default function JobForm(props) {
               </div>
               {!jobPosted && (
                 <>
-                  <div className="w-full">
+                  <div className="w-full flex space-x-4">
+                    <button
+                      onClick={handleCancel}
+                      className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
+                      type="button"
+                    >
+                      Cancel
+                    </button>
                     <button
                       onClick={handleSubmit}
                       className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 my-2 rounded-lg border-black border-[1px] px-4"
                       type="submit"
                     >
-                      Save Job
+                      Post Job
                     </button>
                   </div>
                 </>

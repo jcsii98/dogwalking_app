@@ -11,6 +11,8 @@ export default function Job(props) {
       wgr3: "",
     },
   });
+  const [showConfirm, setShowConfirm] = useState(false);
+
   const handleEditChange = (e) => {
     const { name, value } = e.target;
     setJobEditFormData((prevData) => ({
@@ -56,6 +58,10 @@ export default function Job(props) {
     }
   };
 
+  const handleToggleDelete = () => {
+    setShowConfirm((prev) => !prev);
+  };
+
   const handleDeleteJob = async () => {
     const jobId = job.id;
     const uid = localStorage.getItem("uid");
@@ -84,31 +90,37 @@ export default function Job(props) {
   return (
     <>
       <div className="bg-white rounded-md p-6 border-slate-300 border-[1px]">
-        <div className="flex items-center justify-between">
-          <div className="font-bold text-xl">{job.name}</div>
+        <div className="flex items-top justify-between pb-4">
+          <div className="font-bold text-xl text-center">{job.name}</div>
           <RiDeleteBin6Line
-            onClick={handleDeleteJob}
+            onClick={handleToggleDelete}
             size={20}
             className="cursor-pointer"
           />
         </div>
-        <div className="text-base font-medium text-slate-600">Rates</div>
+        <div className="text-base font-medium text-slate-600">My Rates</div>
         {!isEditing && (
           <>
             <div className="pt-2">
-              <div className="text-base font-medium text-slate-600">WGR1</div>
+              <div className="text-base font-medium text-slate-600">
+                {"<"} 20 lbs
+              </div>
               <div className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2">
                 {job.wgr1}
               </div>
             </div>
             <div className="pt-2">
-              <div className="text-base font-medium text-slate-600">WGR2</div>
+              <div className="text-base font-medium text-slate-600">
+                {"<"} 60 lbs
+              </div>
               <div className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2">
                 {job.wgr2}
               </div>
             </div>
             <div className="pt-2">
-              <div className="text-base font-medium text-slate-600">WGR3</div>
+              <div className="text-base font-medium text-slate-600">
+                {">"} 60 lbs
+              </div>
               <div className="focus:outline-none focus:border-slate-600 border-[1px] border-slate-400 rounded-md w-full py-2 px-2">
                 {job.wgr3}
               </div>
@@ -118,7 +130,9 @@ export default function Job(props) {
         {isEditing && (
           <>
             <div className="pt-2">
-              <div className="text-base font-medium text-slate-600">WGR1</div>
+              <div className="text-base font-medium text-slate-600">
+                {"<"} 20 lbs
+              </div>
               <input
                 name="wgr1"
                 value={jobEditFormData.dog_walking_job.wgr1}
@@ -129,7 +143,9 @@ export default function Job(props) {
               ></input>
             </div>
             <div className="pt-2">
-              <div className="text-base font-medium text-slate-600">WGR2</div>
+              <div className="text-base font-medium text-slate-600">
+                {"<"} 60 lbs
+              </div>
               <input
                 name="wgr2"
                 value={jobEditFormData.dog_walking_job.wgr2}
@@ -140,7 +156,9 @@ export default function Job(props) {
               ></input>
             </div>
             <div className="pt-2">
-              <div className="text-base font-medium text-slate-600">WGR3</div>
+              <div className="text-base font-medium text-slate-600">
+                {">"} 60 lbs
+              </div>
               <input
                 name="wgr3"
                 value={jobEditFormData.dog_walking_job.wgr3}
@@ -153,23 +171,51 @@ export default function Job(props) {
           </>
         )}
 
-        <div className="flex mt-4 border-t-[1px] pt-4">
-          <button
-            onClick={toggleIsEditing}
-            className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 rounded-lg border-black border-[1px] px-4"
-            type="button"
-          >
-            {isEditing ? "Cancel" : "Edit"}
-          </button>
-          {isEditing && (
+        <div className="mt-4 border-t-[1px] pt-4">
+          {showConfirm && (
+            <>
+              <div className="pb-4 text-center">
+                Are you sure you want to delete this job?
+              </div>
+
+              <div className="flex space-x-4">
+                <button
+                  onClick={handleToggleDelete}
+                  className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 rounded-lg border-black border-[1px] px-4"
+                  type="button"
+                >
+                  No
+                </button>
+                <button
+                  onClick={handleDeleteJob}
+                  className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 rounded-lg border-black border-[1px] px-4"
+                  type="button"
+                >
+                  Yes
+                </button>
+              </div>
+            </>
+          )}
+          {!showConfirm && (
             <>
               <button
-                onClick={handleSubmit}
+                onClick={toggleIsEditing}
                 className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 rounded-lg border-black border-[1px] px-4"
                 type="button"
               >
-                Save Changes
+                {isEditing ? "Cancel" : "Edit"}
               </button>
+              {isEditing && (
+                <>
+                  <button
+                    onClick={handleSubmit}
+                    className="w-full hover:bg-slate-400 hover:border-[#00000000] hover:text-white text-black py-2 rounded-lg border-black border-[1px] px-4"
+                    type="button"
+                  >
+                    Save Changes
+                  </button>
+                </>
+              )}
             </>
           )}
         </div>
