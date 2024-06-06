@@ -20,7 +20,7 @@ export default function Root() {
 
   const [activeNavTab, setActiveNavTab] = useState(1);
 
-  const apiUrl = "https://dogwalking-api.onrender.com";
+  const apiUrl = "http://localhost:3000";
   // http://localhost:3000
   // https://dogwalking-api.onrender.com
 
@@ -93,13 +93,13 @@ export default function Root() {
     }
   };
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      rememberMe();
-    }, 1500);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     rememberMe();
+  //   }, 1500);
 
-    return () => clearTimeout(timer);
-  }, []);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   useEffect(() => {
     if (userData && userData.kind === "1") {
